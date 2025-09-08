@@ -220,6 +220,14 @@ glossary:
     definition: Any other computer or computing network that the user can access by logging into the external network. Performing actions on a remote machine requires a secure login and often requires the user to have an account created by the network administrator. In scientific projects, we use remote computing machines as part of the HPC infrastructure to access high-performance computing and collaboratively share big data.
     related: [Distributed Computing, HPC, Local Machine]
 
+  - term: Reproducibility
+    cat: Computing Skills
+    definition: The ability to repeat an analysis and obtain the same results, critical for robust scientific workflows.
+
+  - term: SCINet supercomputers
+    cat: Computing Skills
+    definition: Powerful computing infrastructure used to process large datasets efficiently, often required in modern research. This infrastructure provides two supercomputers (Atlas, Ceres) and Juno (archive storage).
+
   - term: Shell
     cat: Computing Skills
     definition: A command interpreter that processes user commands and passes them to the operating system. Provides users with the ability to execute commands, run scripts, and manage processes and files in the systems.
@@ -308,8 +316,13 @@ glossary:
 
   - term: Bioinformatics 
     cat: Bioinformatics
-    definition: Bioinformatics
+    definition: "Bioinformatics applies computational methods to manage, analyze, and interpret biological data. <b>Sequence Bioinformatics</b> involves processing and analysis of large-scale DNA, RNA, and protein sequences generated from high-throughput technologies to enable biological interpretation. Typical tasks include sequence alignment, motif discovery, gene prediction, variant calling, phylogenetic analysis, the annotation of genomes and transcriptomes, and expression quantification."
     related: [RNA-Seq, Sequencing Technologies, Big Data]
+
+  - term: Biological Sequences
+    cat: Bioinformatics
+    definition: Linear representations of DNA, RNA, or protein molecules that carry genetic or functional information.
+    related: [DNA, RNA, Protein]
 
   - term: Chromosome 
     cat: Bioinformatics
@@ -320,6 +333,11 @@ glossary:
     cat: Bioinformatics
     definition: Contig
     related: [Read, Scaffold, RNA-Seq]
+
+  - term: Data Formats
+    cat: Bioinformatics
+    definition: Standardized ways of storing and organizing biological data to facilitate analysis and interoperability.
+    related: []
 
   - term: Differential Expression 
     cat: Bioinformatics
@@ -357,6 +375,11 @@ glossary:
     cat: Bioinformatics
     definition: A data structure of a compressed full-text file containing the reference genome (e.g., .fna file). Using the genome index makes it efficient when searching a substring (e.g., matching reads) in a large text. Programs such as HISAT2 ⤴ (hisat2-build indexer) build the reference genome index using the FM-index ⤴ approach, where the data is both compressed and indexed to reasonably fit within a computer's memory.
     related: [RNA-seq, Transcriptome Assembly, Mapping, Alignment, Sequencing]
+
+  - term: High-Throughput Sequencing
+    cat: Bioinformatics
+    definition: Modern (experimental) sequencing technologies that generate massive volumes of sequence data quickly and cost-effectively.
+    related: [DNA, Sequencing Technologies]
 
   - term: Genomic Reference 
     alt: [Reference Genome]
@@ -406,6 +429,16 @@ glossary:
     cat: Bioinformatics
     definition: Nuclotide
     related: [DNA, RNA, Monomer]
+
+  - term: Project Organization
+    cat: Bioinformatics
+    definition: The practice of setting up directories, managing files, and documenting processes for scalable, reproducible analysis.
+    related: []
+
+  - term: Public Databases
+    cat: Bioinformatics
+    definition: Curated online repositories that store biological sequences, annotations, and related metadata for research use.
+    related: []
 
   - term: Quality Control 
     alt: [of RNA-Seq data]
