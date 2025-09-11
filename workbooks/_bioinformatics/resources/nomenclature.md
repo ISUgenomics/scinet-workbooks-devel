@@ -11,8 +11,6 @@ wg: Bioinformatics
 description: ""
 type: lesson module
 
-terms: [Biological Sample, Quality Score, Reference Genome]
-
 objectives: 
   - Define and differentiate nucleotide sequences, reads, contigs, scaffolds, and reference genomes
   - Understand the relationship between sequencing data and genome assembly
@@ -26,11 +24,11 @@ applications:
   - Communicating findings with accurate terminology
 
 takeaways:
-  - Sequencing begins with fragmented reads that are assembled into structured sequences
-  - Contigs are continuous, gapless sequences reconstructed from overlapping reads
-  - Scaffolds order contigs but may contain unresolved gaps (often represented by `N`s)
-  - Reference genomes are assembled and annotated representations used for alignment and interpretation
-  - Recognizing these structures is essential to working confidently with real bioinformatics datasets
+    - Sequencing begins with fragmented reads that are assembled into structured sequences.
+    - Contigs are continuous, gapless sequences reconstructed from overlapping reads.
+    - Scaffolds order contigs but may contain unresolved gaps (often represented by Ns).
+    - Reference genomes are assembled and annotated representations used for alignment and interpretation.
+    - Recognizing these structures is essential to working confidently with real bioinformatics datasets.
 
 overview: [objectives, applications]
 
@@ -93,10 +91,7 @@ questions:
 
 
 <div class="highlighted highlighted--basic"><div class="highlighted__body" markdown="1">
-This module is designed for researchers with a background in biology or related fields who are beginning  
-to engage with sequencing data in a computational setting, particularly on HPC systems.  
-
-Familiarity with basic biological concepts (e.g., genes, genomes) is assumed.  
+Familiarity with basic biological concepts (e.g., DNA, RNA, genes, genomes) is assumed.  
 No prior experience with bioinformatics tools is required.
 </div></div>
 
@@ -322,3 +317,15 @@ A **variant** is a difference between a given sequence and a reference genome. V
 - **Structural variants**: larger changes like duplications, inversions, or translocations  
 
 Variants are central to many bioinformatics analyses, including the identification of disease-associated mutations, population genetics, and evolutionary studies.
+
+
+{% if page.takeaways %}
+## Lesson takeaways
+
+<ul>
+  {% for takeaway in page.takeaways %}
+    <li>{{ takeaway }}</li>
+  {% endfor %}
+</ul>
+
+{% endif %}
