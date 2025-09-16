@@ -280,6 +280,13 @@ glossary:
     definition: A working directory for a project or computational task. It often appears as a variable or instruction that can be assigned a path to a selected location in the file system. That path is then used for all future commands that require a location, such as writing to a file. It is a common variable for workload managers on distributed computing infrastructures. The pathname of the current working directory can be accessed with the 'pwd' command or using the '$PWD' environmental variable.
     related: [HPC, Command Line]
 
+### Bioinformatics
+
+  - term: Aligned Reads
+    cat: Bioinformatics
+    definition: Sequencing reads that have been mapped to a reference genome, with positions and alignment quality recorded in formats like SAM/BAM/CRAM.  
+    related: [Sequencing Technologioes, Alignment]
+
   - term: Alignment 
     alt: [Sequence Alignment]
     cat: Bioinformatics
@@ -307,17 +314,27 @@ glossary:
 
   - term: Annotation 
     cat: Bioinformatics
-    definition: Annotation
+    definition: The process of identifying and labeling functional elements in a genome or transcriptome, such as genes, exons, or regulatory regions.
 
   - term: Assembly 
     cat: Bioinformatics
-    definition: Assembly
+    definition: The computational reconstruction of longer sequences (contigs or scaffolds) from shorter sequencing reads.
     related: [Genome Assembly, Transcriptome Assembly]
+
+  - term: Base
+    cat: Bioinformatics
+    definition: "A single nucleotide unit: adenine (A), cytosine (C), guanine (G) and thymine (T) in a DNA strand or uracil (U) in RNA molecule. Bases are the fundamental building blocks of nucleotide sequences."
+    related: [DNA, RNA, Nucleotide Sequence]
 
   - term: Bioinformatics 
     cat: Bioinformatics
     definition: "Bioinformatics applies computational methods to manage, analyze, and interpret biological data. <b>Sequence Bioinformatics</b> involves processing and analysis of large-scale DNA, RNA, and protein sequences generated from high-throughput technologies to enable biological interpretation. Typical tasks include sequence alignment, motif discovery, gene prediction, variant calling, phylogenetic analysis, the annotation of genomes and transcriptomes, and expression quantification."
     related: [RNA-Seq, Sequencing Technologies, Big Data]
+
+  - term: Biological Sample
+    cat: Bioinformatics
+    definition: A source of genetic material (e.g., tissue, cells, soil) from which DNA or RNA is extracted for sequencing.
+    related: [DNA, RNA]
 
   - term: Biological Sequences
     cat: Bioinformatics
@@ -326,12 +343,17 @@ glossary:
 
   - term: Chromosome 
     cat: Bioinformatics
-    definition: Chromosome
+    definition: A long DNA molecule containing part or all of the genetic material of an organism, often organized into linear or circular structures.
     related: [DNA, Gene, Genome]
 
   - term: Contig 
     cat: Bioinformatics
-    definition: Contig
+    definition: A continuous DNA sequence assembled from overlapping sequencing reads, without gaps. Contigs often represent only partial regions of the genome. 
+    related: [Read, Scaffold, RNA-Seq]
+
+  - term: Coverage
+    cat: Bioinformatics
+    definition: The average number of times each base in the genome is sequenced; higher coverage increases data accuracy and variant detection power.
     related: [Read, Scaffold, RNA-Seq]
 
   - term: Data Formats
@@ -341,63 +363,82 @@ glossary:
 
   - term: Differential Expression 
     cat: Bioinformatics
-    definition: Differential Expression
+    definition: A comparison of gene expression levels between samples or conditions to identify genes with statistically significant changes.
     related: [Gene Expression, Transcriptome, RNA-Seq]
     wiki: https://en.wikipedia.org/wiki/RNA-Seq#Differential_expression
 
   - term: DNA 
     cat: Bioinformatics
-    definition: DNA
-    related: [Gene, Gene Expression, Sequencing Technologies]
+    definition: <i>(Deoxyribonucleic Acid)</i> The molecule that carries genetic instructions in all living organisms and many viruses. DNA sequences are composed of A, G, C, T nucleotide bases.
+    related: [Base, Nucleotide Sequence, Gene]
 
   - term: Exon 
     cat: Bioinformatics
-    definition: Exon
+    definition: A segment of a gene that remains in the mature RNA transcript after splicing and typically encodes protein.
     related: [Gene Expression, Alternative Splicing]
     wiki: https://en.wikipedia.org/wiki/Exon
 
+  - term: Feature
+    cat: Bioinformatics
+    definition: A genomic element described in annotation files (e.g., gene, transcript, exon, regulatory region), defined by genomic coordinates and additional metadata.  
+    related: [Gene, Exon, Genomic Coordinates, Annotation]
+
+  - term: File Compression
+    cat: Bioinformatics
+    definition: Reducing file size using algorithms (e.g., gzip), often essential for handling large sequencing datasets. 
+
+  - term: File Extension 
+    cat: Bioinformatics
+    definition: The suffix of a file name that indicates its format (e.g., .fastq, .fa, .bam).
+
   - term: Gene 
     cat: Bioinformatics
-    definition: Gene
+    definition: A region of DNA that encodes a functional product, usually a protein or functional RNA.
     related: [DNA, Gene Expression, Chromosome]
 
   - term: Gene Expression 
     cat: Bioinformatics
-    definition: Gene Expression
-    related: [Transcriptome, RNA-Seq, Alternative Splicing]
+    definition: "The biological process by which information from a gene is used to produce RNA and, often, a protein product. <br>
+    In bioinformatics, gene expressionis is quantified as the amount of RNA transcribed from each gene. It is analyzed using sequencing data (e.g., RNA-seq) to determine when, where, and to what extent genes are active under specific biological conditions."
+    related: [Sequencing Technologies, RNA-Seq, Transcriptome]
 
   - term: Genome Assembly 
     cat: Bioinformatics
-    definition: Genome Assembly
-    related: [DNA, Sequencing Technologies, Alignment]
+    definition: The reconstruction of the complete DNA sequence of an organism's genome from sequencing reads.
+    related: [Sequencing Technologies, Read, DNA]
 
   - term: Genome Index
     cat: Bioinformatics
     definition: A data structure of a compressed full-text file containing the reference genome (e.g., .fna file). Using the genome index makes it efficient when searching a substring (e.g., matching reads) in a large text. Programs such as HISAT2 ⤴ (hisat2-build indexer) build the reference genome index using the FM-index ⤴ approach, where the data is both compressed and indexed to reasonably fit within a computer's memory.
-    related: [RNA-seq, Transcriptome Assembly, Mapping, Alignment, Sequencing]
+    related: [RNA-seq, Transcriptome Assembly, Mapping, Alignment, Sequencing Technologies]
+
+  - term: Genomic Coordinates
+    cat: Bioinformatics
+    definition: The precise location of a feature on a reference genome, defined by chromosome/contig name, start, and end positions (e.g., chr1:11869-12227).  
+    related: [Feature, Genomic Reference, Sequencing Technologies]
+
+  - term: Genomic Reference 
+    alt: [Reference Genome]
+    cat: Bioinformatics
+    definition: A curated and standardized representation of an organism's genome used for read alignment and variant analysis.
+    related: [RNA-seq, Genome-guided Alignment, Transcriptome Assembly]
+    wiki: https://en.wikipedia.org/wiki/Reference_genome
 
   - term: High-Throughput Sequencing
     cat: Bioinformatics
     definition: Modern (experimental) sequencing technologies that generate massive volumes of sequence data quickly and cost-effectively.
     related: [DNA, Sequencing Technologies]
 
-  - term: Genomic Reference 
-    alt: [Reference Genome]
-    cat: Bioinformatics
-    definition: Genomic Reference
-    related: [RNA-seq, Genome-guided Alignment, Transcriptome Assembly]
-    wiki: https://en.wikipedia.org/wiki/Reference_genome
-
   - term: Intron 
     cat: Bioinformatics
-    definition: Intron
+    definition: A non-coding segment of a gene that is removed from the RNA transcript during splicing.
     related: [Exon, Gene, Gene Expression]
     wiki: https://en.wikipedia.org/wiki/Intron
 
   - term: Isoform 
     alt: [transcript]
     cat: Bioinformatics
-    definition: Isoform
+    definition: An alternative version of a transcript produced from the same gene via alternative splicing or different transcription start sites.
     related: [Alternative Splicing, Gene Expression, Messenger RNA]
     wiki: https://en.wikipedia.org/wiki/Protein_isoform
 
@@ -415,20 +456,31 @@ glossary:
   - term: Multiple Sequence Alignment 
     alt: [MSA]
     cat: Bioinformatics
-    definition: Multiple Sequence Alignment
+    definition: A computational alignment of three or more biological sequences (DNA, RNA, or protein) to identify regions of similarity.
     related: [Sequence Alignment, Evolutionary Insights, SNP (polymorphism)]
 
   - term: Multiplexing 
     alt: [Multiplexed Sequencing]
     cat: Bioinformatics
-    definition: Multiplexing 
+    definition: A technique that allows multiple samples to be sequenced in a single run by adding unique barcode sequences to each sample.
     related: [RNA-Seq, Sequencing Technologies, optimization]
     tutorial: Tutorial
 
   - term: Nuclotide 
+    alt: [Base]
     cat: Bioinformatics
     definition: Nuclotide
-    related: [DNA, RNA, Monomer]
+    related: [DNA, RNA, Nuclotide Sequence]
+
+  - term: Nucleotide Sequence
+    cat: Bioinformatics
+    definition: An ordered string of nucleotide bases (A, T, C, G for DNA; A, U, C, G for RNA) that represents the genetic information of an organism.
+    related: [DNA, RNA, base]
+
+  - term: Platform Bias
+    cat: Bioinformatics
+    definition: Systematic errors or preferences introduced by a sequencing platform, which can affect base calling or representation of certain sequences.
+    related: [Sequencing Technologies, Read]
 
   - term: Project Organization
     cat: Bioinformatics
@@ -443,32 +495,57 @@ glossary:
   - term: Quality Control 
     alt: [of RNA-Seq data]
     cat: Bioinformatics
-    definition: Quality Control
+    definition: (<b>QC</b>) The process of assessing and filtering sequencing data (reads) for issues like low-quality bases, contamination, or adapter sequences before analysis.
     related: [RNA-Seq, Read, FastQC]
 
   - term: Read
     cat: Bioinformatics
-    definition: A text in 1-letter per nucleotide base notation for a single fragment of a sequence [DNA/RNA] obtained from sequencing experiment. Due to the huge size of genetic material (~250 million nucleotide in a single chromosome), a typical sequencing experiment requires fragmentation. The superset of selected/filtered fragments of unknown sequences creates the library. During sequencing, library items are encoded, providing a bulk set of reads (i.e., text strings specifying the order of nucleotides in fragments).
-    related: [RNA-Seq, Sequencing Technologies, quality control, assembly]
-    tutorial: https://bioinformaticsworkbook.org/introduction/terminology_index#gsc.tab=0 
+    definition: "A fragment of DNA or RNA sequences generated by a sequencing machine during sequencing experiment and saved in 1-letter per nucleotide base notation to a digital FASTQ file. 
+    Due to the huge size of genetic material (~250 million nucleotide in a single chromosome), a typical sequencing experiment requires fragmentation. 
+    The superset of selected/filtered fragments of unknown sequences creates the library. During sequencing, library items are encoded, providing a bulk set of reads (i.e., text strings specifying the order of nucleotides in fragments)."
+    related: [Sequencing Technologies, quality control, RNA-Seq]
+    tutorial: "/bioinformatics/resources/nomenclature"
     wiki: https://en.wikipedia.org/wiki/Read_(biology)
+
+  - term: Read Length
+    cat: Bioinformatics
+    definition: "The number of base pairs in a single sequencing read; affects alignment, assembly, and resolution of analysis.
+    <ul><li><b>short-read</b> - Sequencing reads typically 50-300 base pairs long, commonly produced by Illumina platforms, offering high accuracy.</li>
+    <li><b>long-read</b> - Sequencing reads that span thousands of bases, produced by platforms like PacBio or Oxford Nanopore, useful for resolving complex genomic regions.</li></ul>"
+    related: [DNA, Read, Transcriptome, RNA-Seq]
 
   - term: RNA 
     cat: Bioinformatics
-    definition: RNA
+    definition: <i>(Ribonucleic Acid)</i> A molecule that plays roles in coding, decoding, regulation, and expression of genes; includes messenger RNA (mRNA) and other types.
     related: [DNA, Transcriptome, RNA-Seq]
 
   - term: RNA-Seq 
     alt: [RNA Sequencing]
     cat: Bioinformatics
-    definition: RNA-Seq
-    related: [Gene Expression, Transcriptome Assembly, NGS (sequencing)]
+    definition: A sequencing-based method to quantify RNA transcripts, allowing measurement of gene expression and transcript diversity.
+    related: [Gene Expression, Transcriptome Assembly, Sequencing Technologies]
     tutorial: https://bioinformaticsworkbook.org/dataAnalysis/RNA-Seq/RNA-SeqIntro/RNAseq-intro#gsc.tab=0
     wiki: https://en.wikipedia.org/wiki/RNA-Seq
 
   - term: RNA-Seq Library
     cat: Bioinformatics
-    definition: RNA-Seq Library
+    definition: A prepared and processed collection of RNA-derived fragments with sequencing adapters, ready for input into a sequencer.
+    related: [Sequencing Technologies, High-Throughput Sequencing, Read]
+
+  - term: Sample Metadata
+    cat: Bioinformatics
+    definition: Contextual information about a biological sample (e.g., species, tissue type, treatment condition), critical for downstream analysis and interpretation.
+    related: [Biological Sample, Sequencing Technologies]
+
+  - term: Scaffold 
+    cat: Bioinformatics
+    definition: A higher-order sequence structure that connects and orders contigs using long-range information, with unresolved regions represented by gaps (Ns). It provides orientation and approximate layout of the genome.
+    related: [Contig, Read, RNA-Seq]
+
+  - term: Sequencing Technologies
+    cat: Bioinformatics
+    definition: The method or platform used to determine the order of nucleotides in DNA or RNA, such as Illumina, PacBio, or Oxford Nanopore.
+    related: [High-Throughput Sequencing, Read]
 
   - term: Single-end vs paired-end
     cat: Bioinformatics
@@ -480,21 +557,6 @@ glossary:
     <li>different sequencing depths</li></ul>"
     related: [RNA-Seq, Read, Sequencing Technologies]
 
-  - term: Scaffold 
-    cat: Bioinformatics
-    definition: Scaffold
-    related: [Contig, Read, RNA-Seq]
-
-  - term: Sequence 
-    cat: Bioinformatics
-    definition: Sequence
-    related: [biopolymers, Sequence Alignment, RNA - DNA - proteins]
-
-  - term: Sequencing Technologies 
-    cat: Bioinformatics
-    definition: Sequencing Technologies
-    related: [NGS, RNA-Seq, assembly]
-
   - term: Soft-Clip 
     alt: [of reads]
     cat: Bioinformatics
@@ -502,17 +564,34 @@ glossary:
     learn: LINK
     related: [RNA-seq, Reads Mapping, Reads Trimming]
 
+  - term: Throughput
+    cat: Bioinformatics
+    definition: The amount of sequencing data a platform can produce in a given run, usually measured in bases or reads per unit time.
+    related: [Sequencing Technologies, High-Throughput Sequencing]
+
+  - term: Transcript
+    cat: Bioinformatics
+    definition: An RNA molecule produced from a gene through transcription, represented in annotation files (e.g., GTF/GFF3) as a sequence of exons that may encode a protein or function as non-coding RNA.  
+    related: [RNA, Gene Expression]
+
   - term: Transcriptome 
     cat: Bioinformatics
-    definition: Transcriptome
+    definition: The full set of RNA transcripts (coding and non-coding) expressed in a cell, tissue, or organism at a given time.
     related: [RNA, Gene Expression, Alternative Splicing]
 
   - term: Transcriptome Assembly 
     cat: Bioinformatics
     related: [RNA-Seq, Gene Expression]
-    definition: "Transcriptome Assembly"
+    definition: The reconstruction of transcript sequences from RNA-seq reads, often used when no reference genome is available.
     tutorial: https://bioinformaticsworkbook.org/dataAnalysis/RNA-Seq/RNA-SeqIntro/RNAseq-using-a-genome.html#gsc.tab=0
     wiki: https://en.wikipedia.org/wiki/RNA-Seq#Transcriptome_assembly
+
+  - term: Variant
+    cat: Bioinformatics
+    definition: A difference between a sample's sequence and the reference genome, such as a single nucleotide polymorphism (SNP), insertion, deletion, or structural change, typically stored in VCF/BCF files.  
+    related: []
+
+### Geospatial
 
   - term: Spatial Interpolation
     cat: Geospatial
