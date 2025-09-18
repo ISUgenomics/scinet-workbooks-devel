@@ -106,34 +106,35 @@ Both approaches aim to improve data quality, but awareness of their scope is ess
 
 {% include table caption="A list of bioinformatics databases, spanning sequences, genomes, variants, expression data, protein structures, and pathways." sortable=true no-row-labels=true content="|#| database | category | content | format(s) | identifier(s) | curation |
 |---|----------|----------|---------|-----------|---------------|----------|
-|1  | [**GenBank**](https://www.ncbi.nlm.nih.gov/genbank/) | sequence *(primary)* | nucleotide sequences | FASTA, GenBank flat file | accession number <br>(**MN908947.3**) | automated, some manual |
-|2  | [**ENA**](https://www.ebi.ac.uk/ena) | sequence, reads *(primary)* | nucleotide sequences & raw reads | FASTA, FASTQ, EMBL flat file | run/study/sample ID <br>(**ERR000111**) | automated |
-|3  | [**DDBJ**](https://www.ddbj.nig.ac.jp) | sequence *(primary)* | nucleotide sequences | FASTA, DDBJ flat file | accession number <br>(**AB000001**) | automated + some manual |
-|4  | [**SRA**](https://www.ncbi.nlm.nih.gov/sra) | reads *(primary)* | raw reads | FASTQ | run ID <br>(**SRR390728**) | automated |
-|5  | [**RefSeq**](https://www.ncbi.nlm.nih.gov/refseq/) | curated sequences | reference genomes, transcripts, proteins | FASTA, GenBank flat file | RefSeq accession <br>(**NM_000546.6**) | automated + manual/expert |
-|6  | [**UniProt**](https://www.uniprot.org/) | sequence, annotation | protein sequences, function, structure | FASTA, TSV, XML | UniProtKB ID <br>(**P38398**) | manual/expert (Swiss-Prot); automated (TrEMBL) |
-|7  | [**Ensembl**](https://www.ensembl.org/) | genome, annotation | genome assemblies, gene models, variation | FASTA, VCF, GTF/GFF3 | Ensembl stable ID <br>(**ENSG00000139618**) | automated + manual/expert |
-|8  | [**UCSC Genome Browser**](https://genome.ucsc.edu/) | genome, annotation | genome assemblies, annotations, tracks | FASTA, BED, GTF/GFF, bigWig | UCSC ID / track name <br>(**uc001aaa.3**) | automated |
-|9  | [**GENCODE**](https://www.gencodegenes.org/) | annotation | comprehensive gene & transcript annotations | GTF/GFF3 | Ensembl/GENCODE ID <br>(**ENST00000456328**) | automated + manual/expert |
-|10 | [**dbSNP**](https://www.ncbi.nlm.nih.gov/snp/) | variation | short genetic variants (SNPs, indels) | VCF | rsID <br>(**rs7412**) | automated |
-|11 | [**ClinVar**](https://www.ncbi.nlm.nih.gov/clinvar/) | variation (clinical) | variants with clinical significance | VCF, XML | ClinVar accession <br>(**RCV000198123**) | manual/expert |
-|12 | [**gnomAD**](https://gnomad.broadinstitute.org/) | variation (population) | population allele frequencies | VCF | variant ID <br>(**1:55516888:G:A**) | automated |
-|13 | [**GEO**](https://www.ncbi.nlm.nih.gov/geo/) | expression | gene expression, microarray, RNA-seq | series matrix (TXT), SOFT, MINiML | GEO accession <br>(**GSE12345**) | automated |
-|14 | [**ArrayExpress**](https://www.ebi.ac.uk/arrayexpress/) | expression | transcriptomics & functional genomics | MAGE-TAB, FASTQ | ArrayExpress ID <br>(**E-MTAB-3050**) | automated + manual/expert |
-|15 | [**PDB**](https://www.rcsb.org/) | structure | 3D protein & nucleic acid structures | PDB, mmCIF | PDB ID <br>(**1A1X**) | manual/expert |
-|16 | [**KEGG**](https://www.genome.jp/kegg/) | pathways & networks | metabolic, signaling, disease pathways | KGML (XML), tabular | KEGG ID <br(**hsa00010**) | manual/expert |
-|17 | [**Reactome**](https://reactome.org/) | pathways & networks | biological pathways & reactions | BioPAX, SBML | Reactome ID <br>(**R-HSA-109581**) | manual/expert |
-|18 | [**miRBase**](https://www.mirbase.org/) | specialized | microRNA sequences & annotations | FASTA, GFF | miRBase ID <br>(**hsa-let-7a-1**) | manual/expert |" %}
+| 1  | [**GenBank**](https://www.ncbi.nlm.nih.gov/genbank/) | sequence *(primary)* | nucleotide sequences | FASTA, GenBank flat file | accession number <br>(**MN908947.3**) | automated, some manual |
+| 2  | [**ENA**](https://www.ebi.ac.uk/ena) | sequence, reads *(primary)* | nucleotide sequences & raw reads | FASTA, FASTQ, EMBL flat file | run/study/sample ID <br>(**ERR000111**) | automated |
+| 3  | [**DDBJ**](https://www.ddbj.nig.ac.jp) | sequence *(primary)* | nucleotide sequences | FASTA, DDBJ flat file | accession number <br>(**AB000001**) | automated + some manual |
+| 4  | [**miRBase**](https://www.mirbase.org/) | sequence *(specialized)* | microRNA sequences & annotations | FASTA, GFF | miRBase ID <br>(**hsa-let-7a-1**) | manual/expert |
+| 5  | [**RefSeq**](https://www.ncbi.nlm.nih.gov/refseq/) | curated sequences | reference genomes, transcripts, proteins | FASTA, GenBank flat file | RefSeq accession <br>(**NM_000546.6**) | automated + manual/expert |
+| 6  | [**Ensembl**](https://www.ensembl.org/) | genome, annotation | genome assemblies, gene models, variation | FASTA, VCF, GTF/GFF3 | Ensembl ID <br>(**ENSG00000139618**) | automated + manual/expert |
+| 7  | [**UCSC Genome Browser**](https://genome.ucsc.edu/) | genome, annotation | genome assemblies, annotations, tracks | FASTA, BED, GTF/GFF, bigWig | UCSC ID / track name <br>(**uc001aaa.3**) | automated |
+| 8  | [**GENCODE**](https://www.gencodegenes.org/) | annotation | comprehensive gene & transcript annotations | GTF/GFF3 | Ensembl/GENCODE ID <br>(**ENST00000456328**) | automated + manual/expert |
+| 9  | [**dbSNP**](https://www.ncbi.nlm.nih.gov/snp/) | variation | short genetic variants (SNPs, indels) | VCF | rsID <br>(**rs7412**) | automated |
+|10  | [**ClinVar**](https://www.ncbi.nlm.nih.gov/clinvar/) | variation (clinical) | variants with clinical significance | VCF, XML | ClinVar accession <br>(**RCV000198123**) | manual/expert |
+|11  | [**gnomAD**](https://gnomad.broadinstitute.org/) | variation (population) | population allele frequencies | VCF | variant ID <br>(**1:55516888:G:A**) | automated |
+|12  | [**SRA**](https://www.ncbi.nlm.nih.gov/sra) | gene expression *(reads)* | raw sequencing reads | FASTQ | run ID <br>(**SRR390728**) | automated |
+|13  | [**GEO**](https://www.ncbi.nlm.nih.gov/geo/) | gene expression | gene expression, microarray, RNA-seq | series matrix (TXT), SOFT, MINiML | GEO accession <br>(**GSE12345**) | automated |
+|14  | [**ArrayExpress**](https://www.ebi.ac.uk/arrayexpress/) | gene expression | transcriptomics & functional genomics | MAGE-TAB, FASTQ | ArrayExpress ID <br>(**E-MTAB-3050**) | automated + manual/expert |
+|15  | [**Gene Ontology (GO)**](http://geneontology.org/) | functional enrichment | gene function classification | OBO, GAF | GO ID <br>(**GO:0006915**) | manual/expert |
+|16  | [**KEGG**](https://www.genome.jp/kegg/) | functional enrichment | metabolic, signaling, disease pathways | KGML (XML), tabular | KEGG ID <br>(**hsa00010**) | manual/expert |
+|17  | [**Reactome**](https://reactome.org/) | functional enrichment | biological pathways & reactions | BioPAX, SBML | Reactome ID <br>(**R-HSA-109581**) | manual/expert |
+|18  | [**UniProt**](https://www.uniprot.org/) | protein | protein sequences, function, structure | FASTA, TSV, XML | UniProtKB ID <br>(**P38398**) | manual/expert (Swiss-Prot); automated (TrEMBL) |
+|19  | [**PDB**](https://www.rcsb.org/) | protein *(structure)* | 3D protein & nucleic acid structures | PDB, mmCIF | PDB ID <br>(**1A1X**) | manual/expert |" %}
 
 
 <div class="process-list ul" markdown="1">
 
 ### ★ Sequence databases
 
-The foundation of bioinformatics is built on sequence repositories. Three primary and major **nucleotide archives**: [GenBank](#genbank), [ENA](#ena), and [DDBJ](#ddbj), work together as the 
-*International Nucleotide Sequence Database Collaboration (INSDC)*. Each submission to one archive is shared across all three partners, 
-ensuring that the global collection of nucleotide data remains synchronized and consistent. 
-In addition, curated and/or specialized resources like [RefSeq](#refseq) or [UniProt](#uniprot) provide standardized reference sequences and rich functional annotations.  
+The foundation of bioinformatics is built on sequence repositories. Three **primary nucleotide archives**: [GenBank](#genbank), [ENA](#ena), and [DDBJ](#ddbj), 
+operate as a unified system under the *International Nucleotide Sequence Database Collaboration (INSDC)*. Submissions to any one archive are synchronized across all three, 
+ensuring a globally consistent, comprehensive collection of sequence data. Beyond raw archival data, **curated secondary resources** such as [RefSeq](#refseq) or [miRBase](#mirbase) 
+provide **non-redundant reference sequences** for genes, transcripts, proteins, and non-coding RNAs.
 
 <div class="usa-accordion " >
 
@@ -187,7 +188,7 @@ In addition, curated and/or specialized resources like [RefSeq](#refseq) or [Uni
 
 </div>
 
-{% include accordion title="Download sequences via FTP" class=" " controls="genbank-5" icon=false %}
+{% include accordion title="CLI download" class=" " controls="genbank-5" icon=false %}
 <div id="genbank-5" class="accordion_content" markdown='1' hidden>
 GenBank releases can be downloaded from the NCBI FTP server: <https://ftp.ncbi.nlm.nih.gov/genbank/>  
 
@@ -270,7 +271,7 @@ esearch -db nucleotide -query "NC_001666.2" | efetch -format gb > corn_chloropla
 
 </div>
 
-{% include accordion title="Download sequences via FTP" class=" " controls="ena-5" icon=false %}
+{% include accordion title="CLI download" class=" " controls="ena-5" icon=false %}
 <div id="ena-5" class="accordion_content" markdown='1' hidden>
 ENA FTP server: <https://ftp.ebi.ac.uk/pub/databases/ena/>  
 
@@ -349,7 +350,7 @@ aria2c -x 8 -s 8 ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR000/ERR000111/ERR000111.f
 
 </div>
 
-{% include accordion title="Download sequences via FTP" class=" " controls="ddbj-5" icon=false %}
+{% include accordion title="CLI download" class=" " controls="ddbj-5" icon=false %}
 <div id="ddbj-5" class="accordion_content" markdown='1' hidden>
 DDBJ FTP site: <https://ftp.ddbj.nig.ac.jp/ddbj_database/>  
 
@@ -427,7 +428,7 @@ esearch -db sra -query "DRR000001" | efetch -format runinfo > DRR000001.csv
 
 </div>
 
-{% include accordion title="Download via FTP" class=" " controls="refseq-5" icon=false %}
+{% include accordion title="CLI download" class=" " controls="refseq-5" icon=false %}
 <div id="refseq-5" class="accordion_content" markdown='1' hidden>
 RefSeq FTP site: <https://ftp.ncbi.nlm.nih.gov/refseq/>  
 
@@ -450,10 +451,1118 @@ esearch -db protein -query "NP_000483.3" | efetch -format fasta > BRCA1_protein.
 </div>
 </div>
 
+<!-- miRBase -->
+
+{% include accordion title="<h2 style='margin: 0; border-bottom: none; font-size: 1.1em; display: inline;'>miRBase</h2><span style='font-weight: 300;'>(secondary) reference microRNA sequences, annotations, and nomenclature</span>" class="outline" controls="db-seq-5" icon=false %}
+<div id="db-seq-5" class="accordion_content" markdown='1' hidden> 
+**Full name:** miRBase – MicroRNA Sequence Database  
+**URL:** <https://www.mirbase.org/>  
+**FTP:** <https://www.mirbase.org/download/CURRENT/>  
+**Scope:** central repository for published microRNA (miRNA) sequences and annotations, including nomenclature, genomic context, and predicted hairpin structures  
+
+{% include alert class="tip" content="miRBase provides the **official naming and reference sequences** for miRNAs (e.g., `hsa-miR-21-5p`), widely used in small RNA-seq, target prediction, and functional studies." %}
+
+<div class="usa-accordion" style="margin-top: 1em;">
+
+{% include accordion title="Characteristics" class=" " controls="mirbase-1" icon=false %}
+<div id="mirbase-1" class="accordion_content" markdown='1' hidden>
+
+- includes both **precursor (hairpin)** and **mature** miRNA sequences  
+- assigns stable accession IDs (e.g., `MI...` for precursors, `MIMAT...` for mature)  
+- **covers over 270 species** including human, mouse, zebrafish, plants  
+- annotations include genomic coordinates, sequence, structure, literature references  
+- supports standardized naming: `hsa-`, `mmu-`, `dre-`, etc. for species prefixes  
+- integrates with tools for miRNA target prediction and expression analysis  
+
+</div>
+
+{% include accordion title="Applications" class=" " controls="mirbase-2" icon=false %}
+<div id="mirbase-2" class="accordion_content" markdown='1' hidden>
+
+- annotate and quantify miRNAs from **small RNA-seq data**  
+- identify **conserved or species-specific miRNAs** in functional studies  
+- use in **target prediction pipelines** (e.g., TargetScan, miRanda)  
+- explore miRNA roles in **cancer, development, immunity**, etc.  
+- integrate with gene expression to infer **regulatory interactions**  
+
+</div>
+
+{% include accordion title="Limitations" class=" " controls="mirbase-3" icon=false %}
+<div id="mirbase-3" class="accordion_content" markdown='1' hidden>
+
+- does not include **miRNA expression data** - only sequence and annotation  
+- some entries are **predicted or low-confidence** (check supporting evidence)  
+- updates may lag behind newly discovered miRNAs  
+- overlapping or redundant names across species can cause confusion  
+- no direct integration with clinical or disease-specific data (use [miRCancer](http://mircancer.ecu.edu), [HMDD](http://mircancer.ecu.edu))  
+
+</div>
+
+{% include accordion title="Practical Tips" class=" " controls="mirbase-4" icon=false %}
+<div id="mirbase-4" class="accordion_content" markdown='1' hidden>
+
+- always cite the **miRBase release version** (e.g., *miRBase v22.1*)  
+- use species prefix (`hsa-`, `mmu-`, etc.) to avoid naming ambiguities  
+- validate miRNA IDs using the [miRBase search](https://www.mirbase.org/search/)  
+- download FASTA files for precursor/mature miRNAs for use in alignment tools (e.g., miRDeep2, sRNAbench)  
+- use [miRBase FTP](https://www.mirbase.org/download/CURRENT/) for batch downloads or custom processing  
+
+</div>
+
+{% include accordion title="CLI download" class=" " controls="mirbase-5" icon=false %}
+<div id="mirbase-5" class="accordion_content" markdown='1' hidden>
+miRBase FTP site: <ftp://mirbase.org/pub/mirbase/>  
+
+1. Download all mature miRNA sequences (FASTA):
+```bash
+wget https://www.mirbase.org/download/CURRENT/mature_high_conf.fa
+```
+2. Download all precursor sequences:
+```bash
+wget https://www.mirbase.org/download/CURRENT/hairpin.fa
+```
+3. Download GFF annotation for human:
+```bash
+wget https://www.mirbase.org/download/hsa.gff3
+```
+4. Search for a specific miRNA (e.g., miR-21):
+```bash
+curl "https://www.mirbase.org/results/?query=miR-21"
+```
+</div>
+</div>
+</div>
+
+</div>
+
+
+### ★ Genomes, Annotations
+
+Beyond [raw sequence repositories](#-sequence-databases), bioinformatics relies on resources that provide **reference genomes** 
+and **structured annotations** of genes, transcripts, and genomic features. Databases such as [Ensembl](#ensembl), the [UCSC Genome Browser](#ucsc-genome-browser), 
+and [GENCODE](#gencode) deliver curated gene models, coordinate systems, and visualization tools, forming the foundation for alignment, 
+variant interpretation, and transcriptomic analysis. These resources ensure that analyses are anchored to well-defined, versioned reference assemblies and annotation sets.  
+
+<div class="usa-accordion " >
+
+<!-- Ensembl -->
+
+{% include accordion title="<h2 style='margin: 0; border-bottom: none; font-size: 1.1em; display: inline;'>Ensembl</h2><span style='font-weight: 300;'>genome assemblies, gene models, variation</span>" class="outline" controls="genome-1" icon=false %}
+<div id="genome-1" class="accordion_content" markdown='1' hidden> 
+**Full name:** Ensembl Genome Browser  
+**URL:** <https://www.ensembl.org/>  
+**FTP:** <https://ftp.ensembl.org/pub/>  
+**Scope:** provides reference genome assemblies, gene/transcript annotations, variation data, and comparative genomics resources for vertebrates and other species  
+
+{% include alert class="tip" content="Ensembl IDs (`ENS...`) are **internal to Ensembl** and release-dependent, while [RefSeq](#refseq) accessions (`NM_`, `NP`, `NC_`) are cross-database stable references. Tools often support both, but you should keep track of which system your pipeline expects." %}
+
+<div class="usa-accordion" style="margin-top: 1em;">
+
+{% include accordion title="Characteristics" class=" " controls="ensembl-1" icon=false %}
+<div id="ensembl-1" class="accordion_content" markdown='1' hidden>
+
+- **secondary database**: uses primary archives (INSDC) to provide **curated annotations**  
+- hosted data includes:  
+  - **genome assemblies** (reference builds)  
+  - **gene and transcript models**  
+  - **variants** (SNPs, indels, structural variants)  
+  - **comparative genomics resources** (orthologs, paralogs, synteny)  
+- uses **stable identifiers**: genes (`ENSG...`), transcripts (`ENST...`), proteins (`ENSP...`)  
+- integrates with [RefSeq](#refseq), [UniProt](#uniprot), [dbSNP](#dbsnp), [ClinVar](#clinvar), and other resources  
+- browser interface allows visualization of genomic features in context  
+
+</div>
+
+{% include accordion title="Applications" class=" " controls="ensembl-2" icon=false %}
+<div id="ensembl-2" class="accordion_content" markdown='1' hidden>
+
+- widely used as the **reference gene annotation** in RNA-seq, variant calling, and GWAS  
+- provides **orthology/paralogy** predictions for comparative genomics  
+- access to **clinical variant databases** through Ensembl [VEP](https://useast.ensembl.org/info/docs/tools/vep/index.html) (Variant Effect Predictor)  
+- programmatic access via Ensembl [REST API](https://rest.ensembl.org/) and [BioMart](http://useast.ensembl.org/biomart/martview/e03bf4380d6cb103e56668f87af7a074) for custom data retrieval  
+
+</div>
+
+{% include accordion title="Limitations" class=" " controls="ensembl-3" icon=false %}
+<div id="ensembl-3" class="accordion_content" markdown='1' hidden>
+
+- updates are **release-based** (~2–3 months), annotations may differ between versions  
+- identifiers are stable, but annotations linked to them can be revised  
+- not all species are equally well-annotated (vertebrates most complete)  
+- [GENCODE](#gencode) is the preferred annotation set for **human and mouse**, though Ensembl distributes it directly  
+
+</div>
+
+{% include accordion title="Practical Tips" class=" " controls="ensembl-4" icon=false %}
+<div id="ensembl-4" class="accordion_content" markdown='1' hidden>
+
+- cite the Ensembl release version in publications (e.g., *Ensembl release 111, 2024*)  
+- use [BioMart](http://useast.ensembl.org/biomart/martview/e03bf4380d6cb103e56668f87af7a074) for quick exports of gene/transcript tables  
+- Ensembl [REST API](https://rest.ensembl.org/) provides programmatic access to sequences, variants, annotations  
+- for reproducibility: track both the **Ensembl release** and the **reference genome build**  
+
+</div>
+
+{% include accordion title="CLI download" class=" " controls="ensembl-5" icon=false %}
+<div id="ensembl-5" class="accordion_content" markdown='1' hidden>
+Ensembl FTP site: <https://ftp.ensembl.org/pub/>  
+
+1. Download genome FASTA (human GRCh38, release 111):  
+```bash
+wget ftp://ftp.ensembl.org/pub/release-111/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz
+```
+2. Download GTF annotation file (human, release 111):
+```bash
+wget ftp://ftp.ensembl.org/pub/release-111/gtf/homo_sapiens/Homo_sapiens.GRCh38.111.gtf.gz
+```
+3. Programmatic access (REST API, example for BRCA2 gene):
+```bash
+curl "https://rest.ensembl.org/sequence/id/ENSG00000139618?content-type=text/x-fasta" -o BRCA2.fasta
+```
+</div>
+</div>
+</div>
+
+<!-- UCSC Genome Browser -->
+
+{% include accordion title="<h2 style='margin: 0; border-bottom: none; font-size: 1.1em; display: inline;'>UCSC Genome Browser</h2><span style='font-weight: 300;'>genome assemblies, annotations, tracks</span>" class="outline" controls="genome-2" icon=false %}
+<div id="genome-2" class="accordion_content" markdown='1' hidden> 
+**Full name:** UCSC Genome Browser  
+**URL:** <https://genome.ucsc.edu/>  
+**FTP:** <https://hgdownload.soe.ucsc.edu/goldenPath/>  
+**Scope:** interactive platform for visualizing reference genomes, annotations, and comparative genomics data  
+
+{% include alert class="tip" content="Choose UCSC for **browsing and visualization**, integration, and coordinate conversion, using [utilities](https://genome.ucsc.edu/util.html): [Table Browser](https://genome.ucsc.edu/cgi-bin/hgTables), [BLAT](https://genome.ucsc.edu/cgi-bin/hgBlat), [LiftOver](https://genome.ucsc.edu/cgi-bin/hgLiftOver), [trackhub](https://daler.github.io/trackhub/). It uses the same underlying genome assemblies as Ensembl, but may differ in annotation sets and track organization. [Ensembl](#ensembl) is best for curated annotations and cross-species comparative genomics." %}
+
+<div class="usa-accordion" style="margin-top: 1em;">
+
+{% include accordion title="Characteristics" class=" " controls="ucsc-1" icon=false %}
+<div id="ucsc-1" class="accordion_content" markdown='1' hidden>
+
+- genome assemblies for many species (vertebrates, model organisms, some plants/fungi)  
+- large collection of **annotation tracks**: genes, transcripts, repeats, conservation, epigenomics, variants  
+- supports both **downloadable flat files** and interactive browsing  
+- identifiers use standard genome builds (e.g., *hg19*, *hg38* for human)  
+- tools: [Table Browser](https://genome.ucsc.edu/cgi-bin/hgTables), [BLAT](https://genome.ucsc.edu/cgi-bin/hgBlat) (fast alignment), [LiftOver](https://genome.ucsc.edu/cgi-bin/hgLiftOver) (coordinate conversion)  
+- hosts [trackhub](https://daler.github.io/trackhub/) for community-provided datasets ([ENCODE](https://www.encodeproject.org), [GTEx](https://gtexportal.org/home/), etc.)  
+
+</div>
+
+{% include accordion title="Applications" class=" " controls="ucsc-2" icon=false %}
+<div id="ucsc-2" class="accordion_content" markdown='1' hidden>
+
+- visualize genome assemblies with layered annotation tracks  
+- export **gene models**, **conservation scores**, **custom subsets** via the [Table Browser](https://genome.ucsc.edu/cgi-bin/hgTables) 
+- align sequences to the genome using [BLAT](https://genome.ucsc.edu/cgi-bin/hgBlat) 
+- convert genomic coordinates between builds using [LiftOver](https://genome.ucsc.edu/cgi-bin/hgLiftOver) 
+- integrate external datasets as **custom tracks** or via [trackhub](https://daler.github.io/trackhub/)  
+
+</div>
+
+{% include accordion title="Limitations" class=" " controls="ucsc-3" icon=false %}
+<div id="ucsc-3" class="accordion_content" markdown='1' hidden>
+
+- most comprehensive for **human and model organisms**; some species have min. data  
+- differences in annotation sets compared to [Ensembl](#ensembl) or [RefSeq](refseq) (reproducibility warning)  
+- [LiftOver](https://genome.ucsc.edu/cgi-bin/hgLiftOver) requires chain files; not all regions map cleanly between builds  
+- large flat files (e.g., `bigWig`, `bigBed`) may require specialized tools to manipulate  
+
+</div>
+
+{% include accordion title="Practical Tips" class=" " controls="ucsc-4" icon=false %}
+<div id="ucsc-4" class="accordion_content" markdown='1' hidden>
+
+- always note the **genome build version** (*hg19* vs *hg38*, *mm10* vs *mm39*, etc.)  
+- use [Table Browser](https://genome.ucsc.edu/cgi-bin/hgTables)for batch downloads instead of manual track clicks  
+- `bigWig` and `bigBed` files can be accessed programmatically and processed using UCSC’s [WiggleTools](https://github.com/Ensembl/WiggleTools) (combine, merge, scale, aggregate, etc.)
+- for reproducibility, cite both the **genome build** and the **UCSC track version**  
+
+</div>
+
+{% include accordion title="CLI download" class=" " controls="ucsc-5" icon=false %}
+<div id="ucsc-5" class="accordion_content" markdown='1' hidden>
+UCSC FTP site: <ftp://hgdownload.soe.ucsc.edu/goldenPath/>  
+
+1. Download human genome FASTA (`hg38`):  
+```bash
+wget ftp://hgdownload.soe.ucsc.edu/goldenPath/hg38/bigZips/hg38.fa.gz
+```
+2. Download GTF annotation file (GENCODE genes for `hg38`):
+```bash
+wget ftp://hgdownload.soe.ucsc.edu/goldenPath/hg38/bigZips/genes/gencode.v43.annotation.gtf.gz
+```
+3. Coordinate conversion with LiftOver (`hg19` to `hg38`):
+```bash
+liftOver input_hg19.bed hg19ToHg38.over.chain.gz output_hg38.bed unMapped.bed
+```
+</div>
+</div>
+</div>
+
+<!-- GENCODE -->
+
+{% include accordion title="<h2 style='margin: 0; border-bottom: none; font-size: 1.1em; display: inline;'>GENCODE</h2><span style='font-weight: 300;'>comprehensive gene & transcript annotations</span>" class="outline" controls="genome-3" icon=false %}
+<div id="genome-3" class="accordion_content" markdown='1' hidden> 
+**Full name:** GENCODE – The Reference Gene Annotation for Human and Mouse  
+**URL:** <https://www.gencodegenes.org/>  
+**FTP:** <https://ftp.ebi.ac.uk/pub/databases/gencode/>  
+**Scope:** provides comprehensive, high-quality gene and transcript annotations for *Homo sapiens* and *Mus musculus*  
+
+<div class="usa-accordion" style="margin-top: 1em;">
+
+{% include accordion title="Characteristics" class=" " controls="gencode-1" icon=false %}
+<div id="gencode-1" class="accordion_content" markdown='1' hidden>
+
+- **secondary annotation resource**, distributed through [Ensembl](#ensembl) and [UCSC](#ucsc-genome-browser)  
+- combines **manual curation** (HAVANA group) and **automated annotation pipelines**  
+- shared data includes:  
+  - protein-coding genes, pseudogenes, long non-coding RNAs, small RNAs  
+  - all known **transcript isoforms**  
+- outputs in [GTF](/bioinformatics/resources/file_formats#gtf)/[GFF](/bioinformatics/resources/file_formats#gff) and [FASTA](/bioinformatics/resources/file_formats#fasta) formats (DNA, cDNA, protein sequences)  
+- identifiers map to **Ensembl stable IDs** (e.g., `ENSG...`, `ENST...`)  
+- the standard annotation set used in large-scale projects (e.g., [ENCODE](https://www.encodeproject.org), [GTEx](https://gtexportal.org/home/))  
+
+</div>
+
+{% include accordion title="Applications" class=" " controls="gencode-2" icon=false %}
+<div id="gencode-2" class="accordion_content" markdown='1' hidden>
+
+- the **default reference gene annotation** for human and mouse pipelines  
+- used in RNA-seq alignment/quantification (e.g., STAR, Salmon, RSEM)  
+- essential for **variant annotation** (via VEP, ANNOVAR)  
+- widely applied in **transcriptomics, cancer genomics, and regulatory studies**  
+
+</div>
+
+{% include accordion title="Limitations" class=" " controls="gencode-3" icon=false %}
+<div id="gencode-3" class="accordion_content" markdown='1' hidden>
+
+- limited to **human and mouse** (other species rely on [Ensembl](#ensembl) or [RefSeq](#refseq))  
+- annotations evolve: gene/transcript models can change between releases  
+- large [GTF](/bioinformatics/resources/file_formats#gtf) files may be computationally heavy to parse  
+- pipelines should always specify the **GENCODE release version** for reproducibility  
+
+</div>
+
+{% include accordion title="Practical Tips" class=" " controls="gencode-4" icon=false %}
+<div id="gencode-4" class="accordion_content" markdown='1' hidden>
+
+- always record the **GENCODE release version** (e.g., *GENCODE v43*)  
+- human and mouse GENCODE are synchronized with [Ensembl](#ensembl) releases and available via [UCSC Genome Browser](#ucsc-genome-browser)  
+- for reproducibility: match the GENCODE release with the **genome build** (e.g., `GRCh38`)  
+- use [BioMart](http://useast.ensembl.org/biomart/martview/e03bf4380d6cb103e56668f87af7a074)/[Ensembl API](https://rest.ensembl.org/) for ID conversions between [Ensembl](#ensembl), [RefSeq](#refseq), GENCODE  
+
+</div>
+
+{% include accordion title="CLI download" class=" " controls="gencode-5" icon=false %}
+<div id="gencode-5" class="accordion_content" markdown='1' hidden>
+GENCODE FTP site: <ftp://ftp.ebi.ac.uk/pub/databases/gencode/>  
+
+1. Download GTF annotation (human, v43, GRCh38):  
+```bash
+wget ftp://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_43/gencode.v43.annotation.gtf.gz
+```
+2. Download transcript FASTA (cDNA sequences):
+```bash
+wget ftp://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_43/gencode.v43.transcripts.fa.gz
+```
+3. Download protein FASTA (translated sequences):
+```bash
+wget ftp://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_43/gencode.v43.pc_translations.fa.gz
+```
+</div>
+</div>
+</div>
+
+</div>
+
+
+### ★ Variant databases
+
+To interpret genetic differences, researchers rely on databases that catalog **genomic variants** across populations and individuals. 
+Core resources include [dbSNP](#dbsnp), [ClinVar](#clinvar), and the [1000 Genomes Project](https://www.internationalgenome.org), along with specialized databases 
+such as [gnomAD](#gnomad) (population allele frequencies), **COSMIC** (cancer mutations), and **HGMD** (heritable disease mutations). 
+These variant databases are essential for tasks such as calling variants from sequencing data, annotating their functional effects, 
+and linking them to disease phenotypes or evolutionary patterns.  
+
+<div class="usa-accordion " >
+
+<!-- dbSNP -->
+
+{% include accordion title="<h2 style='margin: 0; border-bottom: none; font-size: 1.1em; display: inline;'>dbSNP</h2><span style='font-weight: 300;'>broad archive of SNPs and small variants, covering all organisms</span>" class="outline" controls="variant-1" icon=false %}
+<div id="variant-1" class="accordion_content" markdown='1' hidden> 
+**Full name:** dbSNP – Single Nucleotide Polymorphism Database  
+**URL:** <https://www.ncbi.nlm.nih.gov/snp/>  
+**FTP:** <https://ftp.ncbi.nih.gov/snp/>  
+**Scope:** archival database of simple genetic polymorphisms (SNPs, indels, microsatellites, small structural variants) across species  
+
+{% include alert class="tip" content="dbSNP IDs (`rs####`) are **persistent identifiers** used widely in literature, databases, and tools for referencing known variants. These IDs do not change across genome builds, but their coordinates may." %}
+
+<div class="usa-accordion" style="margin-top: 1em;">
+
+{% include accordion title="Characteristics" class=" " controls="dbsnp-1" icon=false %}
+<div id="dbsnp-1" class="accordion_content" markdown='1' hidden>
+
+- primary archive for **small variants**: SNPs, short insertions/deletions, microsatellites  
+- includes variants from multiple sources: large-scale sequencing projects (e.g., [1000 Genomes](https://www.internationalgenome.org)), individual studies, submitters  
+- supports **multiple organisms**, but human is most comprehensively annotated  
+- assigns stable identifiers: Reference SNP cluster IDs, `rs...` 
+- each record includes: alleles, flanking sequence, genomic context, submitter info, allele frequencies (when available)  
+- integrates with [ClinVar](#clinvar), [RefSeq](#refseq), [Gene](https://www.ncbi.nlm.nih.gov/gene/), and [Genome](https://www.ncbi.nlm.nih.gov/genome/)  
+
+</div>
+
+{% include accordion title="Applications" class=" " controls="dbsnp-2" icon=false %}
+<div id="dbsnp-2" class="accordion_content" markdown='1' hidden>
+
+- provides **reference identifiers** for variants in tools and pipelines (e.g., `rs123456`)  
+- used in **variant annotation** and **normalization**, often integrated into annotation tools (e.g., VEP, ANNOVAR)  
+- enables **frequency-based filtering** and prioritization using population submissions (though less extensive than [gnomAD](#gnomad))  
+- cross-referenced by most major bioinformatics tools and databases  
+
+</div>
+
+{% include accordion title="Limitations" class=" " controls="dbsnp-3" icon=false %}
+<div id="dbsnp-3" class="accordion_content" markdown='1' hidden>
+
+- includes **non-validated** or rare submitter-only variants (careful when interpreting)  
+- **allele frequency** data may be missing or outdated for some entries  
+- less suitable for **clinical interpretation** compared to [ClinVar](#clinvar)  
+- coordinate representation can vary by genome build (check version, e.g., *GRCh38*)  
+- variant context annotations may differ from more specialized databases  
+
+</div>
+
+{% include accordion title="Practical Tips" class=" " controls="dbsnp-4" icon=false %}
+<div id="dbsnp-4" class="accordion_content" markdown='1' hidden>
+
+- always cite `rs...` ID when referencing known SNPs in reports/publications  
+- check the associated genome build (use dbSNP build version, e.g., *b155* for GRCh38)  
+- use the [Variation Viewer](https://www.ncbi.nlm.nih.gov/variation/view/) for graphical variant exploration  
+- for **batch retrieval**, use [Entrez E-utilities](https://www.ncbi.nlm.nih.gov/books/NBK25501/) or [dbSNP’s FTP](https://ftp.ncbi.nih.gov/snp/)  
+- when matching variants from [VCF](/bioinformatics/resources/file_formats#vcf--bcf) files, confirm `rsID` and position match the target genome build  
+
+</div>
+
+{% include accordion title="CLI download" class=" " controls="dbsnp-5" icon=false %}
+<div id="dbsnp-5" class="accordion_content" markdown='1' hidden>
+dbSNP FTP site: <https://ftp.ncbi.nih.gov/snp/>  
+
+1. Download human VCF (dbSNP build 155, GRCh38):
+```bash
+wget ftp://ftp.ncbi.nih.gov/snp/latest_release/VCF/GCF_000001405.39.gz
+```
+2. Download supporting files (`rsID` mappings, frequencies):
+```bash
+wget ftp://ftp.ncbi.nih.gov/snp/latest_release/JSON/refsnp-chr1.json.bz2
+```
+3. Example: Query by `rsID` using Entrez (fetch BRCA1 variant):
+```bash
+esearch -db snp -query "rs1799950" | efetch -format docsum
+```
+</div>
+</div>
+</div>
+
+<!-- ClinVar -->
+
+{% include accordion title="<h2 style='margin: 0; border-bottom: none; font-size: 1.1em; display: inline;'>ClinVar</h2><span style='font-weight: 300;'>human variants with clinical interpretations, linking genotype to disease relevance</span>" class="outline" controls="variant-2" icon=false %}
+<div id="variant-2" class="accordion_content" markdown='1' hidden> 
+**Full name:** ClinVar – Clinical Variant Archive  
+**URL:** <https://www.ncbi.nlm.nih.gov/clinvar/>  
+**FTP:** <https://ftp.ncbi.nlm.nih.gov/pub/clinvar/>  
+**Scope:** public archive of relationships between human genetic variants and phenotypes, with clinical interpretations submitted by diagnostic labs, researchers, and expert panels  
+
+{% include alert class="tip" content="ClinVar provides **clinically relevant interpretations** of variants (e.g., `pathogenic`, `likely benign`), making it critical for genetic diagnostics, especially when interpreting results from clinical exome/genome sequencing." %}
+
+<div class="usa-accordion" style="margin-top: 1em;">
+
+{% include accordion title="Characteristics" class=" " controls="clinvar-1" icon=false %}
+<div id="clinvar-1" class="accordion_content" markdown='1' hidden>
+
+- **curated archive** for clinically relevant human genetic variants  
+- submissions come from: clinical testing labs, academic researchers, expert panels
+- variants include SNPs, indels, CNVs, and other structural changes  
+- records include: variant type, genomic location, gene, clinical condition, submitter, interpretation, review status  
+- each variant is linked to a **clinical significance assessment**: `pathogenic`, `likely pathogenic`, `benign`, `likely benign`, `uncertain significance` (VUS)  
+- integrates with: [dbSNP](#dbsnp), [RefSeq](#refseq), [OMIM](https://omim.org/), [MedGen](https://www.ncbi.nlm.nih.gov/medgen/)  
+
+</div>
+
+{% include accordion title="Applications" class=" " controls="clinvar-2" icon=false %}
+<div id="clinvar-2" class="accordion_content" markdown='1' hidden>
+
+- used in clinical genetics, diagnostics, pharmacogenomics, and rare disease research  
+- **variant annotation** (VEP, ANNOVAR, SnpEff) for predicting disease relevance  
+- **clinical interpretation** of variants in patients through genome/exome sequencing  
+- enables **gene-condition mapping**, e.g., BRCA1 → Breast Cancer  
+- review of conflicting interpretations across multiple submitters 
+
+</div>
+
+{% include accordion title="Limitations" class=" " controls="clinvar-3" icon=false %}
+<div id="clinvar-3" class="accordion_content" markdown='1' hidden>
+
+- not all variants are present - depends on voluntary submission  
+- **interpretations may conflict** among submitters (look for expert panel or review stars)  
+- **incomplete coverage** of non-coding or regulatory variants
+- may not reflect latest research / non-clinical evidence (check submission/review dates)  
+- **VUS** designations can be ambiguous - not always actionable in clinical settings  
+
+</div>
+
+{% include accordion title="Practical Tips" class=" " controls="clinvar-4" icon=false %}
+<div id="clinvar-4" class="accordion_content" markdown='1' hidden>
+
+- use the **ClinVar accession ID** (`VCV#######`) when citing variants  
+- prefer records with **2+ stars** and expert panel reviews for higher confidence  
+- search variants by `rsID`, HGVS notation, or gene using the [ClinVar web interface](https://www.ncbi.nlm.nih.gov/clinvar/)  
+- use [Variation Viewer](https://www.ncbi.nlm.nih.gov/variation/view/) for graphical browsing  
+- programmatically access via [Entrez API](https://www.ncbi.nlm.nih.gov/home/develop/api/) or [ClinVar VCF files](https://ftp.ncbi.nlm.nih.gov/pub/clinvar/) for annotation pipelines  
+
+</div>
+
+{% include accordion title="CLI download" class=" " controls="clinvar-5" icon=false %}
+<div id="clinvar-5" class="accordion_content" markdown='1' hidden>
+ClinVar FTP site: <https://ftp.ncbi.nlm.nih.gov/pub/clinvar/>  
+
+1. Download VCF for GRCh38 (latest release):
+```bash
+wget ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh38/clinvar.vcf.gz
+```
+2. Download summary table (tab-delimited, all submissions):
+```bash
+wget ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/tab_delimited/variant_summary.txt.gz
+```
+3. Get info for example `rs121913529` (CFTR pathogenic variant) via Entrez:
+```bash
+esearch -db clinvar -query "rs121913529" | efetch -format docsum
+```
+</div>
+</div>
+</div>
+
+<!-- gnomAD -->
+
+{% include accordion title="<h2 style='margin: 0; border-bottom: none; font-size: 1.1em; display: inline;'>gnomAD</h2><span style='font-weight: 300;'>population-scale human variant frequencies, filtering rare from common variants</span>" class="outline" controls="variant-3" icon=false %}
+<div id="variant-3" class="accordion_content" markdown='1' hidden> 
+**Full name:** Genome Aggregation Database (gnomAD)  
+**URL:** <https://gnomad.broadinstitute.org/>  
+**FTP:** <https://gnomad.broadinstitute.org/downloads>  
+**Scope:** compiles population-level frequencies of human genetic variants from exome and genome sequencing datasets, enabling rare/common variant filtering and allele frequency analysis  
+
+{% include alert class="tip" content="gnomAD is essential for **distinguishing pathogenic from benign variants** based on population frequency - a variant common in healthy individuals is unlikely to be highly penetrant for rare Mendelian disease." %}
+
+<div class="usa-accordion" style="margin-top: 1em;">
+
+{% include accordion title="Characteristics" class=" " controls="gnomad-1" icon=false %}
+<div id="gnomad-1" class="accordion_content" markdown='1' hidden>
+
+- **aggregated variant dataset** from large-scale sequencing projects; versions:  
+  - **gnomAD v2.1.1** (GRCh37, ~125k exomes + 15k genomes)  
+  - **gnomAD v3.1.2** (GRCh38, ~76k genomes)  
+- accessible data includes:  
+  - allele frequencies across diverse populations  
+  - variant consequences, filters, quality metrics  
+  - homozygous counts, coverage data  
+- annotations provided for: SNPs, indels, structural variants  
+- integrates with tools like VEP and annotation pipelines  
+- population groups: AFR, AMR, EAS, NFE, SAS, FIN, ASJ, etc.  
+
+</div>
+
+{% include accordion title="Applications" class=" " controls="gnomad-2" icon=false %}
+<div id="gnomad-2" class="accordion_content" markdown='1' hidden>
+
+- **filtering variants** based on allele frequency (e.g., exclude variants with `MAF > 1%`)  
+- used in **rare disease** gene discovery and interpretation workflows  
+- supports **variant prioritization** in WES/WGS pipelines  
+- enables **population genetics**, constraint metrics (e.g., pLI, LOEUF)  
+- used for **annotating VCFs** with population frequency data  
+
+</div>
+
+{% include accordion title="Limitations" class=" " controls="gnomad-3" icon=false %}
+<div id="gnomad-3" class="accordion_content" markdown='1' hidden>
+
+- does **not include individuals with severe pediatric disease** (reduces pathogenic bias)  
+- **frequency only** - no direct clinical significance annotations (unlike [ClinVar](#clinvar))  
+- **coverage varies** across regions and populations  
+- **versions differ** by genome build and cohort - use matching version for your reference  
+- does not cover all populations equally (e.g., limited representation of certain groups)  
+
+</div>
+
+{% include accordion title="Practical Tips" class=" " controls="gnomad-4" icon=false %}
+<div id="gnomad-4" class="accordion_content" markdown='1' hidden>
+
+- use correct version: v2.1.1 for GRCh37 ; v3.1.2 for GRCh38  
+- **match genome build** of your data before annotating with gnomAD  
+- for rare disease studies, exclude variants with population frequency > 0.01 (1%)  
+- use constraint scores (e.g., LOEUF < 0.35) to prioritize intolerant genes  
+- explore variants interactively at [gnomad.broadinstitute.org](https://gnomad.broadinstitute.org)  
+- annotation tools: VEP plugin for gnomAD, `bcftools` + `tabix` for local querying  
+
+</div>
+
+{% include accordion title="CLI download" class=" " controls="gnomad-5" icon=false %}
+<div id="gnomad-5" class="accordion_content" markdown='1' hidden>
+gnomAD download portal: <https://gnomad.broadinstitute.org/downloads>  
+
+1. Download gnomAD v3.1.2 (GRCh38) VCF:
+```bash
+wget https://storage.googleapis.com/gcp-public-data--gnomad/release/3.1.2/vcf/genomes/gnomad.genomes.v3.1.2.sites.chr1.vcf.bgz
+```
+2. Download constraint scores:
+```bash
+wget https://storage.googleapis.com/gcp-public-data--gnomad/release/3.1.2/constraint/gnomad.v3.1.2.lof_metrics.by_gene.txt.bgz
+```
+3. Index the VCF for fast querying:
+```bash
+tabix -p vcf gnomad.genomes.v3.1.2.sites.chr1.vcf.bgz
+```
+4. Query example (get `rsID`, freq info for variant at `chr1:55516888`):
+```bash
+bcftools view -r 1:55516888 gnomad.genomes.v3.1.2.sites.chr1.vcf.bgz
+```
+</div>
+</div>
+</div>
+
+</div>
+
+
+### ★ Gene Expression
+
+Understanding **gene expression patterns** and functional responses is central to genomics research. Bioinformatics workflows rely on repositories that archive **raw and processed transcriptomic data**, 
+capturing expression profiles across tissues, conditions, diseases, and treatments. Key public resources include the [Sequence Read Archive (SRA)](#sra) for primary sequencing reads, 
+[ArrayExpress](#arrayexpress) for microarray and RNA-seq data submissions with rich experimental metadata, and the [Gene Expression Omnibus (GEO)](#geo) for curated gene expression datasets. 
+These resources support downstream analyses such as differential expression, co-expression network inference, meta-analysis, and biomarker discovery. 
+
+<div class="usa-accordion " >
+
+<!-- SRA -->
+
+{% include accordion title="<h2 style='margin: 0; border-bottom: none; font-size: 1.1em; display: inline;'>SRA</h2><span style='font-weight: 300;'>(primary) repository of raw sequencing reads from transcriptomics and other studies</span>" class="outline" controls="expression-1" icon=false %}
+<div id="expression-1" class="accordion_content" markdown='1' hidden> 
+**Full name:** Sequence Read Archive (SRA)  
+**URL:** <https://www.ncbi.nlm.nih.gov/sra>  
+**FTP:** <https://ftp.ncbi.nlm.nih.gov/sra/>  
+**Scope:** central repository for raw high-throughput sequencing data from [sequencing platforms](/bioinformatics/resources/sequencing#sequencing-technologies) like Illumina, PacBio, Oxford Nanopore; includes [assays](/bioinformatics/resources/sequencing#sequencing-assay-types) RNA-seq, ChIP-seq, WGS, and more  
+
+{% include alert class="tip" content="SRA is a **primary archive** - it stores raw sequencing reads. <br>Use [GEO](#geo) or [ArrayExpress](#arrayexpress) for curated functional genomics datasets." %}
+
+<div class="usa-accordion" style="margin-top: 1em;">
+
+{% include accordion title="Characteristics" class=" " controls="sra-1" icon=false %}
+<div id="sra-1" class="accordion_content" markdown='1' hidden>
+
+- stores **raw sequencing data** from [next-gen sequencing (NGS) experiments](/bioinformatics/resources/sequencing)  
+- includes RNA-seq, DNA-seq, metagenomics, ChIP-seq, ATAC-seq, etc.  
+- structured by accessions: `SRP` (Project), `SRX` (Experiment), `SRS` (Sample), `SRR` (Run)  
+- supports metadata on experiment design, sequencing platform, sample prep  
+- part of the [INSDC](https://www.insdc.org/) with mirrored repositories at [ENA](#ena) (EMBL-EBI) and [DDBJ](#ddbj) (Japan)  
+- integrates with [GEO](#geo) (via linked submissions) and *BioProject*/*BioSample*  
+
+</div>
+
+{% include accordion title="Applications" class=" " controls="sra-2" icon=false %}
+<div id="sra-2" class="accordion_content" markdown='1' hidden>
+
+- download **raw reads** for reanalysis, benchmarking, or new pipelines  
+- search for RNA-seq data across tissues, diseases, organisms  
+- use with tools like `fastq-dump`, `prefetch`, or via [sra-tools](https://github.com/ncbi/sra-tools)  
+- source of data for training machine learning models or meta-analyses  
+- used in pipelines for **de novo assembly**, **differential expression**, **variant calling**  
+
+</div>
+
+{% include accordion title="Limitations" class=" " controls="sra-3" icon=false %}
+<div id="sra-3" class="accordion_content" markdown='1' hidden>
+
+- data is **unprocessed**: requires alignment, quantification, QC  
+- metadata can be incomplete or inconsistent between submissions  
+- **accessions are hierarchical** and can be confusing to navigate  
+- large file sizes: high storage and compute costs for download/processing  
+- annotations or condition labels are often minimal - cross-reference with [GEO](#geo)/*BioSample*  
+
+</div>
+
+{% include accordion title="Practical Tips" class=" " controls="sra-4" icon=false %}
+<div id="sra-4" class="accordion_content" markdown='1' hidden>
+
+- start with a **BioProject ID** to retrieve related experiments (`PRJNA...`)  
+- use [NCBI SRA Run Selector](https://www.ncbi.nlm.nih.gov/Traces/study/) for tabular metadata download  
+- download `SRR...` record with *sra-tools* (see **CLI download** below)
+- combine with [GEO](#geo) or [ArrayExpress](#arrayexpress) for study design and sample annotation
+
+</div>
+
+{% include accordion title="CLI download" class=" " controls="sra-5" icon=false %}
+<div id="sra-5" class="accordion_content" markdown='1' hidden> 
+SRA FTP portal: <https://ftp.ncbi.nlm.nih.gov/sra/>
+
+1. Install sra-tools:
+```bash
+conda install -c bioconda sra-tools
+```
+2. Download SRA file and convert `.sra` to `.fastq` using *fasterq-dump* for speed:
+```bash
+prefetch SRR12345678
+fastq-dump --split-files SRR12345678.sra
+fasterq-dump SRR12345678
+```
+3. Fetch metadata table from a study:
+```bash
+# Go to: https://www.ncbi.nlm.nih.gov/Traces/study/
+# Search for a study (e.g., PRJNA600101)
+# Click "Send to: Run selector" → "Download table"
+```
+</div>
+</div>
+</div>
+
+<!-- GEO -->
+
+{% include accordion title="<h2 style='margin: 0; border-bottom: none; font-size: 1.1em; display: inline;'>GEO</h2><span style='font-weight: 300;'>curated archive of functional genomics data from microarrays and sequencing</span>" class="outline" controls="expression-2" icon=false %}
+<div id="expression-2" class="accordion_content" markdown='1' hidden> 
+**Full name:** Gene Expression Omnibus (GEO)  
+**URL:** <https://www.ncbi.nlm.nih.gov/geo/>  
+**FTP:** <https://ftp.ncbi.nlm.nih.gov/geo/>  
+**Scope:** public functional genomics data repository supporting MIAME-compliant submissions from microarray and sequencing platforms, including RNA-seq, ChIP-seq, and expression profiling  
+
+{% include alert class="tip" content="GEO provides both **processed data** (e.g., expression matrices) and links to **raw data** hosted in [SRA](#sra). It's ideal for reanalysis and method benchmarking." %}
+
+<div class="usa-accordion" style="margin-top: 1em;">
+
+{% include accordion title="Characteristics" class=" " controls="geo-1" icon=false %}
+<div id="geo-1" class="accordion_content" markdown='1' hidden>
+
+- includes data from **microarrays**, **RNA-seq**, **ChIP-seq**, **methylation**, etc.  
+- structured by accessions: `GSE` (Series), `GSM` (Sample), `GPL` (Platform)  
+- often linked to raw [FASTQ](/bioinformatics/resources/file_formats#fastq)/[BAM](/bioinformatics/resources/file_formats#sam--bam--cram) files in [SRA](#sra)  
+- submission includes metadata (organism, experimental design, conditions, protocols)  
+- supports user-submitted supplementary files, processed matrices, and figures  
+- curated collections available via [GEO DataSets](https://www.ncbi.nlm.nih.gov/geo/info/datasets.html) and [GEO Profiles](https://www.ncbi.nlm.nih.gov/geo/info/profiles.html)  
+
+</div>
+
+{% include accordion title="Applications" class=" " controls="geo-2" icon=false %}
+<div id="geo-2" class="accordion_content" markdown='1' hidden>
+
+- download processed **expression matrices** for reanalysis or machine learning  
+- search for relevant studies across diseases, tissues, conditions  
+- use [GEO2R](https://www.ncbi.nlm.nih.gov/geo/info/geo2r.html) for online differential expression analysis  
+- training/testing datasets for **biomarker discovery**, **clustering**, **classification**  
+- track data reuse or replicate findings across studies  
+
+</div>
+
+{% include accordion title="Limitations" class=" " controls="geo-3" icon=false %}
+<div id="geo-3" class="accordion_content" markdown='1' hidden>
+
+- metadata heterogeneity: free-text fields can complicate automated parsing  
+- platform diversity (especially in older microarray data) requires normalization  
+- raw data may be missing or only partially available for some studies  
+- varying file formats (TXT, CSV, [SOFT](https://www.ncbi.nlm.nih.gov/geo/info/soft.html), [MINiML](https://www.ncbi.nlm.nih.gov/geo/info/MINiML.html)) may need manual parsing  
+- annotation consistency depends on submitter quality  
+
+</div>
+
+{% include accordion title="Practical Tips" class=" " controls="geo-4" icon=false %}
+<div id="geo-4" class="accordion_content" markdown='1' hidden>
+
+- use [GEO DataSets](https://www.ncbi.nlm.nih.gov/gds) for keyword-based study searches  
+- inspect metadata using the **Series Matrix File** or [SOFT](https://www.ncbi.nlm.nih.gov/geo/info/soft.html)/[MINiML](https://www.ncbi.nlm.nih.gov/geo/info/MINiML.html) formats  
+- for quick analysis, try [GEO2R](https://www.ncbi.nlm.nih.gov/geo/info/geo2r.html) (web-based DE analysis tool)  
+- download with `wget` or via [GEOquery](https://bioconductor.org/packages/release/bioc/html/GEOquery.html) (R/Bioconductor)  
+- check if raw data is linked to [SRA](#sra) under the `SRA` tab of a study  
+
+{% include alert class="" content="A **Series Matrix File** is a processed, tab-delimited file from GEO that contains normalized gene expression data along with sample annotations for a given study (GSE), making it suitable for downstream analysis." %}
+
+</div>
+
+{% include accordion title="CLI download" class=" " controls="geo-5" icon=false %}
+<div id="geo-5" class="accordion_content" markdown='1' hidden>
+GEO FTP site: <https://ftp.ncbi.nlm.nih.gov/geo/>  
+
+1. Download Series Matrix File (e.g., `GSE22255`):
+```bash
+wget ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE22nnn/GSE22255/matrix/GSE22255_series_matrix.txt.gz
+```
+2. Download raw data archive:
+```bash
+wget ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE22nnn/GSE22255/suppl/GSE22255_RAW.tar
+```
+3. Use GEOquery in R:
+```r
+library(GEOquery)
+gse <- getGEO("GSE22255", GSEMatrix = TRUE)
+exprs(gse[[1]])
+```
+</div>
+</div>
+</div>
+
+<!-- ArrayExpress -->
+
+{% include accordion title="<h2 style='margin: 0; border-bottom: none; font-size: 1.1em; display: inline;'>ArrayExpress</h2><span style='font-weight: 300;'>functional genomics data, focusing on experimental metadata and reusability</span>" class="outline" controls="expression-3" icon=false %}
+<div id="expression-3" class="accordion_content" markdown='1' hidden> 
+**Full name:** ArrayExpress – Functional Genomics Data Archive  
+**URL:** <https://www.ebi.ac.uk/arrayexpress/>  
+**FTP:** <https://ftp.ebi.ac.uk/pub/databases/arrayexpress/>  
+**Scope:** archive of functional genomics experiments, including microarrays and RNA-seq, with rich experimental metadata and curated sample annotations  
+
+{% include alert class="tip" content="ArrayExpress emphasizes **metadata quality and reusability**, and is especially strong for studies with detailed experimental designs. Most RNA-seq data is now routed to [BioStudies](https://www.ebi.ac.uk/biostudies/) but legacy data remains accessible." %}
+
+<div class="usa-accordion" style="margin-top: 1em;">
+
+{% include accordion title="Characteristics" class=" " controls="arrayexpress-1" icon=false %}
+<div id="arrayexpress-1" class="accordion_content" markdown='1' hidden>
+
+- supports both **microarray** and **RNA-seq** data submissions  
+- structured with accession format `E-MTAB-####`, `E-GEOD-####` (GEO imports), etc.  
+- includes sample annotations, experimental variables, factor values, protocols  
+- many datasets are linked to publications and supplementary materials  
+- integrates with [Ensembl](#ensembl), [Expression Atlas](https://www.ebi.ac.uk/gxa/home), and [BioStudies](https://www.ebi.ac.uk/biostudies/)  
+- maintained by EMBL-EBI and part of the ELIXIR infrastructure  
+
+</div>
+
+{% include accordion title="Applications" class=" " controls="arrayexpress-2" icon=false %}
+<div id="arrayexpress-2" class="accordion_content" markdown='1' hidden>
+
+- download **quantified expression matrices** and sample annotations  
+- reuse curated datasets for **meta-analysis**, **differential expression**, **biomarker discovery**  
+- explore expression profiles across species, conditions, and platforms  
+- use sample annotations to build supervised learning models  
+- useful for testing analysis pipelines or validating hypotheses  
+
+</div>
+
+{% include accordion title="Limitations" class=" " controls="arrayexpress-3" icon=false %}
+<div id="arrayexpress-3" class="accordion_content" markdown='1' hidden>
+
+- newer RNA-seq submissions may redirect to [BioStudies](https://www.ebi.ac.uk/biostudies/)  
+- microarray technologies dominate historical data (may not reflect current methods)  
+- platform heterogeneity requires preprocessing for cross-study comparison  
+- not all studies include raw [FASTQ](/bioinformatics/resources/file_formats#fastq) files (many include only processed data)  
+- metadata quality varies between submitters  
+
+</div>
+
+{% include accordion title="Practical Tips" class=" " controls="arrayexpress-4" icon=false %}
+<div id="arrayexpress-4" class="accordion_content" markdown='1' hidden>
+
+- use the [ArrayExpress Advanced Search](https://www.ebi.ac.uk/arrayexpress/) to filter by organism, assay type, or experimental factor  
+- browse [Expression Atlas](https://www.ebi.ac.uk/gxa/home) for baseline and differential expression summaries  
+- access sample metadata via `idf` (investigation) and `sdrf` (sample) files  
+- download processed data matrices or raw files using FTP or direct links  
+- cross-reference accession numbers (`E-GEOD-####`) with GEO if needed  
+
+</div>
+
+{% include accordion title="CLI download" class=" " controls="arrayexpress-5" icon=false %}
+<div id="arrayexpress-5" class="accordion_content" markdown='1' hidden>
+ArrayExpress FTP site: <https://ftp.ebi.ac.uk/pub/databases/arrayexpress/>  
+
+1. Download metadata and processed data (example: `E-MTAB-2836`):
+```bash
+wget ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/experiment/MTAB/E-MTAB-2836/E-MTAB-2836.sdrf.txt
+wget ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/experiment/MTAB/E-MTAB-2836/E-MTAB-2836.processed.1.zip
+```
+2. Access raw files if available:
+```bash
+wget ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/experiment/MTAB/E-MTAB-2836/E-MTAB-2836.raw.1.zip
+```
+3. Search programmatically with EBI's API:
+```bash
+curl "https://www.ebi.ac.uk/arrayexpress/json/v3/experiments?keywords=breast+tumor"
+```
+</div>
+</div>
+</div>
+
+</div>
+
+### ★ Functional enrichment
+
+To interpret large gene or protein lists from high-throughput experiments, bioinformatics relies on resources that capture biological meaning through structured vocabularies and curated pathways. 
+**Functional enrichment analysis** enables researchers to connect differential expression, variant impact, or proteomic profiles to known **biological processes**, **molecular functions**, and **pathways**. 
+Key resources in this space include the [Gene Ontology (GO)](#gene-ontology-go) for standardized function classification, [KEGG](#kegg) for curated maps of metabolic and signaling pathways, 
+and [Reactome](#reactome) for expert-reviewed molecular interaction networks. These databases power enrichment tools (e.g., GSEA, DAVID, clusterProfiler) 
+and support systems-level interpretations of omics data across species and contexts.
+
+<div class="usa-accordion " >
+
+<!-- Gene Ontology -->
+
+{% include accordion title="<h2 style='margin: 0; border-bottom: none; font-size: 1.1em; display: inline;'>Gene Ontology (GO)</h2><span style='font-weight: 300;'>structured ontology, standardized functional terms for genes</span>" class="outline" controls="functional-1" icon=false %}
+<div id="functional-1" class="accordion_content" markdown='1' hidden> 
+**Full name:** Gene Ontology (GO)  
+**URL:** <http://geneontology.org/>  
+**FTP:** <http://current.geneontology.org/ontology/>  
+**Scope:** provides a controlled vocabulary for describing gene and gene product function in terms of biological process, molecular function, and cellular component across all species  
+
+{% include alert class="tip" content="GO terms (e.g., `GO:0006915` for apoptosis) allow **functional annotation and enrichment analysis** of gene sets in a standardized, species-agnostic framework." %}
+
+<div class="usa-accordion" style="margin-top: 1em;">
+
+{% include accordion title="Characteristics" class=" " controls="go-1" icon=false %}
+<div id="go-1" class="accordion_content" markdown='1' hidden>
+
+- composed of three ontologies:  
+  - **Biological Process (BP)** – pathways and processes (e.g., cell cycle, apoptosis)  
+  - **Molecular Function (MF)** – activities at the molecular level (e.g., kinase activity)  
+  - **Cellular Component (CC)** – locations (e.g., nucleus, mitochondrion)  
+- terms are organized hierarchically (parent-child relationships)  
+- used for annotating genes in model organisms and humans  
+- GO annotations link gene products to GO terms via evidence codes (e.g., EXP, IEA, TAS)  
+- maintained by the [Gene Ontology Consortium](https://geneontology.org); updated regularly  
+
+</div>
+
+{% include accordion title="Applications" class=" " controls="go-2" icon=false %}
+<div id="go-2" class="accordion_content" markdown='1' hidden>
+
+- perform **functional enrichment analysis** on differentially expressed genes  
+- annotate genes and proteins with standardized functional descriptors  
+- used in pathway, systems biology, and gene set analysis pipelines  
+- integrated in tools like DAVID, PANTHER, g:Profiler, clusterProfiler  
+- supports **cross-species comparisons** of gene function  
+
+</div>
+
+{% include accordion title="Limitations" class=" " controls="go-3" icon=false %}
+<div id="go-3" class="accordion_content" markdown='1' hidden>
+
+- annotations vary by organism and database (some are inferred electronically)  
+- broad or generic terms may dilute biological specificity  
+- dynamic processes or context-specific functions are not always fully captured  
+- requires gene ID conversion to GO-compatible formats (e.g., Entrez, [Ensembl](#ensembl))  
+- redundancy or hierarchy in terms can inflate enrichment significance (use proper background sets)  
+
+</div>
+
+{% include accordion title="Practical Tips" class=" " controls="go-4" icon=false %}
+<div id="go-4" class="accordion_content" markdown='1' hidden>
+
+- use [AmiGO 2](http://amigo.geneontology.org/amigo) to browse GO terms and annotations  
+- use R packages (`clusterProfiler`, `topGO`, `GSEABase`) for enrichment in pipelines  
+- always check the **evidence code** for annotations (e.g., experimental vs predicted)  
+- match GO annotations to your genome build/version (e.g., [Ensembl](#ensembl) release)  
+- avoid interpreting enrichment solely by `p-value`; check term specificity & gene overlap  
+
+</div>
+
+{% include accordion title="CLI download" class=" " controls="go-5" icon=false %}
+<div id="go-5" class="accordion_content" markdown='1' hidden>
+GO FTP site: <http://current.geneontology.org/ontology/>  
+
+1. Download the ontology file (`OBO` format):
+```bash
+wget http://current.geneontology.org/ontology/go-basic.obo
+```
+2. Download gene-to-GO annotations (e.g., human from Ensembl):
+```bash
+wget http://current.geneontology.org/annotations/goa_human.gaf.gz
+```
+3. Search for an example GO term (e.g., apoptosis):
+```bash
+curl https://www.ebi.ac.uk/QuickGO/services/ontology/go/terms/GO:0006915
+```
+4. Use Ensembl [BioMart](http://useast.ensembl.org/biomart/martview/e03bf4380d6cb103e56668f87af7a074) or [UniProt](#uniprot) mapping tools to convert to Entrez/UniProt for GO analysis.
+</div>
+</div>
+</div>
+
+<!-- KEGG -->
+
+{% include accordion title="<h2 style='margin: 0; border-bottom: none; font-size: 1.1em; display: inline;'>KEGG</h2><span style='font-weight: 300;'>broader biochemical molecular pathways, metabolism, diseases, and drugss</span>" class="outline" controls="functional-2" icon=false %}
+<div id="functional-2" class="accordion_content" markdown='1' hidden> 
+**Full name:** KEGG – Kyoto Encyclopedia of Genes and Genomes  
+**URL:** <https://www.genome.jp/kegg/>  
+**FTP:** <https://www.kegg.jp/kegg/download/> (Academic Subscription required)  
+**GenomeNet FTP:** <https://www.genome.jp/en/gn_ftp.html> (subset of KEGG MEDICUS is freely available)  
+**Scope:** curated resource integrating genomic, chemical, and functional information into pathway maps for metabolism, signaling, disease, and drug discovery  
+
+{% include alert class="tip" content="KEGG pathways are widely used for **functional enrichment**, **metabolic modeling**, and **drug-target network analysis**, especially in human and microbial genomics." %}
+
+<div class="usa-accordion" style="margin-top: 1em;">
+
+{% include accordion title="Characteristics" class=" " controls="kegg-1" icon=false %}
+<div id="kegg-1" class="accordion_content" markdown='1' hidden>
+
+- includes manually drawn **pathway maps** for metabolism, signaling, cellular processes  
+- integrates genes, proteins, metabolites, drugs, and diseases into functional modules  
+- organisms are assigned **KEGG organism codes** (e.g., `hsa` for human, `eco` for *E. coli*)  
+- available data includes:  
+  - **KEGG PATHWAY** – metabolic/signaling maps  
+  - **KEGG ORTHOLOGY (KO)** – gene function classification  
+  - **KEGG DRUG/DISEASE** – pharmacological and medical annotations  
+- supports **KGML** (KEGG Markup Language) for pathway data exchange  
+- links to [Ensembl](#ensembl), [UniProt](#uniprot), [NCBI Gene](https://www.ncbi.nlm.nih.gov/gene/), and [PubChem](https://pubchem.ncbi.nlm.nih.gov)  
+
+</div>
+
+{% include accordion title="Applications" class=" " controls="kegg-2" icon=false %}
+<div id="kegg-2" class="accordion_content" markdown='1' hidden>
+
+- **pathway enrichment analysis** of gene lists (via tools like DAVID, clusterProfiler)  
+- mapping differentially expressed genes or proteins onto known networks  
+- **metabolic reconstruction** in microbial genomics and synthetic biology  
+- used in **drug-target interaction prediction** and **disease mechanism studies**  
+- visual interpretation of omics data via `pathview` or [KEGG Mapper](https://www.genome.jp/kegg/mapper/)  
+
+</div>
+
+{% include accordion title="Limitations" class=" " controls="kegg-3" icon=false %}
+<div id="kegg-3" class="accordion_content" markdown='1' hidden>
+
+- full API and bulk access requires **subscription for academic or commercial use**  
+- updates may lag for some species or newer gene models  
+- metabolic maps are **static diagrams** and lack temporal/dynamic information  
+- data structure is less ontology-driven than [Reactome](#reactome) or [BioCyc](https://biocyc.org)  
+- pathway boundaries are human-defined and may not reflect actual modularity  
+
+</div>
+
+{% include accordion title="Practical Tips" class=" " controls="kegg-4" icon=false %}
+<div id="kegg-4" class="accordion_content" markdown='1' hidden>
+
+- convert gene IDs to KEGG orthologs (`K numbers`) for cross-species analysis  
+- use [KEGG Mapper](https://www.genome.jp/kegg/mapper/) for gene list overlay  
+- combine KEGG with tools like [clusterProfiler](https://bioconductor.org/packages/release/bioc/html/clusterProfiler.html) or [GSEA](https://www.gsea-msigdb.org/)  
+- for visualization in R use: `pathview`, `gage`, `KEGGREST`  
+- cite the **KEGG release number** or date when using specific pathway data  
+
+</div>
+
+{% include accordion title="CLI download" class=" " controls="kegg-5" icon=false %}
+<div id="kegg-5" class="accordion_content" markdown='1' hidden>
+KEGG FTP site: <https://www.kegg.jp/kegg/download/> *(Academic Subscription required)* 
+
+1. Download pathway definitions:
+```bash
+wget ftp://ftp.genome.jp/pub/kegg/pathway/pathway.list
+```
+2. Download organism-specific pathway mapping (e.g., human):
+```bash
+wget ftp://ftp.genome.jp/pub/kegg/pathway/organisms/hsa/hsa00010.keg
+```
+3. Use KEGG REST API to get pathway info:
+```bash
+curl https://rest.kegg.jp/list/pathway/hsa
+curl https://rest.kegg.jp/get/hsa00010
+```
+4. Convert gene to KEGG ID:
+```bash
+curl https://rest.kegg.jp/conv/genes/ncbi-geneid:7157
+```
+</div>
+</div>
+</div>
+
+
+<!-- Reactome -->
+
+{% include accordion title="<h2 style='margin: 0; border-bottom: none; font-size: 1.1em; display: inline;'>Reactome</h2><span style='font-weight: 300;'>curated pathway database for molecular signaling and reaction networks</span>" class="outline" controls="functional-3" icon=false %}
+<div id="functional-3" class="accordion_content" markdown='1' hidden> 
+**Full name:** Reactome – Open-source Pathway Knowledgebase  
+**URL:** <https://reactome.org/>  
+**FTP:** <https://reactome.org/download-data>  
+**Scope:** peer-reviewed, ontology-driven resource of molecular pathways and reactions, primarily for humans, with orthology-based projections to other species  
+
+{% include alert class="tip" content="Reactome is ideal for **systems biology**, offering richly annotated and **hierarchically organized pathways** suitable for network modeling and computational analyses." %}
+
+<div class="usa-accordion" style="margin-top: 1em;">
+
+{% include accordion title="Characteristics" class=" " controls="reactome-1" icon=false %}
+<div id="reactome-1" class="accordion_content" markdown='1' hidden>
+
+- covers molecular signaling, transport, metabolism, cell cycle, disease pathways
+- **curated by domain experts** and updated regularly with literature-backed evidence  
+- pathways are structured as **reaction networks**, capturing inputs, outputs, catalysts, and regulators  
+- integrates with [UniProt](#uniprot), [Ensembl](#ensembl), Gene Ontology (GO), [ChEBI](https://www.ebi.ac.uk/chebi/), [PubMed](https://pubmed.ncbi.nlm.nih.gov)  
+- supports multiple formats: BioPAX, SBML, PSI-MITAB, and JSON  
+- orthology mappings allow pathway projection to model organisms (mouse, fly, worm)  
+
+</div>
+
+{% include accordion title="Applications" class=" " controls="reactome-2" icon=false %}
+<div id="reactome-2" class="accordion_content" markdown='1' hidden>
+
+- perform **pathway enrichment** on gene/protein lists (overrepresentation or [GSEA](https://www.gsea-msigdb.org/)-style)  
+- visualize complex networks using the [Reactome Pathway Browser](https://reactome.org/PathwayBrowser)  
+- model **molecular mechanisms** for disease or drug effects  
+- integrate into **multi-omics pipelines** (genomics, proteomics, phosphoproteomics)  
+- export pathway data for **simulation**, **knowledge graphs**, or **network propagation**  
+
+</div>
+
+{% include accordion title="Limitations" class=" " controls="reactome-3" icon=false %}
+<div id="reactome-3" class="accordion_content" markdown='1' hidden>
+
+- pathway coverage is **most complete for human**; projections to other species are computational  
+- focuses on **manually verified biology**; novel/speculative interactions may be excluded  
+- some pathways (e.g., microbial metabolism) are less represented than in [KEGG](#kegg)  
+- visualization may be overwhelming for very large or nested pathways  
+- clinical annotation is limited (use in conjunction with DisGeNET or OpenTargets)  
+
+</div>
+
+{% include accordion title="Practical Tips" class=" " controls="reactome-4" icon=false %}
+<div id="reactome-4" class="accordion_content" markdown='1' hidden>
+
+- use [Reactome Analysis Service](https://reactome.org/PathwayBrowser/#TOOL=AT) to run enrichment on gene lists  
+- for R/Bioconductor pipelines, use the `ReactomePA` or `reactome.db` packages  
+- each pathway has a **stable ID** (e.g., `R-HSA-199420`) - document this in reports  
+- export diagrams and reaction networks via the [Pathway Browser](https://reactome.org/PathwayBrowser)  interface  
+- use the [REST API](https://reactome.org/ContentService/) for advanced queries  
+
+</div>
+
+{% include accordion title="CLI download" class=" " controls="reactome-5" icon=false %}
+<div id="reactome-5" class="accordion_content" markdown='1' hidden>
+Reactome download portal: <https://reactome.org/download-data>  
+
+1. Download pathway hierarchy and mappings:
+```bash
+wget https://reactome.org/download/current/ReactomePathways.txt
+wget https://reactome.org/download/current/ReactomePathwaysRelation.txt
+```
+2. Download gene-to-pathway mappings (human):
+```bash
+wget https://reactome.org/download/current/Ensembl2Reactome.txt
+```
+3. Access pathway in BioPAX format:
+```bash
+wget https://reactome.org/download/current/BioPAX/Reactome_BioPAX_level3.owl.gz
+```
+4. Query pathway info using REST:
+```bash
+curl https://reactome.org/ContentService/data/pathway/R-HSA-199420
+```
+</div>
+</div>
+</div>
+
+</div>
+
+### ★ Protein databases
+
+Protein-focused bioinformatics resources provide reference data for studying **sequence**, **structure**, and **function** of proteins and their interactions. 
+These databases are critical for tasks such as **functional annotation**, **variant interpretation**, **protein modeling**, and **structure-based drug discovery**. 
+[UniProt](#uniprot) offers a comprehensive, curated catalog of protein sequences, isoforms, domains, and functional annotations across species, 
+integrating experimental and predicted data. The [Protein Data Bank (PDB)](#pdb) archives experimentally determined 3D structures of proteins, DNA/RNA, and complexes, 
+enabling structural biology, docking studies, and mechanistic modeling of molecular function.
+
+<div class="usa-accordion " >
+
 <!-- UniProt -->
 
-{% include accordion title="<h2 style='margin: 0; border-bottom: none; font-size: 1.1em; display: inline;'>UniProt</h2><span style='font-weight: 300;'>(secondary) protein sequences and functional annotations; Swiss-Prot and TrEMBL</span>" class="outline" controls="db-seq-5" icon=false %}
-<div id="db-seq-5" class="accordion_content" markdown='1' hidden> 
+{% include accordion title="<h2 style='margin: 0; border-bottom: none; font-size: 1.1em; display: inline;'>UniProt</h2><span style='font-weight: 300;'>(secondary) protein sequences and functional annotations; Swiss-Prot and TrEMBL</span>" class="outline" controls="special-2" icon=false %}
+<div id="special-2" class="accordion_content" markdown='1' hidden> 
 **Full name:** Universal Protein Resource  
 **URL:** <https://www.uniprot.org/>  
 **FTP:** <https://ftp.uniprot.org/pub/databases/uniprot/>  
@@ -506,7 +1615,7 @@ esearch -db protein -query "NP_000483.3" | efetch -format fasta > BRCA1_protein.
 
 </div>
 
-{% include accordion title="Download via FTP" class=" " controls="uniprot-5" icon=false %}
+{% include accordion title="CLI download" class=" " controls="uniprot-5" icon=false %}
 <div id="uniprot-5" class="accordion_content" markdown='1' hidden>
 UniProt FTP site: <https://ftp.uniprot.org/pub/databases/uniprot/>  
 
@@ -531,54 +1640,91 @@ curl "https://rest.uniprot.org/uniprotkb/P38398.fasta" -o RAD51_protein.fasta
 </div>
 </div>
 
-</div>
+<!-- PDB -->
 
+{% include accordion title="<h2 style='margin: 0; border-bottom: none; font-size: 1.1em; display: inline;'>PDB</h2><span style='font-weight: 300;'>(primary) 3D structural data for proteins, nucleic acids, and complexes</span>" class="outline" controls="special-3" icon=false %}
+<div id="special-3" class="accordion_content" markdown='1' hidden> 
+**Full name:** Protein Data Bank (PDB)  
+**URL:** <https://www.rcsb.org/>  
+**FTP:** <https://files.rcsb.org/>  
+**File Download Services:** <https://www.rcsb.org/docs/programmatic-access/file-download-services>  
+**Scope:** global archive of experimentally determined **three-dimensional structures** of proteins, DNA, RNA, and macromolecular complexes  
 
-### ★ Genomes, Annotations
+{% include alert class="tip" content="PDB structures are essential for **structure-based drug design**, **protein modeling**, and interpreting the **functional impact of genetic variants** on protein stability or interactions." %}
 
-<div class="usa-accordion " >
+<div class="usa-accordion" style="margin-top: 1em;">
 
-<!-- Ensembl -->
+{% include accordion title="Characteristics" class=" " controls="pdb-1" icon=false %}
+<div id="pdb-1" class="accordion_content" markdown='1' hidden>
 
-{% include accordion title="<h2 style='margin: 0; border-bottom: none; font-size: 1.1em; display: inline;'>Ensembl</h2><span style='font-weight: 300;'>genome assemblies, gene models, variation</span>" class="outline" controls="genome-1" icon=false %}
-<div id="genome-1" class="accordion_content" markdown='1' hidden> 
-
-</div>
-
-<!-- UCSC Genome Browser -->
-
-{% include accordion title="<h2 style='margin: 0; border-bottom: none; font-size: 1.1em; display: inline;'>UCSC Genome Browser</h2><span style='font-weight: 300;'>genome assemblies, annotations, tracks</span>" class="outline" controls="genome-2" icon=false %}
-<div id="genome-2" class="accordion_content" markdown='1' hidden> 
-
-</div>
-
-<!-- GENCODE -->
-
-{% include accordion title="<h2 style='margin: 0; border-bottom: none; font-size: 1.1em; display: inline;'>GENCODE</h2><span style='font-weight: 300;'>comprehensive gene & transcript annotations</span>" class="outline" controls="genome-3" icon=false %}
-<div id="genome-3" class="accordion_content" markdown='1' hidden> 
+- structures determined by **X-ray crystallography**, **NMR**, and **cryo-electron microscopy**  
+- supports standard formats: `.pdb`, `.cif`, `.xml`, and `.mmtf`  
+- each entry has a unique **4-character ID** (e.g., `1A2B`)  
+- annotations: atomic coordinates, ligands, domains, secondary structure, quality metrics  
+- integrates with [UniProt](#uniprot), [Pfam](http://pfam.xfam.org), [SCOP2](https://www.ebi.ac.uk/pdbe/scop/)/[CATH](https://www.cathdb.info), [DrugBank](https://go.drugbank.com), and variant databases  
+- part of the [Worldwide PDB consortium](https://www.wwpdb.org) ([RCSB](https://www.rcsb.org), [PDBe](https://www.ebi.ac.uk/pdbe/), [PDBj](https://pdbj.org), [BMRB](https://bmrb.io))  
 
 </div>
 
-</div>
+{% include accordion title="Applications" class=" " controls="pdb-2" icon=false %}
+<div id="pdb-2" class="accordion_content" markdown='1' hidden>
 
-
-### ★ Variation databases
-- **dbSNP**  
-- **ClinVar**  
-- **gnomAD**  
-- (mention 1000 Genomes, if relevant as a data source)  
-
-### ★ Expression, Functional
-- **GEO (Gene Expression Omnibus)**  
-- **ArrayExpress**  
-- **SRA (Sequence Read Archive)**  
-
-### ★ Specialized databases
-- **PDB (Protein Data Bank)**  
-- **KEGG / Reactome** (pathways)  
-- **miRBase** (non-coding RNA)  
+- analyze **protein-ligand**, **protein-protein**, or **nucleic acid interactions**  
+- map mutations or variants onto 3D structures  
+- perform **homology modeling** or structure prediction benchmarking  
+- use in **docking simulations**, drug screening, and antibody modeling  
+- visualize molecular structures for teaching or presentations  
 
 </div>
+
+{% include accordion title="Limitations" class=" " controls="pdb-3" icon=false %}
+<div id="pdb-3" class="accordion_content" markdown='1' hidden>
+
+- structures may be incomplete (e.g., unresolved loops or termini)  
+- experimental artifacts or low resolution can affect interpretation  
+- limited coverage - not all proteins or complexes have known structures  
+- requires basic knowledge of molecular modeling for effective use  
+- redundancy: multiple entries for the same protein (different conformations/complexes)  
+
+</div>
+
+{% include accordion title="Practical Tips" class=" " controls="pdb-4" icon=false %}
+<div id="pdb-4" class="accordion_content" markdown='1' hidden>
+
+- use the **RCSB PDB portal** for structure search by gene, ligand, or function  
+- visualize structures interactively via [Mol* Viewer](https://molstar.org/) or **PyMOL**, **Chimera**, **Jmol**  
+- check resolution, R-factors, and missing regions in the structure summary  
+- align and compare structures using RCSB’s [Structure Alignment](https://www.rcsb.org/alignment) tools  
+- cross-reference with [UniProt](#uniprot) to link sequences and functions  
+
+</div>
+
+{% include accordion title="CLI download" class=" " controls="pdb-5" icon=false %}
+<div id="pdb-5" class="accordion_content" markdown='1' hidden>
+PDB FTP: <https://files.rcsb.org/>  
+
+1. Download structure by PDB ID (e.g., `1A2B`):
+```bash
+wget https://files.rcsb.org/download/1A2B.pdb
+```
+2. Download `mmCIF` version (preferred for newer tools):
+```bash
+wget https://files.rcsb.org/download/1A2B.cif
+```
+3. Use **pdb-tools** to manipulate files:
+```bash
+conda install -c conda-forge pdb-tools
+pdb_selchain -A 1A2B.pdb > chainA.pdb
+```
+4. View basic structure summary via [API](https://www.rcsb.org/docs/programmatic-access/web-apis-overview):
+```bash
+curl https://data.rcsb.org/rest/v1/core/entry/1A2B
+```
+</div>
+</div>
+</div>  <!-- closed record-->
+</div>  <!-- closed section -->
+</div>  <!-- closed process-list -->
 
 
 
