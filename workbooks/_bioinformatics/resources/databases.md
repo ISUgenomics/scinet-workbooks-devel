@@ -35,6 +35,82 @@ takeaways:
 overview: [objectives, applications, terminology]
 
 
+questions:
+  - question: "If you want to deposit newly generated RNA-seq raw reads from your project, which database should you submit them to?"
+    title: "Submitting Raw Reads"
+    qid: 1
+    solution: "Raw high-throughput sequencing data, such as RNA-seq reads, should be submitted to the **Sequence Read Archive (SRA)** (or via ENA/DDBJ, which synchronize through INSDC)."
+
+  - question: "Before submitting a new dataset to ArrayExpress, what is the most important preparation step?"
+    title: "ArrayExpress Submissions"
+    qid: 2
+    solution: "Prepare **MAGE-TAB metadata files (IDF + SDRF)** with clear sample annotations and experimental design - ArrayExpress requires structured metadata alongside raw/processed data."
+
+  - question: "What is the practical difference between Ensembl and UCSC Genome Browser for genome annotations?"
+    title: "Annotation Resources"
+    qid: 3
+    answers:
+      - Ensembl integrates variation and comparative genomics, while UCSC focuses on customizable visualization and tracks.
+      - UCSC provides curated transcript models, while Ensembl only stores raw reads.
+      - Ensembl requires manual submission, UCSC does not.
+    responses:
+      - Correct! Ensembl is strong in annotation and comparative genomics, UCSC excels in visualization and custom track integration.
+      - GEO/GEO-like repositories provide transcriptomic data, not UCSC.
+      - Both UCSC and Ensembl are reference resources, not submission archives.
+    answer: 1
+
+  - question: "You need a non-redundant, curated reference sequence of the TP53 gene for annotation. Which database is the best choice?"
+    title: "Curated Gene References"
+    qid: 4
+    solution: "**RefSeq** provides stable, curated, and non-redundant reference sequences for genes, transcripts, and proteins."
+
+  - question: "What is the main difference between dbSNP and ClinVar when looking up a variant?"
+    title: "Variant Databases"
+    qid: 5
+    answers:
+      - dbSNP archives all kinds of variants, while ClinVar focuses on clinical significance.
+      - ClinVar includes population frequencies, dbSNP does not.
+      - dbSNP only includes SNPs, ClinVar includes SNPs and indels.
+    responses:
+      - Correct! dbSNP is a general archive of variants, while ClinVar adds expert-curated clinical interpretations.
+      - Population frequencies are provided by **gnomAD**, not ClinVar.
+      - dbSNP also includes small indels, not just SNPs.
+    answer: 1
+
+  - question: "When downloading gnomAD population frequency data for human genome build GRCh38, which file format will you typically work with?"
+    title: "Variant Frequency Format"
+    qid: 6
+    solution: "gnomAD distributes variant frequency data as **VCF files**, which can then be indexed and queried with tools like `bcftools`."
+
+  - question: "You want to visualize gene expression datasets without downloading gigabytes of FASTQ files. Which GEO file type is best to start with?"
+    title: "Expression Data Formats"
+    qid: 7
+    solution: "The **Series Matrix File (TXT)** in GEO contains processed, normalized expression data with sample annotations, suitable for immediate analysis."
+
+  - question: "If your project requires running GO enrichment analysis on a gene list, which type of database do you need to query?"
+    title: "Functional Enrichment"
+    qid: 8
+    solution: "You need an **ontology/functional annotation database** like **Gene Ontology (GO)**, which classifies genes into biological processes, molecular functions, and cellular components."
+
+  - question: "Which database should you check if you want to download pathway diagrams for glycolysis to include in a publication?"
+    title: "Pathway Resources"
+    qid: 9
+    solution: "**KEGG** provides pathway maps (including glycolysis) in formats such as KGML (XML) and tabular exports, widely used in publications."
+
+  - question: "What is the main practical difference between UniProt Swiss-Prot and UniProt TrEMBL entries?"
+    title: "Protein Database Curation"
+    qid: 10
+    answers:
+      - Swiss-Prot entries are manually curated and reviewed, while TrEMBL entries are computationally annotated and unreviewed.
+      - Swiss-Prot contains only DNA sequences, while TrEMBL contains proteins.
+      - TrEMBL entries can’t be searched with BLAST, while Swiss-Prot can.
+    responses:
+      - Correct! Swiss-Prot = reviewed/manual; TrEMBL = unreviewed/automated.
+      - Both Swiss-Prot and TrEMBL contain proteins, not DNA.
+      - Both subsets can be queried with BLAST.
+    answer: 1
+
+
 ---
 
 
@@ -106,33 +182,33 @@ Both approaches aim to improve data quality, but awareness of their scope is ess
 
 {% include table caption="A list of bioinformatics databases, spanning sequences, genomes, variants, expression data, protein structures, and pathways." sortable=true no-row-labels=true content="|#| database | category | content | format(s) | identifier(s) | curation |
 |---|----------|----------|---------|-----------|---------------|----------|
-| 1  | [**GenBank**](https://www.ncbi.nlm.nih.gov/genbank/) | sequence *(primary)* | nucleotide sequences | FASTA, GenBank flat file | accession number <br>(**MN908947.3**) | automated, some manual |
-| 2  | [**ENA**](https://www.ebi.ac.uk/ena) | sequence, reads *(primary)* | nucleotide sequences & raw reads | FASTA, FASTQ, EMBL flat file | run/study/sample ID <br>(**ERR000111**) | automated |
-| 3  | [**DDBJ**](https://www.ddbj.nig.ac.jp) | sequence *(primary)* | nucleotide sequences | FASTA, DDBJ flat file | accession number <br>(**AB000001**) | automated + some manual |
-| 4  | [**miRBase**](https://www.mirbase.org/) | sequence *(specialized)* | microRNA sequences & annotations | FASTA, GFF | miRBase ID <br>(**hsa-let-7a-1**) | manual/expert |
-| 5  | [**RefSeq**](https://www.ncbi.nlm.nih.gov/refseq/) | curated sequences | reference genomes, transcripts, proteins | FASTA, GenBank flat file | RefSeq accession <br>(**NM_000546.6**) | automated + manual/expert |
-| 6  | [**Ensembl**](https://www.ensembl.org/) | genome, annotation | genome assemblies, gene models, variation | FASTA, VCF, GTF/GFF3 | Ensembl ID <br>(**ENSG00000139618**) | automated + manual/expert |
-| 7  | [**UCSC Genome Browser**](https://genome.ucsc.edu/) | genome, annotation | genome assemblies, annotations, tracks | FASTA, BED, GTF/GFF, bigWig | UCSC ID / track name <br>(**uc001aaa.3**) | automated |
-| 8  | [**GENCODE**](https://www.gencodegenes.org/) | annotation | comprehensive gene & transcript annotations | GTF/GFF3 | Ensembl/GENCODE ID <br>(**ENST00000456328**) | automated + manual/expert |
-| 9  | [**dbSNP**](https://www.ncbi.nlm.nih.gov/snp/) | variation | short genetic variants (SNPs, indels) | VCF | rsID <br>(**rs7412**) | automated |
-|10  | [**ClinVar**](https://www.ncbi.nlm.nih.gov/clinvar/) | variation (clinical) | variants with clinical significance | VCF, XML | ClinVar accession <br>(**RCV000198123**) | manual/expert |
-|11  | [**gnomAD**](https://gnomad.broadinstitute.org/) | variation (population) | population allele frequencies | VCF | variant ID <br>(**1:55516888:G:A**) | automated |
-|12  | [**SRA**](https://www.ncbi.nlm.nih.gov/sra) | gene expression *(reads)* | raw sequencing reads | FASTQ | run ID <br>(**SRR390728**) | automated |
-|13  | [**GEO**](https://www.ncbi.nlm.nih.gov/geo/) | gene expression | gene expression, microarray, RNA-seq | series matrix (TXT), SOFT, MINiML | GEO accession <br>(**GSE12345**) | automated |
-|14  | [**ArrayExpress**](https://www.ebi.ac.uk/arrayexpress/) | gene expression | transcriptomics & functional genomics | MAGE-TAB, FASTQ | ArrayExpress ID <br>(**E-MTAB-3050**) | automated + manual/expert |
-|15  | [**Gene Ontology (GO)**](http://geneontology.org/) | functional enrichment | gene function classification | OBO, GAF | GO ID <br>(**GO:0006915**) | manual/expert |
-|16  | [**KEGG**](https://www.genome.jp/kegg/) | functional enrichment | metabolic, signaling, disease pathways | KGML (XML), tabular | KEGG ID <br>(**hsa00010**) | manual/expert |
-|17  | [**Reactome**](https://reactome.org/) | functional enrichment | biological pathways & reactions | BioPAX, SBML | Reactome ID <br>(**R-HSA-109581**) | manual/expert |
-|18  | [**UniProt**](https://www.uniprot.org/) | protein | protein sequences, function, structure | FASTA, TSV, XML | UniProtKB ID <br>(**P38398**) | manual/expert (Swiss-Prot); automated (TrEMBL) |
-|19  | [**PDB**](https://www.rcsb.org/) | protein *(structure)* | 3D protein & nucleic acid structures | PDB, mmCIF | PDB ID <br>(**1A1X**) | manual/expert |" %}
+| 1  | [**GenBank**](https://www.ncbi.nlm.nih.gov/genbank/) | sequence *(primary)* | nucleotide&nbsp;sequences | FASTA, GenBank&nbsp;flatfile | accession number <br>(*MN908947.3*) | automated, some manual |
+| 2  | [**ENA**](https://www.ebi.ac.uk/ena) | sequence *(primary)* | nucleotide sequences & raw reads | FASTA, FASTQ, EMBL flatfile | run/study/sample ID <br>(*ERR000111*) | automated |
+| 3  | [**DDBJ**](https://www.ddbj.nig.ac.jp) | sequence *(primary)* | nucleotide sequences | FASTA, DDBJ flatfile | accession number <br>(*AB000001*) | automated + some manual |
+| 4  | [**miRBase**](https://www.mirbase.org/) | sequence *(specialized)* | microRNA sequences & annotations | FASTA, GFF | miRBase ID <br>(*hsa-let-7a-1*) | manual/expert |
+| 5  | [**RefSeq**](https://www.ncbi.nlm.nih.gov/refseq/) | curated sequences | reference genomes, transcripts, proteins | FASTA, GenBank flatfile | RefSeq accession <br>(*NM_000546.6*) | automated + manual/expert |
+| 6  | [**Ensembl**](https://www.ensembl.org/) | genome, annotation | genome assembly, gene model, variation | FASTA, VCF, GTF/GFF3 | Ensembl ID <br>(*ENSG00000139618*) | automated + manual/expert |
+| 7  | [**UCSC Genome Browser**](https://genome.ucsc.edu/) | genome, annotation | genome assembly, annotations, tracks | GTF/GFF, BED, FASTA, bigWig | UCSC ID / track name <br>(*uc001aaa.3*) | automated |
+| 8  | [**GENCODE**](https://www.gencodegenes.org/) | annotation | comprehensive gene, transcript annotation | GTF/GFF3 | Ensembl/GENCODE <br>(*ENST00000456328*) | automated + manual/expert |
+| 9  | [**dbSNP**](https://www.ncbi.nlm.nih.gov/snp/) | variation | SNPs, indels, short genetic variants | VCF | rsID <br>(*rs7412*) | automated |
+|10  | [**ClinVar**](https://www.ncbi.nlm.nih.gov/clinvar/) | variation (clinical) | variants with clinical significance | VCF, XML | ClinVar accession <br>(*RCV000198123*) | manual/expert |
+|11  | [**gnomAD**](https://gnomad.broadinstitute.org/) | variation (population) | population allele frequencies | VCF | variant ID <br>(*1:55516888:G:A*) | automated |
+|12  | [**SRA**](https://www.ncbi.nlm.nih.gov/sra) | gene expression | raw sequencing reads | FASTQ | run ID <br>(*SRR390728*) | automated |
+|13  | [**GEO**](https://www.ncbi.nlm.nih.gov/geo/) | gene expression | gene expression, RNA-seq, microarray | series matrix (TXT), SOFT, MINiML | GEO accession <br>(*GSE12345*) | automated |
+|14  | [**ArrayExpress**](https://www.ebi.ac.uk/arrayexpress/) | gene expression | transcriptomics & functional_genomics | MAGE-TAB, FASTQ | ArrayExpress ID <br>(*E-MTAB-3050*) | automated + manual/expert |
+|15  | [**Gene Ontology (GO)**](http://geneontology.org/) | functional enrichment | gene function classification | OBO, GAF | GO ID <br>(*GO:0006915*) | manual/expert |
+|16  | [**KEGG**](https://www.genome.jp/kegg/) | functional enrichment | metabolic, signaling, disease pathways | KGML (XML), tabular | KEGG ID <br>(*hsa00010*) | manual/expert |
+|17  | [**Reactome**](https://reactome.org/) | functional enrichment | biological pathways & reactions | BioPAX, SBML | Reactome ID <br>(*R-HSA-109581*) | manual/expert |
+|18  | [**UniProt**](https://www.uniprot.org/) TrEMBL / SP | protein | protein sequences, function, structure | FASTA, TSV, XML | UniProtKB ID <br>(*P38398*) | automated; manual/expert |
+|19  | [**PDB**](https://www.rcsb.org/) | protein *(structure)* | 3D protein & nucleic acid structures | PDB, mmCIF | PDB ID <br>(*1A1X*) | manual/expert |" %}
 
 
-<div class="process-list ul" markdown="1">
+<div class="process-list " markdown="1">
 
-### ★ Sequence databases
+### ➔ Sequence databases
 
 The foundation of bioinformatics is built on sequence repositories. Three **primary nucleotide archives**: [GenBank](#genbank), [ENA](#ena), and [DDBJ](#ddbj), 
-operate as a unified system under the *International Nucleotide Sequence Database Collaboration (INSDC)*. Submissions to any one archive are synchronized across all three, 
+operate as a unified system under the *International Nucleotide Sequence Database Collaboration ([INSDC](https://www.insdc.org))*. Submissions to any one archive are synchronized across all three, 
 ensuring a globally consistent, comprehensive collection of sequence data. Beyond raw archival data, **curated secondary resources** such as [RefSeq](#refseq) or [miRBase](#mirbase) 
 provide **non-redundant reference sequences** for genes, transcripts, proteins, and non-coding RNAs.
 
@@ -536,9 +612,9 @@ curl "https://www.mirbase.org/results/?query=miR-21"
 </div>
 
 
-### ★ Genomes, Annotations
+### ➔ Genomes, Annotations
 
-Beyond [raw sequence repositories](#-sequence-databases), bioinformatics relies on resources that provide **reference genomes** 
+Beyond [raw sequence repositories](#sequence-databases), bioinformatics relies on resources that provide **reference genomes** 
 and **structured annotations** of genes, transcripts, and genomic features. Databases such as [Ensembl](#ensembl), the [UCSC Genome Browser](#ucsc-genome-browser), 
 and [GENCODE](#gencode) deliver curated gene models, coordinate systems, and visualization tools, forming the foundation for alignment, 
 variant interpretation, and transcriptomic analysis. These resources ensure that analyses are anchored to well-defined, versioned reference assemblies and annotation sets.  
@@ -777,11 +853,11 @@ wget ftp://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_43/gencode.
 </div>
 
 
-### ★ Variant databases
+### ➔ Variant databases
 
 To interpret genetic differences, researchers rely on databases that catalog **genomic variants** across populations and individuals. 
 Core resources include [dbSNP](#dbsnp), [ClinVar](#clinvar), and the [1000 Genomes Project](https://www.internationalgenome.org), along with specialized databases 
-such as [gnomAD](#gnomad) (population allele frequencies), **COSMIC** (cancer mutations), and **HGMD** (heritable disease mutations). 
+such as [gnomAD](#gnomad) (population allele frequencies), [COSMIC](https://cancer.sanger.ac.uk/cosmic/login) (cancer mutations), and [HGMD](https://www.hgmd.cf.ac.uk/ac/index.php) (heritable disease mutations). 
 These variant databases are essential for tasks such as calling variants from sequencing data, annotating their functional effects, 
 and linking them to disease phenotypes or evolutionary patterns.  
 
@@ -1032,11 +1108,11 @@ bcftools view -r 1:55516888 gnomad.genomes.v3.1.2.sites.chr1.vcf.bgz
 </div>
 
 
-### ★ Gene Expression
+### ➔ Gene Expression
 
 Understanding **gene expression patterns** and functional responses is central to genomics research. Bioinformatics workflows rely on repositories that archive **raw and processed transcriptomic data**, 
 capturing expression profiles across tissues, conditions, diseases, and treatments. Key public resources include the [Sequence Read Archive (SRA)](#sra) for primary sequencing reads, 
-[ArrayExpress](#arrayexpress) for microarray and RNA-seq data submissions with rich experimental metadata, and the [Gene Expression Omnibus (GEO)](#geo) for curated gene expression datasets. 
+the [Gene Expression Omnibus (GEO)](#geo) for curated gene expression datasets, and [ArrayExpress](#arrayexpress) for microarray and RNA-seq data submissions with rich experimental metadata. 
 These resources support downstream analyses such as differential expression, co-expression network inference, meta-analysis, and biomarker discovery. 
 
 <div class="usa-accordion " >
@@ -1285,7 +1361,7 @@ curl "https://www.ebi.ac.uk/arrayexpress/json/v3/experiments?keywords=breast+tum
 
 </div>
 
-### ★ Functional enrichment
+### ➔ Functional enrichment
 
 To interpret large gene or protein lists from high-throughput experiments, bioinformatics relies on resources that capture biological meaning through structured vocabularies and curated pathways. 
 **Functional enrichment analysis** enables researchers to connect differential expression, variant impact, or proteomic profiles to known **biological processes**, **molecular functions**, and **pathways**. 
@@ -1549,7 +1625,7 @@ curl https://reactome.org/ContentService/data/pathway/R-HSA-199420
 
 </div>
 
-### ★ Protein databases
+### ➔ Protein databases
 
 Protein-focused bioinformatics resources provide reference data for studying **sequence**, **structure**, and **function** of proteins and their interactions. 
 These databases are critical for tasks such as **functional annotation**, **variant interpretation**, **protein modeling**, and **structure-based drug discovery**. 
@@ -1731,6 +1807,19 @@ curl https://data.rcsb.org/rest/v1/core/entry/1A2B
 
 ## Practical guidance
 
+The choice of database depends on what kind of data you generate or need to interpret. Knowing whether you are dealing with sequences, 
+variants, expression profiles, or protein structures helps you query the right resource, avoid common pitfalls, and make your analysis reproducible.
+
+<div class="usa-accordion " >
+{% include accordion title="Quick Quiz: Check your understanding" controls="quiz-formats" expanded=false class="question" icon=true %}
+<div id="quiz-formats" class="accordion_content" markdown='1'>
+Now that you've explored standard file formats, their structure, and their applications, 
+try these short questions to test your knowledge and avoid common pitfalls when working with genomic data.
+
+{% include question qid="1,2,3,4,5,6,7,8,9,10" %}
+</div>
+</div>
+
 <div class="process-list ul" markdown="1">
 
 ### Efficient downloads
@@ -1776,6 +1865,320 @@ esearch -db nucleotide -query "NC_001666.2" | efetch -format gb > corn_chloropla
 # Fetch raw read metadata by SRA/DRA/ERA accession
 esearch -db sra -query "DRR000001" | efetch -format runinfo > DRR000001.csv
 ```
+
+
+### Use in real projects  
+<br>
+If your research requires...
+
+<div class="usa-accordion " data-allow-multiple>
+
+{% include accordion title="downloading large datasets efficiently" controls="dp1" expanded=false class="outline" icon=false %}
+<div id="dp1" class="accordion_content" markdown="1">
+
+consider using **command-line tools** instead of browser downloads for large files: 
+- `wget`/`curl` for FTP/HTTP  
+- `prefetch` + `fasterq-dump` for [SRA](#sra)  
+- `gsutil` or AWS CLI for [gnomAD](#gnomad) cloud storage  
+
+*(see section [Efficient downloads](#efficient-downloads) for detailed instructions)*
+
+<div class="usa-accordion" style="margin-top: 1em;" data-allow-multiple>
+{% include accordion title="Common issues" class="highlighted" controls="issue-1" icon=true %}
+<div id="issue-1" class="accordion_content" markdown='1' hidden>
+- Browser downloads for 100+ GB datasets often fail mid-transfer.  
+- Slow networks are more reliable when using cloud-native tools such as AWS CLI or `gsutil`.  
+- Skipping checksum verification can lead to using corrupted or incomplete files in downstream analysis. 
+</div>
+
+{% include accordion title="Good to know" class="tip " controls="tip-1" icon=true %}
+<div id="tip-1" class="accordion_content" markdown='1' hidden>
+- Always verify file integrity and completeness after transfer with checksums. 
+- Use `--continue` (wget) or `-C -` (curl) to resume interrupted transfers.  
+- For repetitive downloads, prepare a **batch file with URLs**.  
+</div>
+</div>
+
+</div>
+
+{% include accordion title="submitting data (e.g., raw sequencing reads) to archives" controls="dp2" expanded=false class="outline" icon=false %}
+<div id="dp2" class="accordion_content" markdown="1">
+
+consider depositing your data in the appropriate public/community archive: 
+- **raw reads** in FASTQ format to [SRA](#sra) / [ENA](#ena) / [DDBJ](#ddbj) (these synchronize globally)  
+- **processed expression data** to [GEO](#geo) / [ArrayExpress](#arrayexpress)  
+- **protein sequences & functional annotation** to [UniProt](#uniprot)  
+- **3D macromolecular structures (DNA/RNA/protein/complexes)** to [PDB](#pdb)  
+
+Archival submission ensures long-term preservation, global accessibility, and proper citation.  
+
+<div class="usa-accordion" style="margin-top: 1em;" data-allow-multiple>
+{% include accordion title="Common issues" class="highlighted" controls="issue-2" icon=true %}
+<div id="issue-2" class="accordion_content" markdown='1' hidden>
+- Submitting processed data (counts, assemblies) into [SRA](#sra) - these belong in [GEO](#geo)/[ArrayExpress](#arrayexpress).  
+- Missing metadata, which delays acceptance and reduces dataset discoverability.  
+- Uploading incomplete or poorly described experiments, which limits reuse.  
+</div>
+
+{% include accordion title="Good to know" class="tip " controls="tip-2" icon=true %}
+<div id="tip-2" class="accordion_content" markdown='1' hidden>
+- Check submission guidelines; each archive has **format and validation tools**.
+- Prepare required **metadata tables** (organism, experiment type, library prep) early.
+- Link raw and processed data (e.g., [SRA](#sra) and [GEO](#geo)) for clarity and reuse.
+</div>
+</div>
+
+</div>
+
+{% include accordion title="preparing metadata for data submission" controls="dp3" expanded=false class="outline" icon=false %}
+<div id="dp3" class="accordion_content" markdown="1">
+
+consider documenting **metadata tables** consistently across project phases to ensure smooth submission, improve dataset discoverability, and support reproducibility.  
+- **SRA** requires sequencing experiment metadata (e.g., library strategy, platform, read layout).  
+- **GEO/ArrayExpress** requires MAGE-TAB files (IDF + SDRF) with sample and experimental design details.  
+- **UniProt/PDB** requires organism information, function/annotation, and experimental methods.  
+
+<div class="usa-accordion" style="margin-top: 1em;" data-allow-multiple>
+{% include accordion title="Common issues" class="highlighted" controls="issue-3" icon=true %}
+<div id="issue-3" class="accordion_content" markdown='1' hidden>
+- Submitting sequences without metadata leads to rejection or makes data unusable.  
+- Using inconsistent sample names across raw data and metadata tables.  
+- Omitting critical experimental parameters (e.g., sequencing kit, growth conditions).  
+</div>
+
+{% include accordion title="Good to know" class="tip" controls="tip-3" icon=true %}
+<div id="tip-3" class="accordion_content" markdown='1' hidden>
+- Start building **metadata tables** at project planning stage and update continuously.  
+- Use controlled vocabularies or ontologies (e.g., [NCBI Taxonomy](https://www.ncbi.nlm.nih.gov/taxonomy), [Experimental Factor Ontology](https://www.ebi.ac.uk/ols/ontologies/efo)) where possible.  
+- Validate files with archive-specific checkers before submission
+  - GEO’s [MAGE-TAB validator](https://www.ncbi.nlm.nih.gov/geo/info/soft2.html#validator) (see [MAGETabulator, a suite of tools to support the microarray data format MAGE-TAB](https://pmc.ncbi.nlm.nih.gov/articles/PMC2638998/))   
+</div>
+</div>
+
+</div>
+
+{% include accordion title="finding curated reference sequences for annotation" controls="dp4" expanded=false class="outline" icon=false %}
+<div id="dp4" class="accordion_content" markdown="1">
+
+consider using [RefSeq](#refseq) for stable, non-redundant gene and transcript models, or [GENCODE](#gencode)/[Ensembl Plants](https://plants.ensembl.org/index.html) for comprehensive annotations.  
+- Match genome build and annotation release to avoid mapping errors.  
+- Use accessioned *RefSeq IDs* in clinical/diagnostic contexts. 
+- Use *Ensembl IDs* for comparative genomics.  
+
+<div class="usa-accordion" style="margin-top: 1em;" data-allow-multiple>
+{% include accordion title="Common issues" class="highlighted" controls="issue-4" icon=true %}
+<div id="issue-4" class="accordion_content" markdown='1' hidden>
+- Mixing genome builds (e.g., GRCh37 annotations with GRCh38 alignments).  
+- Using outdated or draft crop gene sets, leading to missing or misannotated loci.  
+- Ignoring annotation version numbers, which can cause reproducibility issues.  
+</div>
+
+{% include accordion title="Good to know" class="tip" controls="tip-4" icon=true %}
+<div id="tip-4" class="accordion_content" markdown='1' hidden>
+- Always record the **genome build** (*GRCh38*, *TAIR10*, *IRGSP-1.0*, etc.) and annotation release used.  
+- [RefSeq](#refseq) is curated and non-redundant, while [GENCODE](#gencode) and [Ensembl Plants](https://plants.ensembl.org/index.html) provide broader transcript diversity.  
+- Use [BioMart](http://useast.ensembl.org/biomart/martview/e03bf4380d6cb103e56668f87af7a074) or APIs to quickly retrieve gene sets for custom analyses.  
+</div>
+</div>
+
+</div>
+
+{% include accordion title="tracking variants in crops or wildlife genomes" controls="dp5" expanded=false class="outline" icon=false %}
+<div id="dp5" class="accordion_content" markdown="1">
+
+consider building a **project-specific variant panel** if no population resource exists.  
+- [dbSNP](#dbsnp) coverage is limited for non-human species.  
+- Use public resources when available, such as [MaizeGDB](https://www.maizegdb.org), [WheatIS](https://wheatis.org), [TreeGenes](https://treegenesdb.org).  
+- Deposit variants in [VCF](/bioinformatics/resources/file_formats#vcf--bcf) format with clear metadata in a public repository 
+(e.g., [Dryad](https://datadryad.org), [Figshare](https://figshare.com)) or species-specific databases. 
+
+<div class="usa-accordion" style="margin-top: 1em;" data-allow-multiple>
+{% include accordion title="Common issues" class="highlighted" controls="issue-5" icon=true %}
+<div id="issue-5" class="accordion_content" markdown='1' hidden>
+- Assuming [dbSNP](#dbsnp), [ClinVar](#clinvar), or [gnomAD](#gnomad) provide allele frequencies for plants or animals - these are human-focused resources.  
+- Depositing raw reads in [SRA](#sra) without sharing the [VCF](/bioinformatics/resources/file_formats#vcf--bcf) makes results difficult to reuse.  
+- Incomplete metadata (missing sample identifiers, gruping info) reduces dataset value.  
+</div>
+
+{% include accordion title="Good to know" class="tip" controls="tip-5" icon=true %}
+<div id="tip-5" class="accordion_content" markdown='1' hidden>
+- Always pair **raw reads** in [SRA](#sra)/[ENA](#ena)/[DDBJ](#ddbj) with **VCF variant calls** in a suitable repository.  
+- Use dedicated portals when available ([MaizeGDB](https://www.maizegdb.org), [WheatIS](https://wheatis.org), [TreeGenes](https://treegenesdb.org)).  
+- For novel organisms, general-purpose repositories like [Dryad](https://datadryad.org) or [Figshare](https://figshare.com) ensure long-term accessibility.  
+- Provide **metadata tables** (population, location, sequencing method, pipeline parameters) to maximize reusability.  
+</div>
+</div>
+
+</div>
+
+{% include accordion title="filtering common vs rare alleles in natural populations" controls="dp6" expanded=false class="outline" icon=false %}
+<div id="dp6" class="accordion_content" markdown="1">
+
+consider generating **allele frequencies** by resequencing multiple individuals in your target population.  
+- Pool-seq is cost-effective for wild populations. *(see [NGS of Pooled Samples: Guideline for Variants’ Filtering](https://www.nature.com/articles/srep33735))*  
+- Store raw reads in [SRA](#sra)/[ENA](#ena)/[DDBJ](#ddbj), and publish derived frequency tables as supplementary data or in community repositories. 
+
+<div class="usa-accordion" style="margin-top: 1em;" data-allow-multiple>
+{% include accordion title="Common issues" class="highlighted" controls="issue-6" icon=true %}
+<div id="issue-6" class="accordion_content" markdown='1' hidden>
+- Using [gnomAD](#gnomad) for filtering in plants or wildlife studies - gnomAD is human-only.  
+- Small sample sizes leading to unreliable allele frequency estimates.  
+- Mixing populations (e.g., different ecotypes or geographic origins) without stratification, which biases frequency calculations.  
+</div>
+
+{% include accordion title="Good to know" class="tip" controls="tip-6" icon=true %}
+<div id="tip-6" class="accordion_content" markdown='1' hidden>
+- For non-model organisms, allele frequency resources are often missing - generating your own estimates is essential.  
+- Tools like [VCFtools](http://vcftools.sourceforge.net/) or [PLINK](https://www.cog-genomics.org/plink/) can calculate allele frequencies directly from VCF files.  
+- Consider depositing frequency tables in **Dryad** ([datadryad.org](https://datadryad.org)) or **Figshare** ([figshare.com](https://figshare.com)) for long-term accessibility.  
+- Document population metadata (sampling site, number of individuals, sequencing method) alongside frequency data.  
+</div>
+</div>
+
+</div>
+
+{% include accordion title="analyzing gene expression in plant tissues or stress conditions" controls="dp7" expanded=false class="outline" icon=false %}
+<div id="dp7" class="accordion_content" markdown="1">
+
+consider exploring **expression databases** to compare your results with public data or to validate stress/tissue-specific patterns.  
+- Use [GEO](#geo) and [ArrayExpress](#arrayexpress) to find curated expression datasets under various conditions.  
+- Explore [Expression Atlas](https://www.ebi.ac.uk/gxa/home) for cross-study comparisons of tissue- or condition-specific expression.  
+- For non-model species, check clade-specific portals such as [Phytozome](https://phytozome-next.jgi.doe.gov/) or [Ensembl Plants](https://plants.ensembl.org/), which often include baseline RNA-seq profiles.  
+
+<div class="usa-accordion" style="margin-top: 1em;" data-allow-multiple>
+{% include accordion title="Common issues" class="highlighted" controls="issue-7" icon=true %}
+<div id="issue-7" class="accordion_content" markdown='1' hidden>
+- Searching only human/mammalian datasets and overlooking plant-focused repositories.  
+- Missing relevant metadata (e.g., tissue, treatment, developmental stage) when reusing public datasets.  
+- Confusing raw data archives ([SRA](#sra)) with curated expression repositories ([GEO](#geo), [ArrayExpress](#arrayexpress)).  
+</div>
+
+{% include accordion title="Good to know" class="tip" controls="tip-7" icon=true %}
+<div id="tip-7" class="accordion_content" markdown='1' hidden>
+- [Expression Atlas](https://www.ebi.ac.uk/gxa/home) provides ready-to-use expression summaries across multiple species and conditions.  
+- [Ensembl Plants](https://plants.ensembl.org/) links gene models with RNA-seq expression evidence when available.  
+- For specific crops, community portals (e.g., [MaizeGDB](https://www.maizegdb.org), [WheatIS](https://wheatis.org)) sometimes host expression datasets.  
+- Always record the dataset accession (e.g., *GSE ID* in [GEO](#geo), *E-MTAB ID* in [ArrayExpress](#arrayexpress)) for reproducibility.  
+</div>
+</div>
+
+</div>
+
+{% include accordion title="finding closest model organism" controls="dp8" expanded=false class="outline" icon=false %}
+<div id="dp8" class="accordion_content" markdown="1">
+
+consider selecting a **well-annotated model organism** whose genome and functional resources can serve as a proxy when your study species lacks comprehensive annotation.  
+- **Dicots**: [*Arabidopsis thaliana*](https://www.arabidopsis.org/) is the default reference for functional enrichment.  
+- **Monocots**: [*Oryza sativa*](https://rapdb.dna.affrc.go.jp/) (rice) is the most widely used reference, especially for cereals.  
+- **Trees**: [*Populus trichocarpa*](https://phytozome-next.jgi.doe.gov/info/Ptrichocarpa_v4_1) is a common model for woody perennials.  
+- **Other taxa**: look for clade representatives with rich databases (e.g., legumes → [*Medicago*](https://medicago.toulouse.inrae.fr/MtrunA17r5.0-ANR/)).  
+
+<div class="usa-accordion" style="margin-top: 1em;" data-allow-multiple>
+{% include accordion title="Common issues" class="highlighted" controls="issue-8" icon=true %}
+<div id="issue-8" class="accordion_content" markdown='1' hidden>
+- Defaulting to *Arabidopsis* in all plant studies can misrepresent pathways and functions.  
+- Choosing models with poor or outdated annotation reduces the value of downstream functional enrichment.  
+- Ignoring phylogenetic distance may lead to incorrect orthology assignments.  
+</div>
+
+{% include accordion title="Good to know" class="tip" controls="tip-8" icon=true %}
+<div id="tip-8" class="accordion_content" markdown='1' hidden>
+- Use [Ensembl Plants](https://plants.ensembl.org/index.html), [Phytozome](https://phytozome-next.jgi.doe.gov/), or [OrthoDB](https://www.orthodb.org/) to check orthology relationships.  
+- Follow recommendations from community databases such as [MaizeGDB](https://www.maizegdb.org/), [WheatIS](https://www.wheatis.org/), or [TreeGenes](https://treegenesdb.org/).  
+- Prefer models with strong functional annotation coverage: [GO](http://geneontology.org/), [KEGG](https://www.kegg.jp/), [Reactome](https://reactome.org/).  
+- Check release notes of model organism databases - frequent updates indicate active curation.  
+</div>
+</div>
+</div>
+
+{% include accordion title="performing functional enrichment of gene lists" controls="dp9" expanded=false class="outline" icon=false %}
+<div id="dp9" class="accordion_content" markdown="1">
+
+consider [Gene Ontology (GO)](#gene-ontology-go) for functional categories, [KEGG](#kegg)/[Reactome](#reactome) for pathway enrichment.  
+- For plants, use orthology mappings to the **closest well-annotated model organism** as a reference (e.g., *Arabidopsis thaliana* for dicots, *Oryza sativa* for monocots).  
+- Commonly used enrichment tools include [g:Profiler](https://biit.cs.ut.ee/gprofiler/), [DAVID](https://davidbioinformatics.nih.gov), and [clusterProfiler](https://guangchuangyu.github.io/software/clusterProfiler/).  
+
+<div class="usa-accordion" style="margin-top: 1em;" data-allow-multiple>
+{% include accordion title="Common issues" class="highlighted" controls="issue-9" icon=true %}
+<div id="issue-9" class="accordion_content" markdown='1' hidden>
+- Running GO enrichment without background correction can inflate false positives.  
+- Mixing identifiers (e.g., *RefSeq* vs. *Ensembl IDs*) may cause gene loss in enrichment.  
+- Applying human-only background sets (e.g., from [gnomAD](#gnomad) or [ClinVar](#clinvar)) to plants or wildlife studies is inappropriate.  
+</div>
+
+{% include accordion title="Good to know" class="tip" controls="tip-9" icon=true %}
+<div id="tip-9" class="accordion_content" markdown='1' hidden>
+- Always define the **background set** (all expressed genes or all genes tested) to control enrichment properly.  
+- Cross-check enriched terms across [GO](http://geneontology.org/), [KEGG](https://www.kegg.jp/), and [Reactome](https://reactome.org/) for robustness.  
+- Some community portals (e.g., [MaizeGDB](https://www.maizegdb.org/), [WheatIS](https://wheatis.org/)) offer species-specific enrichment options.  
+- Keep track of ontology/database **release versions** for reproducibility.  
+</div>
+</div>
+
+</div>
+
+{% include accordion title="retrieving protein sequences and functional annotations" controls="dp10" expanded=false class="outline" icon=false %}
+<div id="dp10" class="accordion_content" markdown="1">
+
+consider using [UniProtKB](#uniprot) for protein sequence and functional annotation retrieval.
+- **Swiss-Prot** (reviewed, curated) for high-quality annotations (ideal for reference sets, functional studies, and benchmarking)
+- **TrEMBL** (unreviewed) automatically annotated sequences that expand coverage to non-model organisms and novel proteins  
+
+***How to retrieve data?***  
+- Search by *gene name*, *accession*, or *organism* in [UniProt](#uniprot).  
+- Download **FASTA sequences**, **annotations**, or **complete proteomes** for your species.  
+- Use programmatic access via the [UniProt REST API](https://www.uniprot.org/help/api_queries) for large-scale retrieval.  
+- Cross-links to [GO](http://geneontology.org/), [KEGG](https://www.kegg.jp/), [Reactome](https://reactome.org/), [Pfam](http://pfam.xfam.org/), [InterPro](https://www.ebi.ac.uk/interpro/) are embedded in UniProt.  
+
+<div class="usa-accordion" style="margin-top: 1em;" data-allow-multiple>
+{% include accordion title="Common issues" class="highlighted" controls="issue-10" icon=true %}
+<div id="issue-10" class="accordion_content" markdown='1' hidden>
+- Confusion with [GenBank](#genbank) - it accepts protein sequences but lacks curated knowledge; UniProtKB (Swiss-Prot + TrEMBL) is the best resource for protein annotations.  
+- Mixing identifiers (*RefSeq*, *Ensembl*, *UniProt* accessions) without proper mapping can cause data loss.  
+- Annotations are actively updated - record the **release version** used in your analysis.  
+</div>
+
+{% include accordion title="Good to know" class="tip" controls="tip-10" icon=true %}
+<div id="tip-10" class="accordion_content" markdown='1' hidden>
+- Use [UniProt proteome pages](https://www.uniprot.org/proteomes/) to download species-specific complete proteomes.  
+- The [UniProt ID mapping service](https://www.uniprot.org/id-mapping) helps convert between *RefSeq*, *Ensembl*, and *UniProt* identifiers.  
+- For batch queries, upload gene or protein lists directly to UniProt’s search interface or use the REST API.  
+- Swiss-Prot entries often include experimental evidence codes - useful for distinguishing reviewed from predicted annotations.  
+</div>
+</div> 
+
+</div>
+
+{% include accordion title="studying 3D protein structures of enzymes or receptors" controls="dp11" expanded=false class="outline" icon=false %}
+<div id="dp11" class="accordion_content" markdown="1">
+
+consider querying the [Protein Data Bank (PDB)](#pdb) for experimentally solved structures.  
+- Explore structures online with the [Mol* viewer](https://molstar.org/viewer/) or locally with **PyMOL** and **Chimera**.  
+- If no experimental structure exists, generate homology models: [AlphaFold 3](https://alphafoldserver.com/welcome) or [Swiss-Model](https://swissmodel.expasy.org).  
+
+<div class="usa-accordion" style="margin-top: 1em;" data-allow-multiple>
+{% include accordion title="Common issues" class="highlighted" controls="issue-11" icon=true %}
+<div id="issue-11" class="accordion_content" markdown='1' hidden>
+- Expecting complete proteins: many PDB entries are partial or contain only specific domains.  
+- Resolution varies: not all structures are high quality (check the resolution in Ångströms).  
+- Structures may include engineered mutations, ligands, or missing flexible regions that do not reflect the native protein.  
+</div>
+
+{% include accordion title="Good to know" class="tip" controls="tip-11" icon=true %}
+<div id="tip-11" class="accordion_content" markdown='1' hidden>
+- Use the **UniProt cross-links** in protein records to find corresponding PDB entries.  
+- Check [AlphaFold DB](https://alphafold.ebi.ac.uk) for predicted full-length structures when absent from PDB.  
+- Many journals require linking to a PDB ID when publishing structural biology results.  
+- For enzyme studies, [RCSB PDB](https://www.rcsb.org/) offers search filters for ligands, cofactors, and binding sites.  
+</div>
+</div>
+
+</div>
+
+</div>
+
+
+
 </div>
 
 
