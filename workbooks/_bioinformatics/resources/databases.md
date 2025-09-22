@@ -220,7 +220,7 @@ provide **non-redundant reference sequences** for genes, transcripts, proteins, 
 <div id="db-seq-1" class="accordion_content" markdown='1' hidden> 
 **Full name:** GenBank – NCBI Genetic Sequence Database  
 **URL:** <https://www.ncbi.nlm.nih.gov/genbank/>  
-**FTP:** <https://ftp.ncbi.nlm.nih.gov/genbank/>  
+**FTP:** <https://ftp.ncbi.nlm.nih.gov/genbank/> ([README.genbank](https://ftp.ncbi.nlm.nih.gov/genbank/README.genbank))  
 **Scope:** nucleotide sequences (DNA, RNA; assembled and unassembled) 
 
 <div class="usa-accordion" style="margin-top: 1em;">
@@ -242,6 +242,8 @@ provide **non-redundant reference sequences** for genes, transcripts, proteins, 
 - retrieve nucleotide sequences for **comparative genomics, primer design, or database building**  
 - access **legacy or unusual sequences** not yet in curated references (e.g., novel virus)  
 - essential for **BLAST searches**, since it pulls directly from GenBank’s sequence archive  
+
+Tools like **Prokka**, **funannotate**, **BLAST+**, or **Biopython** may require GenBank-format files locally, but many workflows only need to download specific entries on demand.
 
 </div>
 
@@ -266,13 +268,13 @@ provide **non-redundant reference sequences** for genes, transcripts, proteins, 
 
 {% include accordion title="CLI download" class=" " controls="genbank-5" icon=false %}
 <div id="genbank-5" class="accordion_content" markdown='1' hidden>
-GenBank releases can be downloaded from the NCBI FTP server: <https://ftp.ncbi.nlm.nih.gov/genbank/>  
+Due to the large size of GenBank, it’s not typical to download the entire database. 
+Instead, specific entries are usually retrieved on demand using tools like [Entrez Direct](https://www.ncbi.nlm.nih.gov/books/NBK179288/) ( module `edirect`), 
+`ncbi-genome-download`, or via programmatic access through `Biopython`.
 
-1. Download the latest daily update (compressed):  
-```bash
-wget ftp://ftp.ncbi.nlm.nih.gov/genbank/gbdaily.seq.gz
-```
-Or sync a complete release with rsync:
+GenBank entries can be downloaded from the NCBI FTP server: <https://ftp.ncbi.nlm.nih.gov/genbank/>  
+
+1. Download/synchronize the latest complete release (compressed):  
 ```bash
 rsync -av rsync://ftp.ncbi.nlm.nih.gov/genbank/ .
 ```
@@ -281,11 +283,13 @@ rsync -av rsync://ftp.ncbi.nlm.nih.gov/genbank/ .
 ```bash
 wget ftp://ftp.ncbi.nlm.nih.gov/genbank/gbvrl1.seq.gz
 ```
-3. Download with `aria2c` (general-purpose multi-threaded downloader):
+
+3. Fetch sequences by accession using [NCBI EDirect](https://www.ncbi.nlm.nih.gov/books/NBK179288/) command-line utilities:  
 ```bash
-aria2c -x 8 -s 8 ftp://ftp.ncbi.nlm.nih.gov/genbank/gbvrl1.seq.gz
+module load edirect        
+# or user-install if not available
+sh -c "$(curl -fsSL https://ftp.ncbi.nlm.nih.gov/entrez/entrezdirect/install-edirect.sh)"
 ```
-4. Fetch sequences by accession - Use NCBI EDirect (command-line utilities):
 ```bash
 # Fetch a Zea mays (corn) chloroplast sequence in FASTA format
 esearch -db nucleotide -query "NC_001666.2" | efetch -format fasta > corn_chloroplast.fasta
@@ -302,7 +306,7 @@ esearch -db nucleotide -query "NC_001666.2" | efetch -format gb > corn_chloropla
 <div id="db-seq-2" class="accordion_content" markdown='1' hidden> 
 **Full name:** European Nucleotide Archive  
 **URL:** <https://www.ebi.ac.uk/ena>  
-**FTP:** <https://ftp.ebi.ac.uk/pub/databases/ena/>  
+**FTP:**  <https://ftp.sra.ebi.ac.uk/vol1/> (all read and analysis data)  <https://ftp.ebi.ac.uk/pub/databases/ena/> (assembled and annotated sequence data)  
 **Scope:** nucleotide sequences (assembled), raw sequencing reads, study metadata  
 
 <div class="usa-accordion" style="margin-top: 1em;">
@@ -349,26 +353,26 @@ esearch -db nucleotide -query "NC_001666.2" | efetch -format gb > corn_chloropla
 
 {% include accordion title="CLI download" class=" " controls="ena-5" icon=false %}
 <div id="ena-5" class="accordion_content" markdown='1' hidden>
+Due to its large and overlapping content with [GenBank](#genbank)/[RefSeq](#refseq), it's also uncommon to mirror ENA entirely. 
+Instead, specific records (assemblies, reads, etc.) are typically retrieved on demand using tools like ENA Browser CLI, enaDataGet, aspera (ascp), or wget/curl based on accession numbers.
+
 ENA FTP server: <https://ftp.ebi.ac.uk/pub/databases/ena/>  
 
 1. Download example record (FASTA):
 ```bash
-wget ftp://ftp.ebi.ac.uk/pub/databases/ena/wgs/public/aaz/AAZX01.fsa_nt.gz
+wget ftp://ftp.ebi.ac.uk/pub/databases/ena/wgs/public/aaz/AAZXAA01.fasta.gz
 ```
 
-2. Download raw reads by accession (e.g., ERR000111 read set, FASTQ compressed):
+2. Download raw reads by accession (e.g., ERR000100 read set (728M x2), FASTQ compressed):
 ```bash
-wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR000/ERR000111/ERR000111.fastq.gz
+wget https://ftp.sra.ebi.ac.uk/vol1/fastq/ERR000/ERR000100/ERR000100_1.fastq.gz
+wget https://ftp.sra.ebi.ac.uk/vol1/fastq/ERR000/ERR000100/ERR000100_2.fastq.g
 ```
 
 3. Download with Aspera (faster than FTP):
 ```bash
-ascp -QT -l 300m -P33001 \
-    era-fasp@fasp.sra.ebi.ac.uk:/vol1/fastq/ERR000/ERR000111/ERR000111.fastq.gz ERR000111.fastq.gz
-```
-4. Download with `aria2c` (general-purpose multi-threaded downloader):
-```bash
-aria2c -x 8 -s 8 ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR000/ERR000111/ERR000111.fastq.gz
+ascp -T -l 300m -P33001 \
+    era-fasp@fasp.sra.ebi.ac.uk:/vol1/fastq/ERR000/ERR000100/ERR000100_1.fastq.gz ERR000100.fastq.gz
 ```
 </div>
 </div>
@@ -428,21 +432,21 @@ aria2c -x 8 -s 8 ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR000/ERR000111/ERR000111.f
 
 {% include accordion title="CLI download" class=" " controls="ddbj-5" icon=false %}
 <div id="ddbj-5" class="accordion_content" markdown='1' hidden>
-DDBJ FTP site: <https://ftp.ddbj.nig.ac.jp/ddbj_database/>  
+Most of DDBJ content is synchronized with GenBank and ENA. Therefore, it's uncommon to download DDBJ in full, and users typically retrieve specific records as needed. 
+Data from DDBJ can be accessed using `wget` or `curl` from the [DDBJ FTP](https://ddbj.nig.ac.jp/public/ddbj_database/), DRA Tools or SRA Toolkit for raw reads via the DRA, 
+and programmatic access via Biopython. 
+
+DDBJ FTP site: <https://ddbj.nig.ac.jp/public/ddbj_database/> ([README.TXT](https://ddbj.nig.ac.jp/public/ddbj_database/README.TXT))  
 
 1. Download example record (FASTA):  
 ```bash
-wget ftp://ftp.ddbj.nig.ac.jp/ddbj_database/nucleotide/flat_file/DDBJ/daily/flddbjseq.gz
+wget https://ddbj.nig.ac.jp/public/ddbj_database/ddbj/fasta/ddbjbct1.fasta.gz
 ```
 2. Download raw reads from DRA (FASTQ):
 ```bash
-wget ftp://ftp.ddbj.nig.ac.jp/ddbj_database/dra/fastq/DRR000001/DRR000001.fastq.gz
+wget https://ddbj.nig.ac.jp/public/ddbj_database/dra/fastq/DRA000/DRA000001/DRX000001/DRR000001.fastq.bz2
 ```
-3. Download with `aria2c` (general-purpose multi-threaded downloader):
-```bash
-aria2c -x 8 -s 8 ftp://ftp.ddbj.nig.ac.jp/ddbj_database/dra/fastq/DRR000001/DRR000001.fastq.gz
-```
-4. Fetch by accession (via NCBI EDirect, works cross-database):
+3. Fetch by accession (via NCBI EDirect, works cross-database):
 ```bash
 esearch -db sra -query "DRR000001" | efetch -format runinfo > DRR000001.csv
 ```
@@ -456,7 +460,7 @@ esearch -db sra -query "DRR000001" | efetch -format runinfo > DRR000001.csv
 <div id="db-seq-4" class="accordion_content" markdown='1' hidden> 
 **Full name:** NCBI Reference Sequence Database  
 **URL:** <https://www.ncbi.nlm.nih.gov/refseq/>  
-**FTP:** <https://ftp.ncbi.nlm.nih.gov/refseq/>  
+**FTP:** <https://ftp.ncbi.nlm.nih.gov/refseq/> ([README](https://ftp.ncbi.nlm.nih.gov/refseq/README))  
 **Scope:** curated, non-redundant reference sequences for genomes, transcripts, and proteins  
 
 {% include alert class="tip" content="<b>RefSeq</b> differs from [GenBank](#genbank)/[ENA](#ena)/[DDBJ](#ddbj) in being curated and non-redundant - perfect for reference-based analysis." %}
@@ -481,8 +485,13 @@ esearch -db sra -query "DRR000001" | efetch -format runinfo > DRR000001.csv
 - use as **reference input** for read alignment, variant calling, and RNA-seq quantification  
 - basis for **comparative genomics** and **functional annotation** pipelines  
 - provides **stable identifiers** for reproducible reporting in publications  
-- supports **protein functional analysis** (links to UniProt, Pfam, Gene Ontology)  
+- supports **protein functional analysis** (links to UniProt, Pfam, Gene Ontology) 
 
+RefSeq is often used by tools such as:
+- Prokka, funannotate, DRAM (genome annotation)
+- BLAST databases: BLAST+, diamond (custom DBs from RefSeq protein FASTA)
+- Kraken2, Kaiju (taxonomy-aware profiling)
+- CheckM, GTDB-Tk, PhyloPhlAn (phylogenetics and quality control)
 </div>
 
 {% include accordion title="Limitations" class=" " controls="refseq-3" icon=false %}
@@ -506,17 +515,26 @@ esearch -db sra -query "DRR000001" | efetch -format runinfo > DRR000001.csv
 
 {% include accordion title="CLI download" class=" " controls="refseq-5" icon=false %}
 <div id="refseq-5" class="accordion_content" markdown='1' hidden>
+Like [GenBank](#genbank), RefSeq is a large, curated database of genomic, transcript, and protein sequences maintained by NCBI. 
+Due to its size, it’s not typical to download the entire resource. Instead, users typically retrieve specific genomes or sequences on demand using 
+`ncbi-genome-download`, [Entrez Direct](https://www.ncbi.nlm.nih.gov/books/NBK179288/) (module `edirect`), `rsync` from NCBI FTP/Aspera or datasets CLI (`ncbi-datasets-pylib`).
+
 RefSeq FTP site: <https://ftp.ncbi.nlm.nih.gov/refseq/>  
 
 1. Download genome FASTA (human GRCh38):  
 ```bash
 wget ftp://ftp.ncbi.nlm.nih.gov/refseq/H_sapiens/mRNA_Prot/human.*.rna.fna.gz
 ```
-2. Download RefSeq proteins (complete set):
+2. Download example bacterial proteins:
 ```bash
-wget ftp://ftp.ncbi.nlm.nih.gov/refseq/release/complete/complete.protein.faa.gz
+wget ftp://ftp.ncbi.nlm.nih.gov/refseq/release/bacteria/bacteria.1366.protein.faa.gz
 ```
-3. Download by accession (via NCBI EDirect):
+3. Download by accession (via [NCBI EDirect]((https://www.ncbi.nlm.nih.gov/books/NBK179288/))):
+```bash
+module load edirect        
+# or user-install if not available
+sh -c "$(curl -fsSL https://ftp.ncbi.nlm.nih.gov/entrez/entrezdirect/install-edirect.sh)"
+```
 ```bash
 # Fetch RefSeq transcript by accession (FASTA)
 esearch -db nucleotide -query "NM_001126112.2" | efetch -format fasta > BRCA2_transcript.fasta
@@ -561,6 +579,9 @@ esearch -db protein -query "NP_000483.3" | efetch -format fasta > BRCA1_protein.
 - explore miRNA roles in **cancer, development, immunity**, etc.  
 - integrate with gene expression to infer **regulatory interactions**  
 
+miRBase is used by many tools in miRNA discovery, quantification, or target prediction, such as: 
+`bowtie` and `STAR`	(used for alignment to miRNA indices), `miRDeep2` (miRNA discovery and quantification), `miRge3.0` (miRNA alignment and expression), 
+`sRNAbench` or `sRNAtoolbox` (small RNA profiling), `miranda` or `TargetScan` (target prediction using miRBase IDs).
 </div>
 
 {% include accordion title="Limitations" class=" " controls="mirbase-3" icon=false %}
@@ -587,7 +608,10 @@ esearch -db protein -query "NP_000483.3" | efetch -format fasta > BRCA1_protein.
 
 {% include accordion title="CLI download" class=" " controls="mirbase-5" icon=false %}
 <div id="mirbase-5" class="accordion_content" markdown='1' hidden>
-miRBase FTP site: <ftp://mirbase.org/pub/mirbase/>  
+miRBase is a specialized database of microRNA (miRNA) sequences and annotations, widely used in transcriptomics and small RNA research. 
+Because it is relatively small (~MBs rather than GBs), users commonly download it on demand or bundle it into pipelines manually.
+
+miRBase FTP site: <https://www.mirbase.org/download/CURRENT/>  
 
 1. Download all mature miRNA sequences (FASTA):
 ```bash
@@ -657,6 +681,8 @@ variant interpretation, and transcriptomic analysis. These resources ensure that
 - access to **clinical variant databases** through Ensembl [VEP](https://useast.ensembl.org/info/docs/tools/vep/index.html) (Variant Effect Predictor)  
 - programmatic access via Ensembl [REST API](https://rest.ensembl.org/) and [BioMart](http://useast.ensembl.org/biomart/martview/e03bf4380d6cb103e56668f87af7a074) for custom data retrieval  
 
+Tools such as `STAR`, `HISAT2`, `featureCounts`, `HTSeq`, `kallisto`, `salmon`, `SnpEff`, and `VEP` 
+commonly use Ensembl-provided genome FASTA and GTF/GFF annotation files for tasks like alignment, quantification, and variant effect prediction.
 </div>
 
 {% include accordion title="Limitations" class=" " controls="ensembl-3" icon=false %}
@@ -681,17 +707,20 @@ variant interpretation, and transcriptomic analysis. These resources ensure that
 
 {% include accordion title="CLI download" class=" " controls="ensembl-5" icon=false %}
 <div id="ensembl-5" class="accordion_content" markdown='1' hidden>
+Ensembl provides genome assemblies, annotations, transcript/protein sequences, and gene models for a wide range of organisms, 
+including both model and non-model species. Due to the size and organism-specific structure, it is typical to download only the species or data types needed for a given project.
+
 Ensembl FTP site: <https://ftp.ensembl.org/pub/>  
 
-1. Download genome FASTA (human GRCh38, release 111):  
+1. Download genome FASTA (human GRCh38, release 111, 842M):  
 ```bash
 wget ftp://ftp.ensembl.org/pub/release-111/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz
 ```
-2. Download GTF annotation file (human, release 111):
+2. Download GTF annotation file (human, release 111, 52M):
 ```bash
 wget ftp://ftp.ensembl.org/pub/release-111/gtf/homo_sapiens/Homo_sapiens.GRCh38.111.gtf.gz
 ```
-3. Programmatic access (REST API, example for BRCA2 gene):
+3. Programmatic access (REST API, example for BRCA2 gene, 85K):
 ```bash
 curl "https://rest.ensembl.org/sequence/id/ENSG00000139618?content-type=text/x-fasta" -o BRCA2.fasta
 ```
@@ -733,6 +762,8 @@ curl "https://rest.ensembl.org/sequence/id/ENSG00000139618?content-type=text/x-f
 - convert genomic coordinates between builds using [LiftOver](https://genome.ucsc.edu/cgi-bin/hgLiftOver) 
 - integrate external datasets as **custom tracks** or via [trackhub](https://daler.github.io/trackhub/)  
 
+Tools such as `liftOver`, `bedtools`, genome browsers, and custom pipelines often rely on UCSC data formats 
+(e.g., `.2bit`, `.bed`, `.wig`, `.bigWig`, `.gtf`) for genome analysis, annotation conversion, and coordinate mapping.
 </div>
 
 {% include accordion title="Limitations" class=" " controls="ucsc-3" icon=false %}
@@ -757,18 +788,22 @@ curl "https://rest.ensembl.org/sequence/id/ENSG00000139618?content-type=text/x-f
 
 {% include accordion title="CLI download" class=" " controls="ucsc-5" icon=false %}
 <div id="ucsc-5" class="accordion_content" markdown='1' hidden>
+Due to the breadth of data in UCSC, such as genome assemblies, annotations, and a wide range of track-based datasets 
+(e.g., gene models, conservation, variants, epigenomics), users typically download specific tracks or species as needed.
+
 UCSC FTP site: <ftp://hgdownload.soe.ucsc.edu/goldenPath/>  
 
-1. Download human genome FASTA (`hg38`):  
+1. Download human genome FASTA (`hg38`, 939M):  
 ```bash
 wget ftp://hgdownload.soe.ucsc.edu/goldenPath/hg38/bigZips/hg38.fa.gz
 ```
-2. Download GTF annotation file (GENCODE genes for `hg38`):
+2. Download GTF annotation file (GENCODE genes ("knownGene" track) for `hg38`, 38M):
 ```bash
-wget ftp://hgdownload.soe.ucsc.edu/goldenPath/hg38/bigZips/genes/gencode.v43.annotation.gtf.gz
+wget ftp://hgdownload.soe.ucsc.edu/goldenPath/hg38/bigZips/genes/hg38.knownGene.gtf.gz
 ```
-3. Coordinate conversion with LiftOver (`hg19` to `hg38`):
+3. Coordinate conversion with [LiftOver](https://genome.ucsc.edu/cgi-bin/hgLiftOver) (`hg19` to `hg38`):
 ```bash
+# To lift genome annotations locally on Linux systems, download the LiftOver executable and the appropriate chain file. 
 liftOver input_hg19.bed hg19ToHg38.over.chain.gz output_hg38.bed unMapped.bed
 ```
 </div>
@@ -808,6 +843,8 @@ liftOver input_hg19.bed hg19ToHg38.over.chain.gz output_hg38.bed unMapped.bed
 - essential for **variant annotation** (via VEP, ANNOVAR)  
 - widely applied in **transcriptomics, cancer genomics, and regulatory studies**  
 
+GENCODE annotations are widely used by tools such as `STAR`, `HISAT2`, `kallisto`, `salmon`, `featureCounts`, `StringTie`, `SnpEff`, and `VEP` 
+for read alignment, transcript quantification, and variant effect prediction, particularly in human and mouse transcriptomics.
 </div>
 
 {% include accordion title="Limitations" class=" " controls="gencode-3" icon=false %}
@@ -832,17 +869,20 @@ liftOver input_hg19.bed hg19ToHg38.over.chain.gz output_hg38.bed unMapped.bed
 
 {% include accordion title="CLI download" class=" " controls="gencode-5" icon=false %}
 <div id="gencode-5" class="accordion_content" markdown='1' hidden>
+GENCODE provides high-quality, manually curated gene annotations (including protein-coding, lncRNA, and pseudogenes) for human (GRCh38, GRCh37) 
+and mouse (GRCm39, GRCm38) genomes. It is a key reference for transcriptomic and genomic analysis and is often downloaded per project due to its focused organism coverage.
+
 GENCODE FTP site: <ftp://ftp.ebi.ac.uk/pub/databases/gencode/>  
 
-1. Download GTF annotation (human, v43, GRCh38):  
+1. Download GTF annotation (human, v43, GRCh38, 48M):  
 ```bash
 wget ftp://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_43/gencode.v43.annotation.gtf.gz
 ```
-2. Download transcript FASTA (cDNA sequences):
+2. Download transcript FASTA (cDNA sequences, 79M):
 ```bash
 wget ftp://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_43/gencode.v43.transcripts.fa.gz
 ```
-3. Download protein FASTA (translated sequences):
+3. Download protein FASTA (translated sequences, 12M):
 ```bash
 wget ftp://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_43/gencode.v43.pc_translations.fa.gz
 ```
@@ -896,6 +936,8 @@ and linking them to disease phenotypes or evolutionary patterns.
 - enables **frequency-based filtering** and prioritization using population submissions (though less extensive than [gnomAD](#gnomad))  
 - cross-referenced by most major bioinformatics tools and databases  
 
+Tools like `GATK`, `bcftools`, `SnpEff`, `VEP`, and `ANNOVAR` use dbSNP data to annotate known variants, 
+filter common SNPs, or compare against population frequencies in pipelines for variant calling and functional interpretation.
 </div>
 
 {% include accordion title="Limitations" class=" " controls="dbsnp-3" icon=false %}
@@ -922,20 +964,26 @@ and linking them to disease phenotypes or evolutionary patterns.
 
 {% include accordion title="CLI download" class=" " controls="dbsnp-5" icon=false %}
 <div id="dbsnp-5" class="accordion_content" markdown='1' hidden>
+Due to dbSNP size and continuous updates, it's typical to download only relevant subsets (e.g., specific chromosomes, organisms, or variant types) depending on the analysis.
+
 dbSNP FTP site: <https://ftp.ncbi.nih.gov/snp/>  
 
-1. Download human VCF (dbSNP build 155, GRCh38):
+1. Download human common SNPs in VCF format (dbSNP build 157, GRCh38):  **(WARNING: 28G)**
 ```bash
-wget ftp://ftp.ncbi.nih.gov/snp/latest_release/VCF/GCF_000001405.39.gz
+wget ftp://ftp.ncbi.nih.gov/snp/latest_release/VCF/GCF_000001405.40.gz
 ```
 2. Download supporting files (`rsID` mappings, frequencies):
 ```bash
-wget ftp://ftp.ncbi.nih.gov/snp/latest_release/JSON/refsnp-chr1.json.bz2
+wget ftp://ftp.ncbi.nih.gov/snp/latest_release/JSON/refsnp-chr1.json.bz2 **(WARNING: 38G just for chromosome 1)**
 ```
-3. Example: Query by `rsID` using Entrez (fetch BRCA1 variant):
+3. Example query by `rsID` using [Entrez Direct](https://www.ncbi.nlm.nih.gov/books/NBK179288/) (fetch BRCA1 variant):
 ```bash
-esearch -db snp -query "rs1799950" | efetch -format docsum
+# returns a summary view of population frequencies, but not clinical significance, genomic context, or alleles
+esearch -db snp -query "rs1799950" | efetch -format docsum > snp_rs1799950.docsum
 ```
+For richer info, you can:
+- Use `-format xml` or `-format json` for structured parsing.
+- Try `-format docset` or `-format full` for more fields.
 </div>
 </div>
 </div>
@@ -974,6 +1022,8 @@ esearch -db snp -query "rs1799950" | efetch -format docsum
 - enables **gene-condition mapping**, e.g., BRCA1 → Breast Cancer  
 - review of conflicting interpretations across multiple submitters 
 
+Tools such as `VEP`, `SnpEff`, `ANNOVAR`, and `GATK` use ClinVar data to annotate, filter, or prioritize variants based on their known clinical significance, 
+particularly in disease-related and diagnostic workflows. `IGV` and [UCSC Genome Browser](#ucsc-genome-browser) can be used to visualize ClinVar variants in genome.
 </div>
 
 {% include accordion title="Limitations" class=" " controls="clinvar-3" icon=false %}
@@ -1000,17 +1050,20 @@ esearch -db snp -query "rs1799950" | efetch -format docsum
 
 {% include accordion title="CLI download" class=" " controls="clinvar-5" icon=false %}
 <div id="clinvar-5" class="accordion_content" markdown='1' hidden>
+ClinVar ocuses on clinically relevant variants, such as those linked to disease, and includes annotations like clinical significance, condition, review status, and allele origin. 
+Due to frequent updates and large size, users usually download only the relevant subset (e.g., genome build, variant type, or condition) for their analysis.
+
 ClinVar FTP site: <https://ftp.ncbi.nlm.nih.gov/pub/clinvar/>  
 
-1. Download VCF for GRCh38 (latest release):
+1. Download VCF for GRCh38 (latest release, 162M):
 ```bash
 wget ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh38/clinvar.vcf.gz
 ```
-2. Download summary table (tab-delimited, all submissions):
+2. Download summary table (tab-delimited, all submissions, 367M):
 ```bash
 wget ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/tab_delimited/variant_summary.txt.gz
 ```
-3. Get info for example `rs121913529` (CFTR pathogenic variant) via Entrez:
+3. Get info for example `rs121913529` (CFTR pathogenic variant, 44K) via [Entrez Direct](https://www.ncbi.nlm.nih.gov/books/NBK179288/):
 ```bash
 esearch -db clinvar -query "rs121913529" | efetch -format docsum
 ```
@@ -1056,6 +1109,8 @@ esearch -db clinvar -query "rs121913529" | efetch -format docsum
 - enables **population genetics**, constraint metrics (e.g., pLI, LOEUF)  
 - used for **annotating VCFs** with population frequency data  
 
+Tools such as `VEP`, `ANNOVAR`, `SnpEff`, and `bcftools` use gnomAD to annotate variants with allele frequencies across populations, 
+helping to filter out common variants in rare disease and cancer studies.
 </div>
 
 {% include accordion title="Limitations" class=" " controls="gnomad-3" icon=false %}
@@ -1085,19 +1140,12 @@ esearch -db clinvar -query "rs121913529" | efetch -format docsum
 <div id="gnomad-5" class="accordion_content" markdown='1' hidden>
 gnomAD download portal: <https://gnomad.broadinstitute.org/downloads>  
 
-1. Download gnomAD v3.1.2 (GRCh38) VCF:
-```bash
-wget https://storage.googleapis.com/gcp-public-data--gnomad/release/3.1.2/vcf/genomes/gnomad.genomes.v3.1.2.sites.chr1.vcf.bgz
-```
-2. Download constraint scores:
-```bash
-wget https://storage.googleapis.com/gcp-public-data--gnomad/release/3.1.2/constraint/gnomad.v3.1.2.lof_metrics.by_gene.txt.bgz
-```
-3. Index the VCF for fast querying:
+1. [Download gnomAD v4 VCF](https://gnomad.broadinstitute.org/downloads#v4) (XX GB)
+2. Index the VCF for fast querying:
 ```bash
 tabix -p vcf gnomad.genomes.v3.1.2.sites.chr1.vcf.bgz
 ```
-4. Query example (get `rsID`, freq info for variant at `chr1:55516888`):
+3. Query example (get `rsID`, freq info for variant at `chr1:55516888`):
 ```bash
 bcftools view -r 1:55516888 gnomad.genomes.v3.1.2.sites.chr1.vcf.bgz
 ```
@@ -1151,6 +1199,8 @@ These resources support downstream analyses such as differential expression, co-
 - source of data for training machine learning models or meta-analyses  
 - used in pipelines for **de novo assembly**, **differential expression**, **variant calling**  
 
+Tools such as `SRA Toolkit`, `fastq-dump`, `fasterq-dump`, `nf-core` pipelines, and Nextflow workflows rely on SRA data 
+for downstream processing in RNA-seq, metagenomics, variant calling, and genome assembly pipelines.
 </div>
 
 {% include accordion title="Limitations" class=" " controls="sra-3" icon=false %}
@@ -1176,23 +1226,25 @@ These resources support downstream analyses such as differential expression, co-
 
 {% include accordion title="CLI download" class=" " controls="sra-5" icon=false %}
 <div id="sra-5" class="accordion_content" markdown='1' hidden> 
+SRA is NCBI’s repository of raw sequencing data, including Illumina, Nanopore, PacBio, and other platform reads. Due to its massive size, 
+it is never mirrored entirely, and users almost always download reads on demand using accession IDs (e.g., SRR123456).
+
 SRA FTP portal: <https://ftp.ncbi.nlm.nih.gov/sra/>
 
 1. Install sra-tools:
 ```bash
 conda install -c bioconda sra-tools
 ```
-2. Download SRA file and convert `.sra` to `.fastq` using *fasterq-dump* for speed:
+2. Download SRA file and convert `.sra` (4.0M) to `.fastq` (8.5M x2) using *fasterq-dump* for speed:
 ```bash
-prefetch SRR12345678
-fastq-dump --split-files SRR12345678.sra
+prefetch SRR12345678          # downloads *.sra into a SRR12345678 folder 
+fastq-dump --split-files SRR12345678/SRR12345678.sra
+# or faster
 fasterq-dump SRR12345678
 ```
-3. Fetch metadata table from a study:
+3. Fetch metadata table (2.4K) from a study using [NCBI EDirect](https://www.ncbi.nlm.nih.gov/books/NBK179288/) (or download manually from https://www.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA600101):
 ```bash
-# Go to: https://www.ncbi.nlm.nih.gov/Traces/study/
-# Search for a study (e.g., PRJNA600101)
-# Click "Send to: Run selector" → "Download table"
+esearch -db sra -query PRJNA600101 | efetch -format runinfo > PRJNA600101_runinfo.csv
 ```
 </div>
 </div>
@@ -1232,6 +1284,7 @@ fasterq-dump SRR12345678
 - training/testing datasets for **biomarker discovery**, **clustering**, **classification**  
 - track data reuse or replicate findings across studies  
 
+Tools such as `limma`, `DESeq2`, `edgeR`, `GEOquery`, and `ArrayExpress` rely on GEO for expression profiling, differential expression analysis, and benchmark datasets.
 </div>
 
 {% include accordion title="Limitations" class=" " controls="geo-3" icon=false %}
@@ -1260,17 +1313,24 @@ fasterq-dump SRR12345678
 
 {% include accordion title="CLI download" class=" " controls="geo-5" icon=false %}
 <div id="geo-5" class="accordion_content" markdown='1' hidden>
+GEO is NCBI’s public repository for gene expression, epigenomics, and other functional genomics data, including microarray and RNA-seq datasets. 
+Because studies vary widely in size and content, GEO is usually accessed on-demand, either interactively or programmatically.
+
 GEO FTP site: <https://ftp.ncbi.nlm.nih.gov/geo/>  
 
-1. Download Series Matrix File (e.g., `GSE22255`):
+1. Download Series Matrix File (e.g., `GSE22255`, 7.2M):
 ```bash
 wget ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE22nnn/GSE22255/matrix/GSE22255_series_matrix.txt.gz
 ```
-2. Download raw data archive:
+2. Download raw data archive (317M):
 ```bash
 wget ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE22nnn/GSE22255/suppl/GSE22255_RAW.tar
 ```
-3. Use GEOquery in R:
+3. Download GEO data using [NCBI EDirect](https://www.ncbi.nlm.nih.gov/books/NBK179288/) (78K) 
+```bash
+esearch -db gds -query "GSE22255" | efetch -format docsum
+```
+4. Download GEO data using `GEOquery` in **R**:
 ```r
 library(GEOquery)
 gse <- getGEO("GSE22255", GSEMatrix = TRUE)
@@ -1314,6 +1374,8 @@ exprs(gse[[1]])
 - use sample annotations to build supervised learning models  
 - useful for testing analysis pipelines or validating hypotheses  
 
+Tools such as `limma`, `edgeR`, `DESeq2`, and `ExpressionAtlas` workflows use ArrayExpress data for 
+expression analysis, benchmarking, and data reprocessing, especially in multi-species or microarray studies.
 </div>
 
 {% include accordion title="Limitations" class=" " controls="arrayexpress-3" icon=false %}
@@ -1340,20 +1402,19 @@ exprs(gse[[1]])
 
 {% include accordion title="CLI download" class=" " controls="arrayexpress-5" icon=false %}
 <div id="arrayexpress-5" class="accordion_content" markdown='1' hidden>
+ArrayExpress is EMBL-EBI's functional genomics archive, similar to [GEO](#geo), and includes transcriptomics, epigenetics, and proteomics datasets from microarrays and RNA-seq. 
+Since it's tightly integrated with BioStudies and [ENA](#ena), users typically download only the specific studies they need.
+
 ArrayExpress FTP site: <https://ftp.ebi.ac.uk/pub/databases/arrayexpress/>  
 
-1. Download metadata and processed data (example: `E-MTAB-2836`):
+1. Download metadata (13K) and processed data (3.5M) for Arabidopsis thaliana *E-MTAB-2836*:
 ```bash
-wget ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/experiment/MTAB/E-MTAB-2836/E-MTAB-2836.sdrf.txt
-wget ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/experiment/MTAB/E-MTAB-2836/E-MTAB-2836.processed.1.zip
+wget ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/experiment/MTAB/E-MTAB-2835/E-MTAB-2835.sdrf.txt
+wget ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/experiment/MTAB/E-MTAB-2835/E-MTAB-2835.processed.1.zip
 ```
 2. Access raw files if available:
 ```bash
-wget ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/experiment/MTAB/E-MTAB-2836/E-MTAB-2836.raw.1.zip
-```
-3. Search programmatically with EBI's API:
-```bash
-curl "https://www.ebi.ac.uk/arrayexpress/json/v3/experiments?keywords=breast+tumor"
+wget ftp://ftp.ebi.ac.uk/pub/databases/arrayexpress/data/experiment/MTAB/E-MTAB-2835/E-MTAB-2835.raw.1.zip
 ```
 </div>
 </div>
@@ -1407,6 +1468,8 @@ and support systems-level interpretations of omics data across species and conte
 - integrated in tools like DAVID, PANTHER, g:Profiler, clusterProfiler  
 - supports **cross-species comparisons** of gene function  
 
+GO is used by tools such as `topGO`, `clusterProfiler`, `GSEA`, `PANTHER`, `Blast2GO`, and `InterProScan` 
+for functional enrichment analysis, annotation, and pathway interpretation in gene expression and proteomics workflows.
 </div>
 
 {% include accordion title="Limitations" class=" " controls="go-3" icon=false %}
@@ -1433,13 +1496,16 @@ and support systems-level interpretations of omics data across species and conte
 
 {% include accordion title="CLI download" class=" " controls="go-5" icon=false %}
 <div id="go-5" class="accordion_content" markdown='1' hidden>
+The Gene Ontology includes both the GO term hierarchy (ontology) and gene–GO annotations for many species. 
+Due to frequent updates and moderate size, it is common to download GO data on demand, or access it through tools and libraries.
+
 GO FTP site: <http://current.geneontology.org/ontology/>  
 
-1. Download the ontology file (`OBO` format):
+1. Download the ontology file (`OBO` format, 30M):
 ```bash
 wget http://current.geneontology.org/ontology/go-basic.obo
 ```
-2. Download gene-to-GO annotations (e.g., human from Ensembl):
+2. Download gene-to-GO annotations (e.g., human from Ensembl, 15M):
 ```bash
 wget http://current.geneontology.org/annotations/goa_human.gaf.gz
 ```
@@ -1490,6 +1556,8 @@ curl https://www.ebi.ac.uk/QuickGO/services/ontology/go/terms/GO:0006915
 - used in **drug-target interaction prediction** and **disease mechanism studies**  
 - visual interpretation of omics data via `pathview` or [KEGG Mapper](https://www.genome.jp/kegg/mapper/)  
 
+Tools such as `ClusterProfiler`, `eggNOG-mapper`, `KAAS`, `BlastKOALA`, `KEGG Mapper`, and `Pathview` use KEGG 
+for functional annotation, KO assignments, and pathway enrichment analysis, especially in transcriptomics and metagenomics workflows.
 </div>
 
 {% include accordion title="Limitations" class=" " controls="kegg-3" icon=false %}
@@ -1516,25 +1584,39 @@ curl https://www.ebi.ac.uk/QuickGO/services/ontology/go/terms/GO:0006915
 
 {% include accordion title="CLI download" class=" " controls="kegg-5" icon=false %}
 <div id="kegg-5" class="accordion_content" markdown='1' hidden>
+KEGG is a widely used resource for pathway mapping, gene function, metabolism, and molecular interaction networks. 
+Due to licensing restrictions and size, KEGG is typically accessed on demand via APIs.
+
 KEGG FTP site: <https://www.kegg.jp/kegg/download/> *(Academic Subscription required)* 
 
-1. Download pathway definitions:
-```bash
-wget ftp://ftp.genome.jp/pub/kegg/pathway/pathway.list
+{% include alert class="tip" content="If you don’t have a KEGG subscription, you can still perform KEGG pathway analysis using tools like **clusterProfiler**, which access KEGG data through the public REST API. 
+This approach avoids manual downloads and provides seamless integration with gene lists for enrichment analysis." %}
+
+1. Run clusterProfiler in R environment:
+```r
+library(clusterProfiler)
+library(org.Hs.eg.db)
+
+# Gene list (Entrez IDs required for KEGG)
+gene_list <- c("7157", "5290", "1956", "673")  # Example
+
+# KEGG enrichment
+kegg_enrich <- enrichKEGG(gene = gene_list, organism = "hsa")
+
+# Make results readable (map Entrez → gene symbols)
+kegg_enrich <- setReadable(kegg_enrich, OrgDb = org.Hs.eg.db, keyType = "ENTREZID")
+
+# View top pathways
+head(kegg_enrich)
+
+# Plot
+barplot(kegg_enrich, showCategory = 10)
 ```
-2. Download organism-specific pathway mapping (e.g., human):
-```bash
-wget ftp://ftp.genome.jp/pub/kegg/pathway/organisms/hsa/hsa00010.keg
-```
-3. Use KEGG REST API to get pathway info:
-```bash
-curl https://rest.kegg.jp/list/pathway/hsa
-curl https://rest.kegg.jp/get/hsa00010
-```
-4. Convert gene to KEGG ID:
-```bash
-curl https://rest.kegg.jp/conv/genes/ncbi-geneid:7157
-```
+This approach:
+- works without a subscription
+- automatically queries KEGG REST API
+- downloads only what's needed
+- integrates directly with your data and downstream plotting
 </div>
 </div>
 </div>
@@ -1574,6 +1656,7 @@ curl https://rest.kegg.jp/conv/genes/ncbi-geneid:7157
 - integrate into **multi-omics pipelines** (genomics, proteomics, phosphoproteomics)  
 - export pathway data for **simulation**, **knowledge graphs**, or **network propagation**  
 
+Reactome data is supported by tools such as `clusterProfiler` via `enrichPathway()`, `ReactomePA` (R/Bioconductor package dedicated to Reactome), `GSEA`, `Cytoscape` & `ReactomeFI`, and `Pathview`. 
 </div>
 
 {% include accordion title="Limitations" class=" " controls="reactome-3" icon=false %}
@@ -1600,24 +1683,27 @@ curl https://rest.kegg.jp/conv/genes/ncbi-geneid:7157
 
 {% include accordion title="CLI download" class=" " controls="reactome-5" icon=false %}
 <div id="reactome-5" class="accordion_content" markdown='1' hidden>
+Reactome is a manually curated, open-access pathway database that covers human biology and inferred pathways for many other species. 
+Unlike KEGG, it is fully open and regularly updated, making it easy to access programmatically or through R packages for enrichment analysis.
+
 Reactome download portal: <https://reactome.org/download-data>  
 
-1. Download pathway hierarchy and mappings:
+1. Download pathway hierarchy (1.5M) and mappings (608K):
 ```bash
 wget https://reactome.org/download/current/ReactomePathways.txt
 wget https://reactome.org/download/current/ReactomePathwaysRelation.txt
 ```
-2. Download gene-to-pathway mappings (human):
+2. Download gene-to-pathway mappings (human, 153M):
 ```bash
 wget https://reactome.org/download/current/Ensembl2Reactome.txt
 ```
-3. Access pathway in BioPAX format:
+3. Access pathway in BioPAX format (161M). This includes the `.owl` (BioPAX level 3) files for all included species.
 ```bash
-wget https://reactome.org/download/current/BioPAX/Reactome_BioPAX_level3.owl.gz
+wget https://reactome.org/download/current/biopax.zip
 ```
-4. Query pathway info using REST:
+4. Query [pathway](https://reactome.org/ContentService/#/pathways) (and many other categories) info using [ContentService](https://reactome.org/ContentService/):
 ```bash
-curl https://reactome.org/ContentService/data/pathway/R-HSA-199420
+curl -X 'GET' 'https://reactome.org/ContentService/data/pathway/R-HSA-5673001/containedEvents' -H 'accept: */*'
 ```
 </div>
 </div>
@@ -1670,6 +1756,8 @@ enabling structural biology, docking studies, and mechanistic modeling of molecu
 - links proteins to **genetic variants** (via UniProtKB/Var)  
 - supports **systems biology** workflows by integrating with structure and pathway data  
 
+Tools such as `InterProScan`, `Prokka`, `funannotate`, `eggNOG-mapper`, and `DIAMOND` commonly use UniProt data for 
+protein function annotation, domain prediction, and custom sequence searches, making the pre-downloaded datasets on your HPC ideal for faster, offline analysis.
 </div>
 
 {% include accordion title="Limitations" class=" " controls="uniprot-3" icon=false %}
@@ -1693,22 +1781,37 @@ enabling structural biology, docking studies, and mechanistic modeling of molecu
 
 {% include accordion title="CLI download" class=" " controls="uniprot-5" icon=false %}
 <div id="uniprot-5" class="accordion_content" markdown='1' hidden>
+
+<div class="highlighted highlighted--highlighted"><div class="highlighted__body" markdown="1"> 
+UniProt is large (tens to hundreds of GB uncompressed), so when working with:
+- annotation tools like `Prokka`, `funannotate`, `InterProScan`
+- custom protein search via `BLAST` or `DIAMOND`
+- functional pipelines using KO, GO, EC mappings  
+it is recommended to use the existing files rather than redownloading. You’ll save time, storage, and bandwidth.
+</div></div>
+
+The directory **/reference/data/Uniprot/** (accessible on both supercomputers) contains multiple versions of UniProt releases, including:
+- dated releases: `2018-18-07`, `2020-17-06`, `2021-08-01`, `2023-09-12`, `2025-07-07`
+- a **latest/** symlink or folder pointing to the most recent version
+- **TrEMBL/** - a subset of automatically annotated protein entries
+- **uniprot_sprot_plants** - curated plant-specific Swiss-Prot entries
+
 UniProt FTP site: <https://ftp.uniprot.org/pub/databases/uniprot/>  
 
-1. Download Swiss-Prot (curated proteins):  
+1. Download Swiss-Prot (curated proteins, 89M):  
 ```bash
 wget ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/uniprot_sprot.fasta.gz
 ```
-2. Download TrEMBL (unreviewed proteins):
+2. Download TrEMBL (unreviewed proteins): **(WARNING: 59G)**
 ```bash
 wget ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/uniprot_trembl.fasta.gz
 ```
-3. Download by accession (via EDirect):
+3. Download by accession via [Entrez Direct](https://www.ncbi.nlm.nih.gov/books/NBK179288/) (entry P38398, 2.1K):
 ```bash
 # Fetch UniProt entry in text format
 esearch -db protein -query "P38398" | efetch -format fasta > RAD51_protein.fasta
 ```
-4. Programmatic query with cURL (REST API):
+4. Programmatic query with cURL (REST API, 2.1K):
 ```bash
 curl "https://rest.uniprot.org/uniprotkb/P38398.fasta" -o RAD51_protein.fasta
 ```
@@ -1751,6 +1854,8 @@ curl "https://rest.uniprot.org/uniprotkb/P38398.fasta" -o RAD51_protein.fasta
 - use in **docking simulations**, drug screening, and antibody modeling  
 - visualize molecular structures for teaching or presentations  
 
+Tools such as `PyMOL`, `Chimera/X`, `MODELLER`, `AlphaFold`, `Rosetta`, and `MDAnalysis` use PDB structures for 
+visualization, homology modeling, structure prediction, or molecular dynamics simulations.
 </div>
 
 {% include accordion title="Limitations" class=" " controls="pdb-3" icon=false %}
@@ -1777,13 +1882,15 @@ curl "https://rest.uniprot.org/uniprotkb/P38398.fasta" -o RAD51_protein.fasta
 
 {% include accordion title="CLI download" class=" " controls="pdb-5" icon=false %}
 <div id="pdb-5" class="accordion_content" markdown='1' hidden>
+Due to the size and frequent updates of the full PDB archive, users typically download only specific structures (by PDB ID) or small subsets relevant to their study.
+
 PDB FTP: <https://files.rcsb.org/>  
 
-1. Download structure by PDB ID (e.g., `1A2B`):
+1. Download structure by PDB ID (e.g., `1A2B`, 151K):
 ```bash
 wget https://files.rcsb.org/download/1A2B.pdb
 ```
-2. Download `mmCIF` version (preferred for newer tools):
+2. Download `mmCIF` version (preferred for newer tools, 209K):
 ```bash
 wget https://files.rcsb.org/download/1A2B.cif
 ```
@@ -1822,6 +1929,56 @@ try these short questions to test your knowledge and avoid common pitfalls when 
 
 <div class="process-list ul" markdown="1">
 
+
+### Databases on SCINet HPC
+
+The SCINet supercomputers hosts a wide range of pre-downloaded bioinformatics databases and resources under the **/reference/data** directory. 
+These resources support various tools such as `BLAST+`, `Kraken`, `BUSCO`, `Prokka`, `HUMAnN`, `Kaiju`, and others. 
+
+```bash 
+ls /reference/data/ 
+```
+
+<details markdown="1"><summary><b>List of pre-downloaded databases on SCINet HPC</b></summary>
+
+{% include table caption="" sortable=true content="| Folder Path | Description | Common Tools |
+|-------------------------|-----------------------------------------------------------|------------------------------------------------|
+| BUSCO/                  | lineage datasets for benchmarking genome completeness     | `BUSCO`, `funannotate`                         |
+| Uniprot/                | protein sequence data from UniProtKB                      | `InterProScan`, `eggNOG`, `Prokka`, `BLAST`    |
+| Pfam/                   | protein families (HMMs)                                   | `HMMER`, `InterProScan`, `Prokka`              |
+| RepBase/                | repetitive element sequences                              | `RepeatMasker`, `RepeatModeler`                |
+| Dfam/                   | profile HMMs for repetitive elements                      | `RepeatMasker`, `EDTA`                         |
+| NCBI/taxdump/           | NCBI Taxonomy dump files                                  | `Kraken2`, `Kaiju`, `MEGAN`, `GTDB-Tk`         |
+| NCBI/blast/             | preformatted BLAST databases                              | `BLAST+`                                       |
+| NCBI/blast_taxdb/       | taxonomy information for BLAST DBs                        | `BLAST+`, `blastdbcmd`                         |
+| NCBI/kraken*/           | Kraken database build, KrakenUniq database build,  compact Kraken DB for fast classification | `Kraken`    |
+| NCBI/16SMicrobial/      | NCBI's 16S reference sequences                            | `Kraken`, `PhyloFlash`, `QIIME2`, `Kaiju`      |
+| gtdbtk/                 | GTDB reference genomes and taxonomy                       | `GTDB-Tk`                                      |
+| eggnogdb/               | ortholog and functional annotation database               | `eggNOG-mapper`, `DRAM`, `funannotate`         |
+| dbCAN2/                 | carbohydrate-active enzyme HMMs                           | `dbCAN2`, `DRAM`                               |
+| pantherdb/              | protein family classification                             | `InterProScan`, `Gene Ontology tools`          |
+| humann/                 | metabolic and pathway annotation databases                | `HUMAnN`                                       |
+| humann2/                | previous version of HUMAnN annotation DBs                 | `HUMAnN2`                                      |
+| metaphlan/              | marker gene database for taxonomic profiling              | `MetaPhlAn`, `HUMAnN`                          |
+| checkm/                 | marker sets for genome quality assessment                 | `CheckM`                                       |
+| checkm2/                | updated marker sets and models for CheckM2                | `CheckM2`                                      |
+| get_homologues/         | gene family clustering data                               | `GET_HOMOLOGUES`                               |
+| picrust2/               | functional prediction reference files                     | `PICRUSt2`                                     |
+| snpEff/                 | variant effect annotation databases                       | `SnpEff`                                       |
+| alphafold/              | protein structure prediction models                       | `AlphaFold`                                    |
+| alphafill/              | structural complement to AlphaFold (ligand binding)       | `AlphaFill`, structural modeling               |
+| omegafold/              | alternative structure prediction models                   | `OmegaFold`                                    |
+| rosettafold/            | deep learning models for structure prediction             | `RosettaFold`                                  |" %}
+
+**NCBI folder** includes additional species-specific directories (e.g., **mus_musculus/**, **pacific_oyster/**) that typically contain reference genomes, 
+annotations, or indexes used in species-specific analyses such as alignment, variant calling, or functional annotation.
+</details>
+
+{% include alert class="tip" content="The contents of **/reference/data/** may change over time as new resources are added or updated. Before starting your analysis, it's a good idea to explore the directory to check for pre-downloaded datasets that could save you time." %} 
+
+{% include alert class="highlighted" content="Before downloading any database manually, it's recommended to check these `/reference/data` location first to avoid redundancy. If you need a resource that isn't there but may benefit others, [contact the VRSC](https://scinet.usda.gov/support/contact#contact-the-vrsc) to request its addition." %}
+
+
 ### Efficient downloads
 
 Large biological datasets (e.g., genomes, raw reads, daily database updates) can be many gigabytes in size. 
@@ -1833,29 +1990,32 @@ Tools like **`aria2c`** and **Aspera (`ascp`)** offer faster, more reliable alte
 - use **EDirect** for specific records by accession  
 
 
-**`wget`** (simple & robust)
+**`wget`** (simple & robust; `-c` allows resume if interrupted) or **`curl`**
 ```bash
-wget -c ftp://ftp.ncbi.nlm.nih.gov/genbank/gbdaily.seq.gz
+wget -c ftp://ftp.ncbi.nlm.nih.gov/genbank/README.genbank
+curl ftp://ftp.ncbi.nlm.nih.gov/genbank/README.genbank -o README.genbank 
 ```
-`-c` allows resume if interrupted.
 
-
-**`aria2c`** (multi-connection downloader)
+**`aria2c`** (multi-connection downloader, not available on Atlas)
 ```bash
 # Split file into 8 segments, download in parallel
-aria2c -x 8 -s 8 ftp://ftp.ncbi.nlm.nih.gov/genbank/gbdaily.seq.gz
-aria2c -x 8 -s 8 ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR000/ERR000111/ERR000111.fastq.gz
+aria2c -x 8 -s 8 ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR000/ERR000001/ERR000001_1.fastq.gz
 ```
 
-**`ascp`** (Aspera; much faster for raw reads)
-- only from [ENA](#ena)/[SRA](#sra) databases
+**`ascp`** ([Aspera](https://scinet.usda.gov/guides/data/datatransfer#data-transfer-to-ncbi); much faster for raw reads; only from [ENA](#ena)/[SRA](#sra) databases)
 ```bash
-ascp -QT -l 300m -P33001 \
-    era-fasp@fasp.sra.ebi.ac.uk:/vol1/fastq/ERR000/ERR000111/ERR000111.fastq.gz ERR000111.fastq.gz
+# syntax
+ascp -i <asperaweb_id_dsa.openssh with path> -k1 -Tr –l100m anonftp@ftp.ncbi.nlm.nih.gov:/<files_to_transfer> <local_destination>
+# test download
+ascp -T -l640M -i /opt/aspera/etc/asperaweb_id_dsa.openssh anonftp@ftp.ncbi.nlm.nih.gov:1GB ./
 ```
 
-**`esearch`** (NCBI EDirect; download by accession across INSDC)
+**`esearch`** ([NCBI EDirect](https://www.ncbi.nlm.nih.gov/books/NBK179288/); download by accession across INSDC)
 ```bash
+module load edirect        
+# or user-install if not available
+sh -c "$(curl -fsSL https://ftp.ncbi.nlm.nih.gov/entrez/entrezdirect/install-edirect.sh)"
+
 # Fetch a nucleotide sequence in FASTA format
 esearch -db nucleotide -query "NC_001666.2" | efetch -format fasta > corn_chloroplast.fasta
 
@@ -1863,7 +2023,7 @@ esearch -db nucleotide -query "NC_001666.2" | efetch -format fasta > corn_chloro
 esearch -db nucleotide -query "NC_001666.2" | efetch -format gb > corn_chloroplast.gb
 
 # Fetch raw read metadata by SRA/DRA/ERA accession
-esearch -db sra -query "DRR000001" | efetch -format runinfo > DRR000001.csv
+esearch -db sra -query "SRP433780" | efetch -format runinfo > SRP433780.csv
 ```
 
 
