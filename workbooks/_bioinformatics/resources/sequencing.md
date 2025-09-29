@@ -24,7 +24,7 @@ applications:
   - Evaluating experimental design
   - Interpreting metadata associated with sequence datasets
 
-terms: [Biological Sample, Nucleotide Sequence, Base, Reads, Sequencing Technology, High-Throughput Sequencing, Short-Read, Long-Read, Illumina, Nanopore, PacBio, RNA-seq, Whole Genome Sequencing, Amplicon Sequencing, Metagenomics, Read Length, Throughput, Coverage, Platform Bias, Metadata]
+terms: [Biological Sample, Sample Metadata, Nucleotide Sequence, Base, Sequencing Technologies, High-Throughput Sequencing, Throughput, Platform Bias, Read, Read Length, Coverage]
 
 takeaways: 
   - The choice of platform and assay type depends on the research goal/biological question and sample type.
