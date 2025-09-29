@@ -11,7 +11,6 @@ wg: Bioinformatics
 description: ""
 type: reference material
 
-
 objectives: 
   - Understand the role of standard file formats in bioinformatics workflows.
   - Learn the structure and key components of common formats (e.g., FASTQ, SAM/BAM, VCF, GTF).  
@@ -36,7 +35,6 @@ takeaways:
   - Maintain consistency between file formats and reference versions (e.g., genome build, chromosome naming).  
 
 overview: [objectives, applications, terminology]
-
 
 questions:
   - question: "What type of sequences can FASTA files contain?"
@@ -162,8 +160,8 @@ Many of these formats require paired index files (`.bai`, `.tbi`, `.fai`) to all
 | [SAM](#sam--bam--cram)  | read alignments (text-based)               | human-readable; includes mapping, flags, optional tags       |
 | [BAM](#sam--bam--cram)  | read alignments (binary)                   | compressed version of SAM; requires `.bai` index             |
 | [CRAM](#sam--bam--cram) | compressed alignments                      | smaller than BAM; needs reference to decompress              |
-| [GTF](#gtf)             | gene annotations                           | tab-delimited; used by many RNA-seq tools                    |
-| [GFF3](#gff)            | general feature format (genome annotations)| more flexible than GTF; used in genome browsers              |
+| [GTF](#gtf)             | feature annotations <br>(gene and transcript) | tab-delimited; used by many RNA-seq tools; focused subset of features, standardized for gene models |
+| [GFF3](#gff)            | general feature annotations                | broader scope, more flexible than GTF; used in genome browsers |
 | [BED](#bed)             | genomic intervals                          | used for peak regions, annotation features, etc.             |
 | [VCF](#vcf--bcf)        | variant calls (SNPs, indels)               | text-based; includes genotypes, quality, annotations         |
 | [BCF](#vcf--bcf)        | binary VCF                                 | compressed version of VCF; faster to parse                   |
@@ -409,7 +407,14 @@ GATTTGGGGTTCAAAGCAGTATCGATCAAATAGTTA     #2
 - Line 1: starts with @, contains sequence identifier.
 - Line 2: raw nucleotide sequence.
 - Line 3: + separator (optionally repeats identifier).
-- Line 4: ASCII-encoded quality scores, same length as sequence.
+- Line 4: ASCII-encoded quality string of the same length as sequence.
+
+<div class="process-list ul" markdown="1">
+
+### Quality score
+
+{% include nested_page nest="/bioinformatics/resources/nomenclature" %}
+</div>
 
 <div class="highlighted highlighted--error ">
 <div class="highlighted__body"  markdown="1"><h4>Common issues</h4></div>
@@ -1173,21 +1178,20 @@ bcftools view variants.bcf > variants.vcf
 
 ## Practical guidance
 
-### Match tasks to file formats
-
-The choice of file format depends on the stage of analysis and the type of data being processed.  
+The choice of file format depends on the stage of analysis and the type of data being processed. 
 Understanding what each format stores and how it should be validated, indexed, or converted is essential for building reliable bioinformatics workflows.  
 
 <div class="usa-accordion " >
 {% include accordion title="Quick Quiz: Check your understanding" controls="quiz-formats" expanded=false class="question" icon=true %}
 <div id="quiz-formats" class="accordion_content" markdown='1'>
-Now that you've explored standard file formats, their structure, and their applications,  
+Now that you've explored standard file formats, their structure, and their applications, 
 try these short questions to test your knowledge and avoid common pitfalls when working with genomic data.
 
 {% include question qid="1,2,3,4,5,6,7,8" %}
 </div>
 </div>
 
+<div class="process-list ul" markdown="1">
 
 ### Genomic coordinate system
 
@@ -1196,8 +1200,8 @@ Always check whether a format is **0-based or 1-based**, and whether intervals a
 
 | **Format**   | **Coordinate system** | **Start** | **End**   | **Notes** |
 |--------------|-----------------------|-----------|-----------|-----------|
-| **BED**      | 0-based, half-open    | inclusive | exclusive | `chromStart` is 0-based; `chromEnd` is 1-based. Interval length = `end – start`. |
-| **GTF/GFF3** | 1-based, closed       | inclusive | inclusive | Both start and end are 1-based. Interval length = `end – start + 1`. |
+| **BED**      | 0-based, half-open    | inclusive | exclusive | `chromStart` is 0-based; <br>`chromEnd` is 1-based. <br>`interval_len = end – start` |
+| **GTF/GFF3** | 1-based, closed       | inclusive | inclusive | Both start and end are 1-based. `interval_len = end – start + 1` |
 | **VCF**      | 1-based, left-aligned | inclusive | inclusive | Variants are anchored at a single 1-based position; indels extend coordinates. |
 
 
@@ -1216,7 +1220,7 @@ chr1    11869    .    A    T    60    PASS    .
 ```
 
 **Key difference:**  
-- In BED, the same region starts at 11868 (because of 0-based indexing) and ends at 12227 (exclusive).  
+- In BED, the same region starts at 11868 (0-based indexing) and ends at 12227 (exclusive).  
 - In GTF, the interval is written exactly as 11869–12227 (inclusive).  
 - In VCF, only a single 1-based position is specified (e.g., a SNP at 11869).  
 
@@ -1257,6 +1261,8 @@ liftOver input.bed reference.chain.gz output_ref.bed unMapped.bed
 - `output_ref.bed` - successfully converted coordinates in the target assembly
 - `unMapped.bed` - intervals that could not be mapped (due to gaps, assembly differences, etc.)
 </div>
+</div>
+
 </div>
 
 
