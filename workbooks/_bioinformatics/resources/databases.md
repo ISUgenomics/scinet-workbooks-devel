@@ -1930,7 +1930,7 @@ try these short questions to test your knowledge and avoid common pitfalls when 
 <div class="process-list ul" markdown="1">
 
 
-### Databases on SCINet HPC
+### Databases on SCINet
 
 The SCINet supercomputers hosts a wide range of pre-downloaded bioinformatics databases and resources under the **/reference/data** directory. 
 These resources support various tools such as `BLAST+`, `Kraken`, `BUSCO`, `Prokka`, `HUMAnN`, `Kaiju`, and others. 
