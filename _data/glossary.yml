@@ -57,9 +57,14 @@ glossary:
     definition: A command is a text-based instruction given to a computer through the Command Line Interface (CLI) to perform a specific task, such as running a program, managing files or processing data. Commands trigger the execution of various processes.
     related: [Unix Shell, Terminal, Bash, Command Line]
 
-  - term: Container
+  - term: Conda
     cat: Computing Skills
-    definition: A executable package of specific application code and its dependencies. A software container includes all necessary elements needed to run the software such that it can be run in any environment/system.
+    definition: An open-source package and environment manager used to install, update, and manage bioinformatics software reproducibly.
+    related: [Environment File, Module System]
+
+  - term: Container
+    cat: [Computing Skills, Bioinformatics]
+    definition: An executable package of specific application code and its dependencies, bundled together into a consistent, portable environment. This eliminates the need for users to install or configure software manually and ensures that tools in compatible versions run reliably across different systems.  
     related: [Programming]
 
   - term: Data Science
@@ -84,7 +89,12 @@ glossary:
   - term: Environment
     cat: Computing Skills
     compile: [Development environment, Programming environment, CLI Environment]
-    
+
+  - term: Environment File
+    cat: Computing Skills
+    definition: A configuration file listing software packages and versions required to reproduce a specific computational environment.
+    related: [Conda, Module System]
+
   - term: Development environment
     cat: Computing Skills
     definition: A workspace for developers where they create and modify the source code of their application (software, web, etc.).
@@ -97,6 +107,11 @@ glossary:
     cat: Computing Skills
     definition: is the organization of data retained in the digital storage on the computing machine. The content consists of hierarchically ordered folders and files. Folders are user-categorized containers for files. Files contain data and consume digital storage space. Some files belong to the operating system and include configurations, source code, and executables of various programs. Each file and folder is assigned an absolute path that defines its location in the file system. Knowing this path is very useful for navigating the file system from the command line.
     related: [Operating System, Command Line, Bash Scripting]
+
+  - term: Git Repository
+    cat: Computing Skills
+    definition: A storage space where code, documents, and version history are tracked and managed with Git, supporting collaboration and reproducibility.
+    related: [Metadata, Project Directory]
 
   - term: Gnuplot
     cat: Data Science
@@ -170,11 +185,21 @@ glossary:
     definition: A field of study focused on developing advanced computer algorithms that search for deeply coupled patterns in massive, disparate data and enable knowledge extraction. Machine learning methods are trained with large sets of data, and they learn from examples to make intelligent decisions without being explicitly programmed.
     related: [Big Data, Unstructured Data, data science, artificial intelligence]
 
+  - term: Metadata
+    cat: Data Science
+    definition: Descriptive information about data (such as origin, format, or parameters) that provides context and supports reproducibility.
+    related: [Project Directory, Environment File]
+
   - term: Module
     cat: Computing Skills
     compile: [Module system]
     definition: A small piece of a larger program. Modular programming is a way to design software such that each module is independent and can be used to execute a part of the function.
     related: [Programming]
+
+  - term: Module System
+    cat: Computing Skills
+    definition: A system that allows users to dynamically load, unload, and manage software packages on HPC.
+    related: [Conda, Environment File]
 
   - term: Nextflow
     cat: Data Science
@@ -200,6 +225,11 @@ glossary:
     definition: means creating a set of instructions for a computer on how to execute operations in order, following the assumptions and logical conditions of the algorithm. Many programming languages facilitate communication between the code developer and the computing machine. Bash enables a shell scripting using a command-line interpreter for automating repetitive tasks by executing pre-defined commands according to requested conditionals and loops. More advanced analytical operations, including mathematical and statistical functions, modifying complex data structures, or processing non-text data, usually require a higher-level programming language such as Python or C++.
     related: [Algorithm, Command Line, Bash, Python, R, C++]
 
+  - term: Project Directory
+    cat: Computing Skills
+    definition: "A structured workspace on SCINet supercomputers containing data, scripts, results, and documentation, usually associated with ARS Research Projects. After being added to the project group, users are able to access <b>/peoject/</b>project_name, <b>/90daydata/</b>project_name on Atlas and Ceres, and <b>/LTS/project/</b>project_name on Juno archive storage."
+    related: [Scratch Space, Metadata]
+
   - term: Pseudocode
     cat: Computing Skills
     definition: A representation of code or algorithm, summarizing the code. It is a readable step by step description of what the program should do.
@@ -209,6 +239,11 @@ glossary:
     cat: Computing Skills
     definition: in distributed computing, it is an organized list (sequence) of tasks submitted to the job scheduler that manages the computational resources and decides to start or stop the task. The queue is ordered by wait time, user priority, and availability of requested resources. When the combination of these factors is advantageous, the submitted task begins executing, and so its status changes from waiting to running. The queuing system is typical for distributed computing, such as a network of computer clusters shared by more users. Some of the most popular workload managers are SLURM and PBS.
     related: [HPC, Distributed Computing, SLURM, PBS]
+
+  - term: Quota
+    cat: Computing Skills
+    definition: A <a href="https://scinet.usda.gov/guides/data/storage#quotas" target="_blank">storage limit</a> set by the HPC system, defining how much space a user or group can use.
+    related: [Scratch Space, Project Directory]
 
   - term: Raw Data
     cat: Data Science
@@ -227,6 +262,11 @@ glossary:
   - term: SCINet supercomputers
     cat: Computing Skills
     definition: Powerful computing infrastructure used to process large datasets efficiently, often required in modern research. This infrastructure provides two supercomputers (Atlas, Ceres) and Juno (archive storage).
+
+  - term: Scratch Space
+    cat: Computing Skills
+    definition: High-performance temporary storage on an HPC system, intended for active computations and subject to automatic purging. <i>See <a href="https://scinet.usda.gov/guides/data/storage#temporary-local-node-storage" target="_blank">Temporary Local Node Storage</a> guide for SCINet users.</i>
+    related: [Quota, Project Directory]
 
   - term: Shell
     cat: Computing Skills
