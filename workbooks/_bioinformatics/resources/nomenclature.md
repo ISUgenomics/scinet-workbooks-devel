@@ -1,7 +1,7 @@
 ---
 title: Reads, contigs, scaffolds, and nucleotide sequences 
 svg: /genomics.svg
-author: Aleksandra Badaczewska
+author: [Aleksandra Badaczewska, Andrew Severin]
 
 header:
   overlay_image: 07-wrangling/assets/img/07_data_acquisition_banner.png
@@ -187,7 +187,10 @@ CCCFFFFFHHHHHJJJJJJJHIIJJFFFEDEEEEEEEDDDDDDDDEDD$$      #4 QUALITY STRING (Phred
 
 ### Quality score
 
-Quality scores indicate the confidence in the accuracy of each base call made by the sequencing machine.
+<!--page start-->
+
+Quality scores indicate the confidence in the accuracy of each base call made by the sequencing machine. 
+They are critical for quality control and downstream analysis.
 ```markdown
 TTAACCTTGGTTTTGAACTTGAACACTTAGGGGATTGAAGATTCAACAAC  # Line 2: nucleotide sequence  
 CCCFFFFFHHHHHJJJJJJJHIIJJFFFEDEEEEEEEDDDDDDDDEDD$$  # Line 4: quality scores  
@@ -204,6 +207,7 @@ where each character corresponds to a numerical value that expresses the probabi
 - Q30 means 1 in 1,000 chance (99.9% accuracy)
 - Q40 means 1 in 10,000 chance (99.99% accuracy)
 
+<!--page end-->
 
 ## Contig
 
