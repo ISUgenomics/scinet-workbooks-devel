@@ -1,5 +1,5 @@
 ---
-title: Project setup on SCINet’s supercomputers
+title: Project setup and storage management
 description: ""
 type: interactive tutorial
 author: Aleksandra Badaczewska
@@ -24,23 +24,136 @@ applications:
   - Writing <b>README</b> files at the project and workspace levels to document workflows and decision points.
   - Ensuring reproducibility and collaboration by maintaining organized structures and consistent documentation.
 
-terms: [Project Directory, Directory Tree, Pipeline Workspace, Working Directory, Scratch Space, Documentation, README]
+terms: [Directory Tree, Project Directory, Workspace, Working Directory, Scratch Space, Documentation, README]
 
 takeaways: 
-  - A well-structured directory tree (project setup) is the foundation of efficient and reproducible research projects. 
+  - A well-structured directory tree (project setup) is the foundation of efficient and reproducible research. 
   - Pipeline workspaces with nested subfolders make it easier to manage multiple analysis versions or variants.
+  - <b>README</b> files act as living documentation, helping both current and future collaborators understand the project layout, workflow choices, and data handling. Create one per level in your project directory tree.
   - The working directory determines where jobs are executed and files saved. Choose <b>/project</b>, <b>/90daydata</b>, or <b>$TMPDIR</b> based on performance and retention needs.
-  - <b>$TMPDIR</b> provides high-performance scratch storage but must be used carefully; copy outputs back to permanent storage after jobs finish. 
-  - <b>README</b> files act as living documentation, helping both current and future collaborators understand the project layout, workflow choices, and data handling.
+  - <b>$TMPDIR</b> provides high-performance scratch storage but must be used carefully. Copy outputs back to permanent storage before job finishes (or before you exit the allocated compute node). 
 
 overview: [objectives, applications, terminology]
+
+
+questions:
+  - question: "You have just activated your SCINet account but are not yet a member of any project. You can practice and complete some tutorials. Where should you work?"
+    title: "First Steps Without a Project"
+    qid: 1
+    answers:
+      - "In your `/home` directory, since it is private and available immediately."  
+      - "In `90daydata/project`, even without membership, because it is shared among all users."  
+      - "In `/90daydata/shared`, since it is open to everyone and does not require project membership."  
+      - "In `$TMPDIR`, because it is created automatically for each job."  
+    answer: 3
+    responses:
+      - "`/home` is private, but it is not intended for storing or running research or tutorial data beyond lightweight configs."  
+      - "`90daydata/project` requires membership the same way `/project` does. You cannot write there without being part of a project."  
+      - "Correct! `/90daydata/shared` is accessible without project membership and is suitable for practicing tutorials, though files are purged after 90 days."  
+      - "`$TMPDIR` is temporary job-local storage and not a suitable location for working through tutorials. Also, to run jobs on compute nodes of either cluster, the jobs need to be associated with a <b>slurm account</b>, which has the same name as the project directory. The slurm account for users without access to project directories is called `sandbox`. In your very first SLURM scripts use `#SBATCH -A sandbox`."  
+
+  - question: "Which location is most appropriate for installing group-shared software?"
+    title: "Software Shared Among Project Members"
+    qid: 2
+    solution: "The **/project** directory is the main persistent location for group-level tasks. Software useful to project contributors should be installed in a dedicated subfolder, e.g., `/project/<project_name>/software/tool_X/`.  <br>Before adding a new tool, always check if it is already available as a module (`module avail <tool>`) or as a container (`ls /reference/containers`). Be sure to set access permissions so that your project members can use the installed tools/environments. <br>
+    ```chmod -R g+rwx /project/<project_name>/software/<tool_name>```"
+ 
+  - question: "What is the main purpose of defining a working directory in your job script?"
+    title: "The Role of Working Directory"
+    qid: 3
+    solution: "The working directory is the location where jobs run and where output files are written by default. By default, this is the current directory from which the script is executed. To perform calculations in a different location, enter it explicitly at the start of your script (e.g., with cd) or assign an absolute path to a `WORKDIR` variable and reference it for saving outputs."
+
+  - question: "Why is it unsafe to leave the results in a workspace created under /90daydata?"
+    title: "90daydata Storage Risk"
+    qid: 4
+    solution: "Files in `/90daydata` are automatically purged 90 days after last access. Critical outputs should be copied to `/project` for safe keeping."
+
+  - question: "Which storage location provides the fastest I/O on a compute node?"
+    title: "Processing Multiple Small Files"
+    qid: 5
+    answers:
+      - /home
+      - $TMPDIR
+      - /90daydata/shared
+    answer: 2
+    responses: 
+      - "`/home` is intended for personal scripts and configurations. Running intensive I/O tasks here can lead to poor performance and is discouraged."  
+      - "Correct! `$TMPDIR` is local scratch space on a compute node (only!) designed for intensive input/output operations during job execution."
+      - "`/90daydata/shared` offers large temporary storage without quota but it does not provide the fastest I/O on a compute node."
+
+  - question: "A user tries to run a job referencing data stored on another cluster’s filesystem. <br>Why will this fail?"
+    title: "Cross-Cluster Data Synchronization"
+    qid: 6
+    solution: "Data must first be transferred to the supercomputer before jobs can use it. 
+      The two SCINet clusters have separate project file systems, but they share the same directory structure. This means that paths will look the same across clusters (e.g., `/project/<project_name>`), but the contents are not synchronized. File systems cannot be mounted across clusters by users. <br>Always ensure you are developing and running pipelines on the same cluster where your raw data is stored. To confirm what is available, list your project directory with: <br>
+      ```ls /project/<project_name>```"
+
+  - question: "If a job fails due to missing input files while using `$TMPDIR` as the working directory, what is the most likely cause?"
+    title: "Inputs Location for $TMPDIR"
+    qid: 7
+    answers:
+      - The files were placed in `$TMPDIR`, which is removed after the job ends.
+      - The input files are stored in `/project`, which cannot be used by compute nodes.
+      - The directory tree is too deeply nested for the scheduler to access.
+      - The inputs were not copied to `$TMPDIR`. 
+    answer: 4
+    responses:
+      - "`$TMPDIR` is temporary, but storage clean-up happens after the job ends, not during execution."  
+      - "`/project` is fully accessible to compute nodes."  
+      - Deep nesting does not prevent access as long as correct paths are used.  
+      - "Correct! When using `$TMPDIR` as the working directory, inputs must either be copied into `$TMPDIR` before tool/command execution, or a shell variable (e.g., `INPUTS`) should be set with the absolute path to the original input files. <br>define input path: `INPUTS=/project/<project_name>/raw_data` <br>A) copy inputs: <br>`cp ${INPUTS}/* $TMPDIR` <br>`cd $TMPDIR` <br> `<tool> <input_file> ` <br>B) or reference inputs location: <br> `cd $TMPDIR` <br> `<tool> ${INPUTS}/input_file` <br>See section [Manage storage: $TMPDIR](/computing-skills/scinet/project_setup#tmpdir) for an example script. "
+
+  - question: "A job script developed in `/project/<project_name>/RNASEQ_pipeline` sets `WORKDIR=$PWD`. The user submits a job from `/home` with the command <br>`sbatch /project/<project_name>/RNASEQ_pipeline/run_job.sh` <br>Will they find results in their project directory? What is the most likely issue?"
+    title: "Using Environment Variables in Job Scripts"
+    qid: 8
+    answers:
+      - "`$PWD` expands to the submission directory (`/home/user`), not the project pipeline directory."  
+      - "`/project/<project_name>/RNASEQ_pipeline` is not accessible from compute nodes."  
+      - "`$PWD` points to `$TMPDIR` during job execution."  
+      - "The results exceeded the quota in `/project/<project_name>` and were deleted."  
+    answer: 1
+    responses:
+      - "Correct! Using `$PWD` ties the working directory to the submission location (`/home/user`). To ensure results go to the project directory, in your script define `WORKDIR=/project/<project_name>/results` with an absolute path and enter it using `cd $WORKDIR`."  
+      - "`/project` is fully accessible from compute nodes."  
+      - "`$PWD` does not automatically point to `$TMPDIR`. It reflects the directory where the job was submitted."  
+      - "Quotas in `/project` do not cause automatic deletion of files."  
+
+  - question: "A user sets inside their job script: <br>`WORKDIR=results` <br>`mkdir -p $WORKDIR && cd $WORKDIR` <br>and submits the job from `/project/<project_name>/scripts`. They expected the outputs to appear in `/project/<project_name>/results`. Where will the outputs actually be written, and why?"
+    title: "Using Relative vs. Absolute Paths"
+    qid: 9
+    answers:
+      - Outputs will be in `/project/<project_name>/results` because the system resolves relative paths to the project root.  
+      - Outputs will be in `/project/<project_name>j/scripts/results` because `results` is created relative to the submission directory.  
+      - Outputs will be in `/home/results` because relative paths default to $HOME directory.  
+      - The job will fail because `mkdir` cannot be used with relative paths.  
+    answer: 2
+    responses:
+      - "Incorrect. The scheduler does not automatically map relative paths to `/project/<project_name>/results`."  
+      - "Correct! Since `results` is a relative path, it is created under the submission directory (`/project/<project_name>/scripts`). Always use absolute paths (e.g., `WORKDIR=/project/<project_name>/results`) to avoid this mistake."  
+      - "Relative paths do not point to your /home directory by default. `$HOME` or `~` must be explicitly referenced."  
+      - "The command itself is not the problem, `mkdir` fully supports relative paths."  
+
+  - question: "For the past 9 months, you’ve been working daily using Ceres, and this week you finally started creating the figures for your publication. This morning, you log in to Jupiter interface via OOD excited to continue, only to learn the supercomputer has suffered a major failure causing complete data loss. Which of the following practices would have saved your results?"
+    title: "Data Lifecycle and Backup Awareness"
+    qid: 10
+    answers:
+      - "Keeping important datasets and results in `/home`."  
+      - "Regularly transferring key data to the backed-up LTS storage on Juno using Globus."  
+      - "Using `$TMPDIR` for storing final outputs, since it is fast."  
+      - "Relying on `/project` for long-term storage, since it is permanent."  
+    answer: 2
+    responses:
+      - "`/home` is private but not backed up, and not suitable for storing research data."  
+      - "Correct! Only LTS storage is backed up! Transferring critical datasets and results there with Globus ensures they are preserved even if supercomputer storage fails."  
+      - "`$TMPDIR` is erased at the end of each job - it cannot be used for storing final results."  
+      - "`/project` is permanent in terms of allocation, but not backed up - data can still be lost in case of hardware failure."  
 
 ---
 
 
 <div class="highlighted highlighted--basic"><div class="highlighted__body" markdown="1">
 An active SCINet account with access to shared and project directories is required to complete this tutorial. 
-Basic familiarity with the [SCINet File System](/computing-skills/scinet/file_system) and [Shell interface](/computing-skills/scinet/interfaces) for navigating directories and managing files is also expected.
+Basic familiarity with the [SCINet File System](/computing-skills/scinet/file_system) and [Shell interface](/computing-skills/scinet/interfaces) for [navigating directories](/computing-skills/command-line/#navigating-the-unix-file-system) and [managing files](/computing-skills/command-line/#file-management-in-the-shell) is also expected.
 </div></div>
 
 
@@ -70,15 +183,10 @@ The goal is to help you manage research projects efficiently by choosing the rig
 
 ## Manage project structure
 
-<div class="highlighted highlighted--basic"><div class="highlighted__body" markdown="1"> 
-A **workspace** is a [directory tree](#directory-tree) created by a user to organize input data, scripts, intermediate files, and results for a specific analysis, pipeline, or computational task. A **working directory** is the active location (usually within a workspace) where computations are executed and outputs are written during a run.
-
-</div></div>
-
 Once you have access to the specific [ARS Research Project](/computing-skills/scinet/file_system#project-directory) (i.e., `<project_name>`), you can create your own nested directories under the locations assigned to that project:
-- **/project/**`<project_name>` on supercomputers (Atlas, Ceres)
-- **/90daydata/**`<project_name>` on supercomputers (Atlas, Ceres) 
-- **/LTS/project/**`<project_name>` on archive storage (Juno)
+- **/project/**`<project_name>` on supercomputers (Atlas, Ceres) - base space for your project with quota
+- **/90daydata/**`<project_name>` on supercomputers (Atlas, Ceres) - large short-term storage
+- **/LTS/project/**`<project_name>` on archive storage (Juno) - long-term storage, periodically backed up
 
 The number of nested workspaces is not limited, but it is important to structure them consistently to keep the project manageable and reproducible.
 
@@ -130,13 +238,11 @@ This allows individual users to test tools or develop pipelines independently, w
 </details>
 </div></div>
 
-<div class="highlighted highlighted--highlighted"><div class="highlighted__body" markdown="1"> 
-In the **/90daydata/** location, only create workspaces for selected pipelines or analyses that require large data loads or heavy computations with large intermediate files exceeding the project quota.   
-- Scripts and tools can be called directly from their original location in **/project/** (with proper permissions). The working directory and output paths should be set to the **/90daydata/** location within your job submission script.  
-- Once computations are completed, move the key outputs to **/project/** or archive them on Juno.
-</div></div>
-
 ### Pipeline Workspace
+
+<div class="highlighted highlighted--basic"><div class="highlighted__body" markdown="1"> 
+A **workspace** is a [directory tree](#directory-tree) created by a user to organize input data, scripts, intermediate files, and results for a specific analysis, pipeline, or computational task. A **[working directory](#working-directory)** is the active location (usually within a workspace) where computations are executed and outputs are written during a run.
+</div></div>
 
 A workspace should be created for each pipeline run, analysis variant, or other substantial computational task that involves managing files and commands in an organized way. Such a folder provides a structured layout to keep inputs, intermediate files, and results organized step by step. 
 
@@ -153,6 +259,12 @@ A workspace should be created for each pipeline run, analysis variant, or other 
 ```
 
 Each numbered subfolder corresponds to a sequential stage in the analysis, while parallel steps can be distinguished with letters. A [README.md](#readme) file at the pipeline root should record the order of steps, required inputs, special parameters, and the reasoning behind key decisions. This structure and documentation makes the analysis easier to reproduce and to share with collaborators.  
+
+<div class="highlighted highlighted--highlighted"><div class="highlighted__body" markdown="1"> 
+In the **/90daydata/** location, only create workspaces for selected pipelines or analyses that require large data loads or heavy computations with large intermediate files exceeding the project quota.   
+- Scripts and tools can be called directly from their original location in **/project/** (with proper permissions). The [working directory](#working-directory) and output paths should be set to the **/90daydata/** location within your job submission script.  
+- Once computations are completed, move the key outputs to **/project/** or archive them on Juno.
+</div></div>
 
 ### README
 
@@ -218,7 +330,53 @@ Both formats can be written and edited with simple command-line editors such as 
 
 ## Manage storage
 
+In this section, you will learn how to manage storage effectively on SCINet by understanding quotas, making use of large temporary spaces, and planning for long-term data archiving. These practices will help you balance performance, avoid quota issues, and follow good data-lifecycle management on the supercomputer.
+
+{% include table caption="Storage types and key characteristics on SCINet" content="|      | /home     | /project  | /90daydata | $TMPDIR    | /LTS/project/ |
+|---------------|-----------|-----------|------------|------------|-----------|
+| Location  | Atlas, Ceres | Atlas, Ceres | Atlas, Ceres | Atlas, Ceres | Juno |
+| Quota     | 30GB      | 1TB       | no quota   | ~1.5TB     | 1TB or more |
+| Duration  | permanent | permanent | 90-day purge | job runtime | permanent |
+| Backup    | No        | No        | No         | No         | Yes       |
+| Compute   | limited   | Yes       | Yes        | Yes (fast) | No        |
+| Access    | User      | Group     | All (**shared/**) | User | Group    |
+| Purpose   | scripts, configs | installs, data, research | tmp data, large research | compute node only, intensive I/O | long-term storage |
+| Docs      | [guide](https://scinet.usda.gov/guides/data/storage#home-directories) | [guide](https://scinet.usda.gov/guides/data/storage#project-directories) | [guide](https://scinet.usda.gov/guides/data/storage#large-short-term-storage) | [guide](https://scinet.usda.gov/guides/data/storage#temporary-local-node-storage) | [guide](https://scinet.usda.gov/guides/data/data-management#data-and-storage-sop)" %}
+
+<div class="highlighted highlighted--basic"><div class="highlighted__body" markdown="1">
+* With **SCINet account** you get small storage quota (30GB) in your `/home/<user.name>/` directory. This is a personal storage space assigned to an individual user.
+* As a member of ARS **research project**, you get access to group-shared large storage quota (e.g., 1TB) in a specific `/project/<project_name/>` directory and `/90daydata/<project_name>/` space for unlimited but temporary files (with 90-day auto-purge policy). 
+* **Everyone** has access to shared space in `/90daydata/shared` dedicated for cross-group collaboration and to `$TMPDIR` when using a compute node.
+</div></div>
+
 <div class="process-list ul" markdown="1">
+
+### Data lifecycle
+
+The data lifecycle in HPC describes how research data moves between different storage types depending on its purpose or performance needs. **Not all storage is equal.** Each location is designed for a specific stage of work.  
+
+1. On SCINet supercomputers (Atlas, Ceres):
+- **/home** is not intended for storing research data but rather for lightweight scripts and config files. 
+- The **/project** directory is the main location for research data, software installs, computations. 
+- For large short-term storage needs or broader collaboration, researchers can use **/90daydata**. 
+- **$TMPDIR** is node-local scratch space useful for input-output (I/O) intensive computations but storage is cleared once you exit the allocated compute node. 
+
+2. Finally, critical outputs and long-term datasets should be migrated to the Juno storage device (**/LTS/project/**), where data is preserved and backed up. No further computations there.
+
+### Persistent vs. Temporary
+
+The data storage location is not always the same as the active location where calculations are performed or where temporary files and outputs are written by default. Depending on quota limits, the intensity of I/O operations, and specific tool requirements, it is often more efficient to separate these locations: 
+- (`$INPUTS`) one for persistent input data, 
+- (`$WORKDIR` or `$TMPDIR`) another for active work or temporary files, 
+- (`$OUTPUTS`) and another for final persistent outputs.  
+
+On HPC, this is typically managed by setting **[shell variables](/computing-skills/command-line/configuration/variables)** with absolute paths that point to the chosen locations, which are then referenced in execution commands or job scripts. This approach ensures that computations run efficiently while keeping key results safe in the appropriate long-term storage, and prevents project spaces from being cluttered with temporary/intermediate files or excessive logs.
+
+<div class="highlighted highlighted--highlighted"><div class="highlighted__body" markdown="1">
+Input, tmp, output locations must be assigned within the same file system. Data should be transferred to the supercomputer first. Paths from other clusters or archive storage cannot be directly used during computation. User-managed file system mounts are not supported, so all referenced paths must exist locally.
+</div></div>
+
+
 ### Working Directory
 
 A working directory is the active location where computations are executed and where intermediate or temporary files are written by default. In many cases, this is the same location as the [pipeline workspace](#pipeline-workspace) in the **/project/** location. You can run commands directly from the working directory or submit SLURM scripts while inside it.  
@@ -272,6 +430,7 @@ WORKDIR=/90daydata/<project_name>/pipeline_v1_date/01_step
 mkdir -p $WORKDIR
 cd $WORKDIR
 ```
+Be sure to copy important results to permanent storage in **/project/**, since files in `/90daydata/` are automatically deleted 30 days after their last access.
 
 <div class="highlighted highlighted--highlighted"><div class="highlighted__body" markdown="1"> 
 Scripts, tools, and reference data should remain in their permanent locations under **/project/**, while only runtime files and outputs are written into the working directory.
@@ -320,6 +479,24 @@ date      # optional: print timestamp for job end
 [Temporary Local Node Storage](https://scinet.usda.gov/guides/data/storage#temporary-local-node-storage) (SCINet User Guide) provides detailed instructions on staging data in and out of `$TMPDIR`. 
 </div></div>
 
+### Backed up LTS
+
+For long-term preservation, copy key datasets and results to the backed-up LTS (Long-Term Storage) device (Juno). The recommended tool for reliable transfers is Globus, which supports checkpointing and restart to handle large files and bulk data efficiently. For up-to-date, detailed instructions on transferring data to LTS using Globus, please refer to the [Data and Storage SOP](https://scinet.usda.gov/guides/data/data-management#data-and-storage-sop) SCINet User Guide.
+
+</div>
+
+
+## Practical guidance
+
+The choice of storage location depends on what kind of work you are doing. Knowing whether you need a private space, group-shared project data, temporary scratch for computations, or backed-up long-term storage helps you place files correctly, avoid quota or purge issues, and keep your research safe and reproducible.
+
+<div class="usa-accordion " >
+{% include accordion title="Quick Quiz: Check your understanding" controls="quiz-formats" expanded=false class="question" icon=true %}
+<div id="quiz-formats" class="accordion_content" markdown='1'>
+Now that you’ve explored how storage spaces differ in purpose, performance, and policies, try this quiz to test your knowledge of where to place files and how to keep your data safe through the full lifecycle.
+
+{% include question qid="1,2,3,4,5,6,7,8,9,10" %}
+</div>
 </div>
 
 
