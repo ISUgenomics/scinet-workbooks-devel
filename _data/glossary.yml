@@ -81,9 +81,19 @@ glossary:
     definition: A collection of observables registered in a computer-readable representation. A single item of data is called a datum. Each datum has assigned the binary value of “false, 0” or “true, 1”, resulting in a bit of information, i.e., one binary digit.
     related: [Structured Data, Unstructured Data, Big Data]
 
+  - term: Directory Tree
+    cat: Computing Skills
+    definition: "A hierarchical structure that organizes files and folders on a computer system, starting from a root directory and branching into subdirectories. A project directory tree provides a logical layout for project data, scripts, results, and documentation, making it easier to navigate, manage versions, and maintain reproducibility."
+    related: [Project Directory, Documentation, README]
+
   - term: Distributed Computing
     cat: Computing Skills
     definition: A system of multiple computer machines connected over a network to create a computing cluster that appears as a single computer to the end-user. It provides a unified environment with access to shared resources (software, data, storage) and coordinated computing power. Distributed computing is a technique typically used in the High-Performance Computing (HPC) infrastructures.
+    related: [Queue, Job Scheduler, High-Performance Computing, HPC]
+
+  - term: Documentation
+    cat: Computing Skills
+    definition: The systematic recording of information about research processes, methods, data, and results. In a research context, documentation ensures transparency, reproducibility, and long-term usability of scientific work. In HPC projects, a README file is often used as the primary form of documentation.
     related: [Queue, Job Scheduler, High-Performance Computing, HPC]
 
   - term: Environment
@@ -255,6 +265,11 @@ glossary:
     definition: Any other computer or computing network that the user can access by logging into the external network. Performing actions on a remote machine requires a secure login and often requires the user to have an account created by the network administrator. In scientific projects, we use remote computing machines as part of the HPC infrastructure to access high-performance computing and collaboratively share big data.
     related: [Distributed Computing, HPC, Local Machine]
 
+  - term: README
+    cat: Computing Skills
+    definition: A plain-text or markdown file placed in a directory that explains the contents, purpose, and usage of the files within it. A README is often included at the project or pipeline workspace level (and ideally in subfolders) to provide quick guidance and context for anyone accessing the directory.
+    related: [Project Directory, Workspace, README]
+
   - term: Reproducibility
     cat: Computing Skills
     definition: The ability to repeat an analysis and obtain the same results, critical for robust scientific workflows.
@@ -319,6 +334,16 @@ glossary:
     cat: Computing Skills
     definition: A working directory for a project or computational task. It often appears as a variable or instruction that can be assigned a path to a selected location in the file system. That path is then used for all future commands that require a location, such as writing to a file. It is a common variable for workload managers on distributed computing infrastructures. The pathname of the current working directory can be accessed with the 'pwd' command or using the '$PWD' environmental variable.
     related: [HPC, Command Line]
+
+  - term: Working Directory
+    cat: Computing Skills
+    definition: "A working directory is the <b>active location</b> (usually within a workspace) where computations are executed and outputs are written during a run."
+    related: [HPC, Command Line]
+
+  - term: Workspace
+    cat: Computing Skills
+    definition: "A workspace is a <b>directory tree</b> created by a user to organize input data, scripts, intermediate files, and results for a specific analysis, pipeline, or computational task."
+    related: [HPC, Command Line]     
 
 ### Bioinformatics
 
