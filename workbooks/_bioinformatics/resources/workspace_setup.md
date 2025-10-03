@@ -139,7 +139,7 @@ The goal is to help you set up and organize a well-structured **workspace for bi
 
 ## Practical guidance
 
-<div class="usa-accordion ul" style="margin-top: 1em;">
+<div class="process-list ul" markdown="1">
 ### Templates for Bioinformatics Pipelines
 
 </div>
