@@ -42,7 +42,7 @@ questions:
     qid: 1
     answers:
       - "In your `/home` directory, since it is private and available immediately."  
-      - "In `90daydata/project`, even without membership, because it is shared among all users."  
+      - "In `90daydata/<project_name>`, even without membership, because it is shared among users."  
       - "In `/90daydata/shared`, since it is open to everyone and does not require project membership."  
       - "In `$TMPDIR`, because it is created automatically for each job."  
     answer: 3
@@ -148,6 +148,40 @@ questions:
       - "`$TMPDIR` is erased at the end of each job - it cannot be used for storing final results."  
       - "`/project` is permanent in terms of allocation, but not backed up - data can still be lost in case of hardware failure."  
 
+
+  - question: "Create a new pipeline workspace in your <b>`/90daydata/shared/<user>`</b> directory with subdirectories for numbered steps (e.g., `01_data_prep`, `02_analysis`, `03_final_report`). Add a `README.md` file at the top level that describes the purpose of each subdirectory. What commands would you use?"
+    title: "You Try! Create Your First Workspace"
+    qid: 13
+    solution: |
+      Example solution:  
+      ```bash
+      mkdir -p /90daydata/shared/$USER   
+      ```
+      ```bash
+      cd /90daydata/shared/$USER 
+      ```
+      ```bash 
+      mkdir -p pipeline_workspace/{01_data_prep,02_analysis,03_final_report}  
+      ```
+      ```bash
+      cd pipeline_workspace  
+      ```
+      ```bash
+      nano README.md   # or use your preferred editor  
+      ```
+      *README.md content (example):*
+      <div class="highlighted highlighted--basic"><div class="highlighted__body" markdown="0" icon="false">
+      # Pipeline Workspace <br>
+      - Goal: Create a simple template for well-organized project structure <br>
+      - location: @Ceres:/90daydata/shared/alex.badacz/pipeline_workspace <br>
+      - created: Oct 2025 <br><br>
+      ## Directory Tree <br> 
+      - **01_data_prep/**: preparing raw input files: file integrity, format validation, initial pre-processing <br>
+      - **02_analysis/**: main analysis steps, exploratory data analysis <br>
+      - **03_final_report/**: selected final results, summary tables, plots, notes on key insights <br>
+      </div></div>
+      This structure keeps project data organized and makes workflows easier to reproduce.
+
 ---
 
 
@@ -179,6 +213,8 @@ First, you will log in through **Open OnDemand (OOD)** and use the shell to acce
 </div>
 
 The goal is to help you manage research projects efficiently by choosing the right location for your pipeline workspace and structuring it wisely, making effective use of temporary storage within system limits, and maintaining clear documentation for reproducibility and collaboration.
+
+Before completing this section, it is recommended that you first go through the [File system on Atlas and Ceres supercomputers](/computing-skills/scinet/file_system) tutorial.
 
 
 ## Manage project structure
@@ -328,9 +364,17 @@ Both formats can be written and edited with simple command-line editors such as 
 
 </div>
 
+{% include question qid="13" %}
+
 ## Manage storage
 
 In this section, you will learn how to manage storage effectively on SCINet by understanding quotas, making use of large temporary spaces, and planning for long-term data archiving. These practices will help you balance performance, avoid quota issues, and follow good data-lifecycle management on the supercomputer.
+
+Before completing this section, it is recommended that you first go through the [File system on Atlas and Ceres supercomputers](/computing-skills/scinet/file_system) tutorial and [Manage project structure](/computing-skills/scinet/project_setup#manage-project-structure) section in this guide.
+
+<div class="process-list ul" markdown="1">
+
+### Storage types on SCINet
 
 {% include table caption="Storage types and key characteristics on SCINet" content="|      | /home     | /project  | /90daydata | $TMPDIR    | /LTS/project/ |
 |---------------|-----------|-----------|------------|------------|-----------|
@@ -349,7 +393,22 @@ In this section, you will learn how to manage storage effectively on SCINet by u
 * **Everyone** has access to shared space in `/90daydata/shared` dedicated for cross-group collaboration and to `$TMPDIR` when using a compute node.
 </div></div>
 
-<div class="process-list ul" markdown="1">
+### Check Your Quota
+
+<div class="highlighted highlighted--basic"><div class="highlighted__body" markdown="1">
+A quota is a fixed limit on the amount of storage space (or number of files) that a user or project group can consume in a given file system. On HPC systems, quotas prevent individuals or projects from using excessive resources and ensure fair access for all users. Exceeding a quota may block new writes, cause job failures, or generate “no space left on device” errors.
+</div></div>
+
+All project directories exist on both clusters, however they may have different quotas. Data in the /project and /home directories is not automatically synced between the clusters.
+
+```
+# Check quota on Ceres 
+my_quotas                                  # /home and /project
+# Check quota on Atlas
+quota -s                                   # /home directory
+/apps/bin/reportFSUsage -p <project_name>  # /project directory
+```
+
 
 ### Data lifecycle
 
@@ -499,6 +558,207 @@ Now that you’ve explored how storage spaces differ in purpose, performance, an
 </div>
 </div>
 
+<div class="process-list ul" markdown="1">
+### Use in real projects
+<br>
+If you need...
+
+<div class="usa-accordion" data-allow-multiple>
+
+{% include accordion title="completing tutorials from this workbook (with/without project membership)" controls="dp1" expanded=false class="outline" icon=false %}
+<div id="dp1" class="accordion_content" markdown="1">
+
+- with or without project membership: use `/90daydata/shared` (accessible to all users).  
+```bash
+# create a personal workspace
+mkdir -p /90daydata/shared/$USER/tutorials
+cd /90daydata/shared/$USER/tutorials 
+```
+- With project membership, you can also create a tutorial workspace in `/90daydata/<project_name>`
+```bash
+mkdir -p /90daydata/<project_name>/tutorials/
+```  
+
+*(see section [Manage storage](#manage-storage) for details)*  
+</div>
+
+{% include accordion title="checking your current quota usage" controls="dp2" expanded=false class="outline" icon=false %}
+<div id="dp2" class="accordion_content" markdown="1">
+All project directories exist on both clusters, however they may have different quotas. 
+Data in the `/project` and `/home` directories is not automatically synced between the clusters. 
+
+```bash
+# Check quota on Ceres 
+my_quotas                                  # /home and /project
+# Check quota on Atlas
+quota -s                                   # /home directory
+/apps/bin/reportFSUsage -p <project_name>  # /project directory
+```
+*(see sections [Storage types on SCINet](#storage-types-on-scinet) and [Check Your Quota](#check-your-quota))*
+</div>
+
+{% include accordion title="decluttering /home to resolve quota errors ('no space left on device')" controls="dp3" expanded=false class="outline" icon=false %}
+<div id="dp3" class="accordion_content" markdown="1">
+- Remove old logs, cached files, and conda environments.  
+- Always store research data in `/project` or `/90daydata`.  
+- Keep only lightweight configs and scripts.  
+
+Check usage and hidden files (`~` is a shortcut to `/home`): 
+```bash
+ls -lha ~                         # show all files including hidden configs and caches
+du -h --max-depth=1 ~ | sort -h   # check what takes the most space
+```
+Typical storage clutter: `.conda`, `.local`, `.cache`, and large log files.
+
+Move `.conda` and `.apptainer` directories to `/project` and create symlinks back into `/home`:
+```bash
+mv ~/.conda /project/<project_name>/software/conda
+ln -s /project/<project_name>/software/conda ~/.conda
+```
+</div>
+
+{% include accordion title="decluttering /project to free space" controls="dp4" expanded=false class="outline" icon=false %}
+<div id="dp4" class="accordion_content" markdown="1">
+- Archive old results to LTS on Juno. See [detailed instructions, using Globus (preferred)](https://scinet.usda.gov/guides/data/data-management#detailed-instructions-using-globus-preferred).
+- Remove duplicates or move temporary outputs to `/90daydata`.  
+- Compress intermediate or currently unused files: 
+```bash
+tar -czf archive.tar.gz folder/
+```  
+</div>
+
+{% include accordion title="installing group-shared software | installing with Conda" controls="dp5" expanded=false class="outline" icon=false %}
+<div id="dp5" class="accordion_content" markdown="1">
+First, check if a tool ia already avaialble on a supercomputer:  
+```bash
+module avail <tool>
+ls /reference/containers
+```
+
+Install more software packages in `/project/<project_id>/software/`.  
+
+Since `/home` directories on both clusters have small quotas, it’s recommended to save Conda installations to a `/project` directory. Move the miniconda/Conda to a project directory and create a symbolic link to the new location in the home directory.
+
+- To build a Conda environment load miniconda module:
+```
+module load miniconda   # on Ceres
+module load miniconda3  # on Atlas
+```
+```bash
+mv ~/.conda /project/<project_name>/software/.
+ln -s /project/<project_name>/software/.conda ~/.
+```
+
+*(see User Guide: [User-Installed Software with Conda](https://scinet.usda.gov/guides/software/conda#user-installed-software-with-conda))*
+
+If you’re not sure whether you should install software yourself or if you need help, **[contact SCINet VRSC](https://scinet.usda.gov/support/request#software-request)**. 
+</div>
+
+{% include accordion title="getting access to data in a specific /project" controls="dp6" expanded=false class="outline" icon=false %}
+<div id="dp6" class="accordion_content" markdown="1">
+[Project directories](https://scinet.usda.gov/guides/data/storage#project-directories) are usually shared between group members working on the same project. Each project directory has a manager who 
+can give and revoke access to the project directory.
+
+Check your current membership in groups:
+```bash
+id $USER   # check group membership
+```
+Ask the PI or project lead to add you to the project group:  
+```bash
+ipa group-add-member proj-<project_name> --users=<scinet_username>
+ipa group-remove-member proj-<project_name> --users=<scinet_username>
+```
+After being added to the `proj-` project group, users will be able to access `/project/` and `/90daydata/` both on Ceres and Atlas, as well as `/LTS/project/` on Juno.
+
+Alternatively, you can ask a collaborator to move the (non-sensitive data) dataset to `/90daydata/shared/` with appropriate access permissions:
+```bash
+chmod -R u+rwx /90daydata/shared/<dir_name>
+```
+`r` - read; `w` - write; `x` - execute
+
+</div>
+
+{% include accordion title="sharing project data securely with users without project membership" controls="dp7" expanded=false class="outline" icon=false %}
+<div id="dp7" class="accordion_content" markdown="1">
+
+- Use `/90daydata/shared` for temporary, non-sensitive data.  
+
+*(see [File system on Atlas and Ceres supercomputers: /90daydata/shared](/computing-skills/scinet/file_system#daydatashared))*  
+</div>
+
+{% include accordion title="flexible path management in job scripts" controls="dp8" expanded=false class="outline" icon=false %}
+<div id="dp8" class="accordion_content" markdown="1">
+Define shell variables storing absolute paths to INPUTS, OUTPUTS and working directory:  
+```bash
+INPUTS=/project/<project_id>/raw_data/<dataset_X>
+OUTPUTS=/project/<project_id>/<pipleine_X>/results
+
+WORKDIR=$OUTPUTS          # or /90daydata/<project_name> or $TMPDIR or different absolute path
+mkdir -p $WORKDIR
+cd $WORKDIR
+```
+Use absolute paths to prevent path resolution issues. Avoid using `$PWD`, as it always expands to your current working directory and changes whenever you move within the file system.  
+*(see section [Working Directory](#working-directory))*
+</div>
+
+{% include accordion title="processing (either reading or writing) hundreds files (I/O intensive computations)" controls="dp9" expanded=false class="outline" icon=false %}
+<div id="dp9" class="accordion_content" markdown="1">
+Use a compute node to complete this task. Start interactive session or submit a job to SLURM queue. In your script:
+
+- stage input data in `$TMPDIR`: 
+```bash
+cp /project/<project_name>/raw_data/*.fastq $TMPDIR/
+```
+
+- enter the scratch space on a compute node:
+```bash
+cd $TMPDIR/ 
+```
+
+- execute commands using transferred inputs: 
+```bash
+command <options> <inputs> <outputs>
+```
+
+- by default results should also be saved in $TMPDIR, so copy them back to `/project` before exiting a compute node:
+```bash
+cp $TMPDIR/<outputs> /project/<project_name>/<pipeline_x>/<results> 
+```
+
+*(see section [$TMDIR](#tmpdir) for details on node-local scratch space)*
+</div>
+
+{% include accordion title="copying results out of $TMPDIR before job completion" controls="dp10" expanded=false class="outline" icon=false %}
+<div id="dp10" class="accordion_content" markdown="1">
+
+Always copy outputs to persistent location at the end of your job script:  
+```bash
+cp $TMPDIR/* /project/<project_id>/results/
+```
+When you exit a compute node, the scratch space in `$TMPDIR` is automatically and permanently deleted.
+*(see section [Working directory](/computing-skills/scinet/project_setup#working-directory))*
+</div>
+
+{% include accordion title="backing up important results" controls="dp11" expanded=false class="outline" icon=false %}
+<div id="dp11" class="accordion_content" markdown="1">
+
+Transfer to LTS on Juno using Globus.
+- [Detailed instructions, using Globus (preferred)](https://scinet.usda.gov/guides/data/data-management#detailed-instructions-using-globus-preferred)
+- [Alternative instructions, using` scp` or `rsync` CLI commands](https://scinet.usda.gov/guides/data/data-management#alternative-instructions-not-using-globus)
+</div>
+
+{% include accordion title="requesting more storage space in /project or for long term storage (LTS)" controls="dp12" expanded=false class="outline" icon=false %}
+<div id="dp12" class="accordion_content" markdown="1">
+
+Submit a [Resources Request](https://scinet.usda.gov/support/request#request-resources) to the SCINet VRSC.  
+- [To Request a New SCINet Project](https://scinet.usda.gov/support/request#to-request-a-new-scinet-project)
+- [To Modify an Existing SCINet Project](https://scinet.usda.gov/support/request#to-modify-an-existing-scinet-project)
+- [To Request a Quota Increase for an Existing SCINet Project](https://scinet.usda.gov/support/request#to-request-a-quota-increase-for-an-existing-scinet-project)
+
+</div>
+
+</div>
+</div>
 
 {% if page.takeaways %}
 ## Best Practices
