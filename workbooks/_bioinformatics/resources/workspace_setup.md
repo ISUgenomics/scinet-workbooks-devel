@@ -18,7 +18,7 @@ objectives:
   - Become familiar with effective strategies for collaboration and data sharing in HPC settings.
 
 applications:
-  - Structuring a project directory for different types of bioinformatics analyses (e.g., RNA-seq).
+  - Structuring a workspace directory for different types of bioinformatics analyses (e.g., RNA-seq).
   - Managing data and metadata across home, scratch, long-term storage, and shared workspaces.
   - Configuring and documenting software environments using module systems or Conda.
   - Using reproducible project templates for consistent pipeline setup and configuration.
@@ -39,34 +39,66 @@ takeaways:
 overview: [objectives, applications, terminology]
 
 questions:
-  - question: "Why is it recommended to create a dedicated workspace for each pipeline instead of keeping all files directly in /project?"
+  - question: "Why is it recommended to create a dedicated workspace for each pipeline instead of keeping all files directly in `/project`?"
     title: "Workspace Purpose"
     qid: 1
     answers:
-      - "To make quota monitoring easier in `/home`"
-      - "To keep analysis steps organized and reproducible"
-      - "To speed up I/O operations on compute nodes"
+      - "to make quota monitoring easier in `/home`"
+      - "to keep analysis steps organized and reproducible"
+      - "to speed up I/O operations on compute nodes"
     answer: 2
     responses:
       - "Incorrect. Quota management is not the main reason for workspaces."
       - "Correct! A dedicated workspace organizes pipeline steps, improves reproducibility, and avoids mixing multiple analyses."
       - "Not quite. Storage tier choice affects I/O speed, not just having a workspace."
 
-  - question: "Which of the following is the safest place to store a Conda environment shared across multiple pipelines?"
+  - question: "Which of the following is the safest place to store a virtual environment or container shared across multiple pipelines or users?"
     title: "Shared Environments"
     qid: 2
     answers:
-      - "In your `/home` directory"
-      - "Inside each workspace separately"
-      - "In `/project/<project_id>/software`"
+      - "Ii your `/home` directory"
+      - "inside each workspace separately"
+      - "in `/project/<project_id>/software`"
     answer: 3
     responses:
       - "Incorrect. `/home` has a small quota and is not meant for software installs."
       - "Not ideal. This duplicates environments and wastes storage."
-      - "Correct! The shared software folder in /project makes environments reusable."
+      - "Correct! The shared software folder in `/project` makes environments reusable."
+
+  - question: "You want to create a DESeq2 environment in a way that your teammates can use it too, without everyone duplicating installs in their own `~/.conda/`. What’s the best way to do this?"
+    title: "Sharing Conda Environments"
+    qid: 5
+    answers:
+      - "Use `conda create -n deseq2_env` so everyone has the same env name."
+      - "Create the env in a group-shared location by using `conda create -p /project/<project_name>/software/envs/deseq2_env`"
+      - "Install DESeq2 directly in the base Conda environment and tell teammates to use `conda activate base`."
+      - "Export the env to YAML with `conda env export > deseq2_env.yml` and email it to teammates."
+    answer: 2
+    responses:
+      - "Creating in your personal `~/.conda` only makes it available to you, not your group."
+      - "Correct! Using `-p` places the env in the specified (shared) location, from where it can be activated by all teammates."
+      - "Installing in `base` is discouraged; it can break dependencies and is not shareable across users."
+      - "Exporting YAML is useful for reproducibility but doesn’t create a shared ready-to-use env on the cluster."
+
+  - question: "Previously, you built a single large Conda environment that included FastQC, Trimmomatic, HISAT2, DESeq2, and various plotting libraries. Now you want to try alignment-free quantification with Salmon, so you started creating another all-in-one environment (this time without HISAT2). What would have been a better strategy?"
+    title: "Creating Environments Efficiently"
+    qid: 6
+    answers:
+      - "First check if some tools are available as modules or containers, and install only if your required version is not provided."
+      - "Build separate, smaller environments for each tool or task (e.g., one for QC, one for alignment, one for DGE) to enable flexible reuse."
+      - "Reuse group-shared environments in `/project/<project_name>/software` instead of duplicating installs."
+      - "All of the above."
+      - "Always install everything into a new Conda environment to keep things simple in one all-in-one env for the entire pipeline."
+    answer: 4
+    responses:
+      - "Correct - but not the only correct choice. <br>Always check for existing modules or containers before creating a new environment."
+      - "Correct - but not the only correct choice. <br>Smaller, task-specific environments are easier to maintain, avoid conflicts, and can be reused across pipelines."
+      - "Correct - but not the only correct choice. <br>Group-shared environments prevent duplication and save space in quota-limited `/home`."
+      - "Correct! The best approach combines all these strategies: check for existing tools first, keep environments small and modular, and place them in shared project space."
+      - "Incorrect. Large all-in-one environments are inefficient, prone to version conflicts, and often duplicate the installation of a tool available elsewhere."
 
   - question: "You want to reuse the same reference genome across multiple pipeline versions. Which is the most efficient way to include it in your workspace?"
-    title: "Referencing Shared Data"
+    title: "Referencing Raw Data"
     qid: 3
     answers:
       - "Copy the genome FASTA into each workspace separately"
@@ -79,38 +111,39 @@ questions:
       - "Incorrect - downloading each time is unnecessary and slow."
       - "Correct! Using absolute paths ensures scripts point reliably to the shared reference, making workflows reproducible and avoiding ambiguity."
 
-  - question: "You and three teammates each created your own workspace inside `/project` to test different tools for step 05_DGE in the RNA-seq pipeline. Everyone referenced inputs from the shared `raw_data/` folder and installed environments individually. Now your /project/<project_name> has exceeded its quota. Which best practices would have helped prevent this issue?"
+  - question: "You and three teammates each created your own workspace inside `/project` to test different tools for step 05_DGE in the RNA-seq pipeline. Everyone referenced inputs from the shared `raw_data/` folder and created environments individually. Now your `/project/<project_name>` has exceeded its quota. Which best practices would have helped prevent this issue?"
     title: "Collaboration in Project Space"
     qid: 4
     answers:
       - "Use smaller test datasets before scaling up to full inputs"
       - "Share software environments for common steps instead of duplicating installs"
-      - "Precompute steps 1–4 once and share the results as input for DGE testing"
+      - "Precompute steps 1–4 once and share the results as input for multiple DGE variant testing"
       - "All answers are correct."
     answer: 4
     responses:
-      - Correct but not only! Testing with subsets minimizes data usage and speeds up trial runs.
-      - Correct but not only! Sharing environments at the project level avoids redundant installs and saves space.
-      - Correct but not only! Precomputing early steps once and reusing outputs prevents unnecessary duplication of large intermediate files.
+      - "Correct - but not the only correct choice. <br>Testing with subsets minimizes data usage and speeds up trial runs."
+      - "Correct - but not the only correct choice. <br>Sharing environments at the project level avoids redundant installs and saves space."
+      - "Correct - but not the only correct choice. <br>Precomputing early steps once and reusing outputs prevents unnecessary duplication of large intermediate files."
+      - "All answers are correct." 
 
-  - question: "Previously, you built a single large Conda environment with Python 3.8 that included FastQC, Trimmomatic, HISAT2, DESeq2, and various plotting libraries. It worked well for your transcriptomics project. Now you want to try alignment-free quantification with Salmon, so you started creating another all-in-one environment with Python 3.12 for convenience. Before installation completed, the system ran out of space, and you discovered that `.conda` in /home was already using 25 GB. What would have been a better strategy?"
-    title: "Managing Environments Efficiently"
-    qid: 5
+  - question: "You suddenly hit 'No space left on device' errors in your `/home` directory, even though you only store a few scripts there. What is the most likely cause and best practice fix?"
+    title: "Quota Troubleshooting"
+    qid: 7
     answers:
-      - "Build separate, smaller environments for each tool or task (e.g., one for QC, one for alignment, one for DGE)"
-      - "Reuse group-shared environments in `/project/<project_name>/software` instead of duplicating installs in /home"
-      - "Both answers above are correct."
-      - "Always install everything into a single Conda environment to keep things simple"
-    answer: 3
+      - "Hidden caches and environments (e.g., `.conda`, `.cache`) are consuming space; move them to `/project/<project_name>/software/` and link back."
+      - "Large raw datasets should always be stored in `/home`; compress them to free up space."
+      - "Logs from recent jobs filled up `/home`; delete `/var/log` entries to clear them."
+      - "The quota applies cluster-wide; request an increase to fix the error."
+    answer: 1
     responses:
-      - "Correct but not only! Smaller, task-specific environments reduce size, avoid conflicts, and are easier to maintain."
-      - "Correct but not only! Group-shared environments prevent duplication and save space in quota-limited `/home`."
-      - "Correct! Group-shared more specialized enviornments are more robust and transferable across piplines."
-      - "Incorrect. Large all-in-one environments are inefficient, prone to version conflicts, and quickly exhaust quota."
+      - "Correct! Hidden directories like `.conda` or `.cache` often consume most of the quota. Move them into project storage and create symlinks back to `/home`."
+      - "`/home` is not meant for raw data. Storing datasets there will quickly exceed quota and is discouraged."
+      - "System logs are not stored in your `/home`; deleting `/var/log` entries is unsafe and won’t fix the issue."
+      - "Quota for `/home` is fixed to 30GB per user on SCINet supercomputers. The standard solution is to clean up or relocate large files."
 
   - question: "You want to test RNAseq pipeline with a new tool. Which is the best approach?"
     title: "Test Before Scaling Up"
-    qid: 6
+    qid: 8
     answers:
       - "Run the full dataset in `/project` to be safe"
       - "Downsample your FASTQ files and test pipeline in `/90daydata` or `$TMPDIR`"
@@ -121,6 +154,35 @@ questions:
       - "Correct! Testing with small datasets in temporary storage helps optimize scripts before scaling up."
       - "Wrong. `/home` is not for large data and will hit quota limits quickly."
 
+  - question: "Which storage location is backed up and safest for long-term preservation of key data or results?"
+    title: "Backed up Storage"
+    qid: 9
+    answers:
+      - /home
+      - /90daydata
+      - /project
+      - /LTS/project
+    answer: 4
+    responses:
+      - "`/home` is quota-limited and not backed up. Available on Atlas and Ceres supercomputers."  
+      - "`/90daydata` is automatically purged and unsuitable for long-term storage. Available on Atlas and Ceres supercomputers."  
+      - "`/project` is persistent but not backed up. Available on both supercomputers but content is not synced."  
+      - "Correct! LTS is the only backed-up storage, designed for long term storage of data that cannot be easily reproduced. Available on Juno."  
+
+  - question: "You rerun a workflow 6 months later using the same raw data inputs and pipeline steps, but get slightly different results. Which practice would most likely have prevented this?"
+    title: "Reproducibility"
+    qid: 10
+    answers:
+      - "Documenting which software modules and versions were loaded"
+      - "Using relative paths for input and output"
+      - "Saving intermediate files in `/90daydata`"
+      - "Organizing results in separate workspaces"
+    answer: 1
+    responses:
+      - "Correct! Recording software versions is key for reproducibility. Many tools are available in multiple module versions, and the default (e.g., `module load fastqc`) can change over time. Best practice is to load a specific version, such as `module load fastqc/0.12.1`."
+      - "Relative paths make scripts fragile and harder to reuse. Always prefer absolute paths to ensure inputs and outputs are found consistently."
+      - "The storage location does not affect the calculation results. However, spaces like `/90daydata` are purged and cannot be relied on for long-term reproducibility."
+      - "Organized workspaces improve navigation and clarity, but they do not prevent differences in the actual results."  
 
 ---
 
@@ -145,7 +207,7 @@ You’ll learn how to manage files across different storage locations, document 
 
 ### Reproducibility, compliance, and collaboration needs
 
-A well-structured project setup is more than a matter of convenience on a shared supercomputer:
+A well-structured workspace setup is more than a matter of convenience on a shared supercomputer:
 - It ensures **reproducibility**, by keeping data, code, and environments organized and documented in a way that others (and your future self) can follow.  
 - It supports **compliance**, by aligning with storage policies, quotas, and security rules that govern shared HPC resources.  
 - It enables **collaboration**, by making projects easier to share, extend, and maintain within research groups.  
@@ -238,7 +300,7 @@ Numbered prefixes (`00_raw_data`, `01_read_qc`, etc.) ensure that steps appear i
 Good documentation is the backbone of a reproducible workflow. Every workspace should have a **main `README.md` file** at its root. This file acts as the first entry point for you and your collaborators to understand what the workspace contains and how to use it.
 
 <div class="highlighted highlighted--basic"><div class="highlighted__body" markdown="1"> 
-README acts as lightweight documentation that explain the folder’s purpose, contents, and how it fits into the overall workflow. A clear and consistent `README` makes it easier for group members (and your future self) to understand what has been done, reproduce results, and continue work without confusion.  
+README acts as lightweight documentation that explain the folder’s purpose, contents, and how it fits into the overall workflow. A clear and consistent `README` makes it easier for group members to understand what has been done, reproduce results, and continue work without confusion.  
 </div></div>
 
 <ol>
@@ -249,7 +311,7 @@ touch README.md
 ```
 </div></li>
 <li><div markdown="1">Add pipeline metadata  
-Open the file in your preferred editor:
+Open the file in your preferred CLI text editor:
 ```bash
 nano README.md 
 ```
@@ -327,7 +389,7 @@ Follow these best practices:
    Keep all original raw data files in a dedicated folder directly in your research project `/project/<project_name>/raw_data/`. Organize different datasets in uniquely and descriptively named subdirectories (e.g., by experiment, organism, or date).  
    ```bash
    mkdir -p /project/<project_name>/raw_data/arabidopsis_rnaseq_oct2025
-   # Use Globus co move data to the supercomputer
+   # Use Globus to move data to the supercomputer
    chmod -R a-w /project/<project_name>/raw_data/arabidopsis_oct2025   # set read-only permissions
    ```
 
@@ -411,7 +473,7 @@ Follow best practices:
 - `/project` - main datasets, software, shared group work  
 - `/90daydata` - temporary data, auto-purged after 90 days  
 - `$TMPDIR` - local scratch on a compute node, deleted when the job ends  
-- `LTS/project` - backed up device for long term storage (Juno) 
+- `/LTS/project` - backed up device for long term storage (Juno) 
 
 
 ### Build a reproducible environment
@@ -474,8 +536,8 @@ mkdir -p envs
 
 ```bash
 RNAseq_thaliana_v1_Oct2025/       # root folder for your RNA-Seq project; customize it
-├── workflow/                     # parent folder for all computatoional steps ina pipeline
-├── envs/                         # fastqc reports, multiqc summary
+├── workflow/                     # parent folder for all computatoional steps in a pipeline
+├── envs/                         # documentation for environments used in a pipeline
 │   ├── qc_env/                   # module_list.txt including FastQC and Trimmomatic
 │   ├── quant_env/                # container config or container_list.txt for Salmon
 │   ├── dge_env/                  # e.g, environment.yml for Conda env with R + DESeq2; absolute path to env
@@ -516,10 +578,10 @@ To prevent issues, either delete unused caches or relocate them to your project 
 du -sh ~/.conda
 
 # Move .conda directory out of /home
-mv ~/.conda /project/<project_name>/<user>/software/conda
+mv ~/.conda /project/<project_name>/<user>/software/
 
 # Create a symlink so tools can still find it
-ln -s /project/<project_name>/<user>/software/conda ~/.conda
+ln -s /project/<project_name>/<user>/software/.conda ~/
 ```
 
 
@@ -542,11 +604,11 @@ Remember that Git is not GitHub - Git is the version control system you run loca
 #### Version Control with Git 
 
 <div class="highlighted highlighted--question"><div class="highlighted__body" markdown="1"> 
-**Excercise**
+**Exercise**
 
 1. Navigate to your pipeline workspace:
    ```bash
-   cd /project/<project_name>/<user>/RNAseq_thaliana_v1_Oct2025/
+   cd /project/<project_name>/RNAseq_thaliana_v1_Oct2025/
    ```
 
 2. Initialize Git, track the structure and commit changes made in README file:
@@ -576,6 +638,7 @@ Remember that Git is not GitHub - Git is the version control system you run loca
    Create `.gitignore` and add it to Git:
    ```bash
    nano .gitignore
+   # copy-paste or manually list files and folders excluded from tracking; save changes and close editor
    git add .gitignore
    git commit -m "Add gitignore to exclude raw data and temporary files"
    ```
@@ -603,7 +666,7 @@ Following a few simple habits makes Git much more effective:
 *Validate workflows quickly with small datasets before scaling up to full research data.*
 
 Before running a full analysis, it is best practice to validate your workflow on a small dataset. 
-This helps catch mistakes in file paths, environment setup, or resource requests early, saving both time and compute quota.  
+This helps catch mistakes in file paths, environment setup, or resource requests early, saving time and compute quota.  
 
 1. Stage a small dataset in `/90daydata` or `$TMPDIR` to keep tests lightweight and temporary.  
 2. Run a trial workflow step to verify that commands, environments, and file locations work as expected. 
@@ -617,7 +680,7 @@ Many bioinformatics tools provide built-in sample data or allow downsampling (e.
 </div></div>
 
 <div class="highlighted highlighted--question"><div class="highlighted__body" markdown="1"> 
-**Excercise: downsampling FASTQ files with seqtk**
+**Exercise: downsampling FASTQ files with seqtk**
 
 Load the `seqtk/1.3` module on Ceres:
 ```bash
@@ -645,12 +708,132 @@ and managing storage responsibly helps you avoid confusion, save space, and make
 Now that you’ve explored best practices for setting up a workspace, from directory structure and environment management to storage choices and reproducibility. 
 Try this quiz to test your understanding and check for common pitfalls.
 
-{% include question qid="1,2,3,4,5,6" %}
+{% include question qid="1,2,3,4,5,6,7,8,9,10" %}
 </div>
 </div>
 
 
 <div class="process-list ul" markdown="1">
+
+### Use in real projects
+<br>
+If your bioinformatics pipeline or a workspace requires...
+
+<div class="usa-accordion" data-allow-multiple>
+
+{% include accordion title="environment that could be shared across project members" controls="bw1" expanded=false class="outline" icon=false %}
+<div id="bw1" class="accordion_content" markdown="1">
+Create Conda or virtual environments in the group-shared `/project/<project_name>/software` folder instead of your personal `.conda`. Use the `-p <absolute_path>/<env_name>` option (instead of `-n <env_name>`) to place the environment in a group-accessible location. This prevents quota issues in `/home` and ensures that all project members can use the same tool installation.
+
+```bash
+# Create environment in shared project space
+conda create -p /project/<project_name>/software/envs/deseq2_env bioconductor-deseq2
+# Adjust permissions so group members can use it
+chmod -R g+rx /project/<project_name>/software/envs/deseq2_env
+# Activate by absolute path
+conda activate /project/<project_name>/software/envs/deseq2_env
+```
+
+<div class="highlighted highlighted--tip"><div class="highlighted__body" markdown="1"> 
+By default, Conda only shows environments in your personal `.conda` space. To use shared envs, either activate them by absolute path or add the shared folder to your Conda search path.
+```bash
+export CONDA_ENVS_DIRS=/project/<project_name>/software/envs:$CONDA_ENVS_DIRS
+conda config --show envs_dirs   # display paths tracked by Conda
+conda env list                  # list available environments
+```
+</div></div>
+</div>
+
+{% include accordion title="testing multiple tool variants or different settings" controls="bw2" expanded=false class="outline" icon=false %}
+<div id="bw2" class="accordion_content" markdown="1">
+
+Keep **separate workspaces** for each pipeline iteration within your project space. Use numbered directories for steps and an `envs/` folder for environment documenattion. This keeps analyses cleanly separated, easy to archive, and reproducible.  
+
+Example:  
+- `/project/<project_name>/RNAseq_soybean_deseq2_03-2025/`
+- `/project/<project_name>/RNAseq_soybean_svm_linear_04-2025/`
+- `/project/<project_name>/RNAseq_soybean_svm_radial_04-2025/`
+
+Workspace directory tree:
+```bash
+RNAseq_thaliana_v1_Oct2025/       # root folder for your RNA-Seq project; customize it
+├── workflow/                     # parent folder for all computatoional steps in a pipeline
+├── envs/                         # documentation for environments used in a pipeline 
+└── README.md                     # main README with the purpose of the workspace and outline of the pipeline
+```
+</div>
+
+{% include accordion title="SLURM optimization before running with huge dataset" controls="bw3" expanded=false class="outline" icon=false %}
+<div id="bw3" class="accordion_content" markdown="1">
+
+Run trial workflows with **small datasets** staged in `/90daydata` or `$TMPDIR`.  
+
+Example: downsample FASTQ reads with `seqtk`:  
+```bash
+cd /project/<project_name>/raw_data/rnaseq_arabidopsis_Oct-25
+seqtk sample -s100 large_R1.fastq.gz 0.01 > /90daydata/<project_name>/workspace_rnaseq_arabidopsis_Oct-25_optimization/00_rawdata/test_R1.fastq.gz
+seqtk sample -s100 large_R2.fastq.gz 0.01 > /90daydata/<project_name>/workspace_rnaseq_arabidopsis_Oct-25_optimization/00_rawdata/test_R2.fastq.gz
+```
+Log run settings and adjust resource requests (memory, cores, walltime) until the workflow runs smoothly. Then scale up on full data.
+</div>
+
+{% include accordion title="fixing the 'No space left on device' or different quota error" controls="bw4" expanded=false class="outline" icon=false %}
+<div id="bw4" class="accordion_content" markdown="1">
+
+Tools like Conda, Nextflow, or Snakemake often create hidden folders (`.conda`, `.cache`, `.nextflow`) in `/home`, which can trigger quota errors.  
+
+Relocate them to project space and symlink back:  
+```bash
+mv ~/.conda /project/<project_name>/<user>/software
+ln -s /project/<project_name>/<user>/software/.conda ~/
+```
+Regularly check disk usage to spot large hidden folders:
+```bash
+du -sh ~/* .??*                                 # /home
+du -sh /project/<project_name>/<workspace>/*    # selected workspace
+du -sh /project/<project_name>/software/*       # shared software or environments
+```
+</div>
+
+{% include accordion title="using large raw datasets" controls="bw5" expanded=false class="outline" icon=false %}
+<div id="bw5" class="accordion_content" markdown="1">
+
+Store original raw data in a centralized, read-only folder: `/project/<project_name>/raw_data/` 
+Then link to it in your workspace:  
+```bash
+cd /project/<project_name>/workspace_rnaseq_arabidopsis_Oct-25    # navigate to a workspace
+mkdir -p 00_rawdata/ 
+ln -s /project/<project_name>/raw_data/rnaseq_arabidopsis_Oct-25/*.fastq.gz 00_rawdata/   # link raw data
+```
+This prevents duplication and ensures consistency across all pipelines.
+
+<div class="highlighted highlighted--tip"><div class="highlighted__body" markdown="1"> 
+If your tool cannot handle symlinks, reference the raw data directly with **absolute paths**, i.e., starting from the file system root `/` (e.g., `/project/<project_name>/raw_data/sample1.fastq.gz`) instead of copying files.
+</div></div>
+
+</div>
+
+{% include accordion title="reproducibility over long time periods" controls="bw6" expanded=false class="outline" icon=false %}
+<div id="bw6" class="accordion_content" markdown="1">
+
+Reproducibility is critical when results may need to be revisited months or even years later. On an HPC system, this means keeping data, environments, and documentation stable while ensuring they can be shared and understood by collaborators.
+
+Follow these best practices:
+- **Protect raw data:** Keep original raw datasets in a dedicated **read-only project folder** to prevent accidental edits.  
+- **Back up critical files:** Store copies of raw data, intermediate results, and final outputs in backed-up long-term storage (LTS) on Juno.  
+- **Version control scripts:** Track all analysis scripts in Git and push to a remote (e.g., GitHub, GitLab). This provides history, collaboration, and recovery if files are lost locally.  
+- **Document environments:** Record all loaded modules and Conda/virtual environments in `README.md`. Include full module load commands with version included (e.g., `module load fastqc/0.12.1`) and environment YAML files.  
+- **Share group-wide environments:** Place shared Conda/virtual envs in `/project/<project_name>/software/envs/` to avoid duplication and ensure consistent access for collaborators.  
+Optional:
+- **Capture checkpoints:** Enhance your scripts to save logs, print statistics and QC summaries at each major pipeline step. This facilitates troubleshooting and allows partial re-runs.  
+- **Keep troubleshooting notes:** Record common errors and fixes in project documentation to support future iterations or team members.  
+- **Use containers for longevity:** If the workflow depends on tools that update frequently, or if you need a *frozen snapshot* of optimized settings, package the environment into a container (Apptainer). Containers preserve exact versions and settings across systems and time.  
+</div>
+
+</div>
+
+
+
 ### Templates for Bioinformatics Pipelines
 
 </div>
