@@ -34,7 +34,112 @@ takeaways:
 
 overview: [objectives, applications]
 
+questions:
+  - question: "Which location is private to you and not accessible by other project members?"
+    title: "User Private Storage"
+    qid: 1
+    answers:
+      - "`/home`"
+      - "`/project/<project_name>/$USER`"
+      - "`/90daydata/shared/$USER`"
+    answer: 1
+    responses:
+      - "Correct! `/home` is your personal space for configs and scripts, not shared with others."
+      - "`/project` is shared among group members who are added to the project."
+      - "`/90daydata/shared` is a shared scratch area, by default visible to all users on the system."
 
+  - question: "You want to practice tutorials provided in the scinet-workbooks. <br>Where should you work?"
+    title: "Getting Started Workspace"
+    qid: 2
+    answers:
+      - "/home"
+      - "/90daydata/shared/$USER"
+      - "/90daydata/scinet_workshop1/$USER"
+      - "/reference/workshops"
+    answer: 2
+    responses:
+      - "Not correct - `/home` is quota-limited and intended for personal configs and scripts, not for running larger tutorials."
+      - "Correct! `/90daydata/shared/$USER` is your temporary workspace for practice or tutorials. It will be automatically purged 90 days after last access, so move any important *takeaway notes* or code snippets to `/home` or `/project/<project_name>/$USER` before it’s cleared."
+      - "Not correct - `/90daydata/scinet_workshop1/` is reserved for scheduled workshops. Access is limited to registered participants, and it is revoked once the event ends and the grace period has passed."
+      - "Not correct - `/reference/workshops` contains post-workshop reference materials curated by instructors. It is read-only and not intended for personal training workspace."
+
+  - question: "SCINet users cannot access a specific research project until..."
+    title: "Project Access Control"
+    qid: 3
+    answers:
+      - "PI requests quota increase for `/project`."
+      - "They are added to the corresponding project group."
+      - "They create a `$USER` folder under `/project/<project_name>`."
+    answer: 2
+    responses:
+      - "Quota increases do not grant access."
+      - "Correct! Access is controlled by project group membership."
+      - "Users cannot create their own project folders without being in the project group."
+
+  - question: "Two project groups want to use the same 1 TB experimental dataset. Should you store a copy in both `/project/<projectA>` and `/project/<projectB>`?"
+    title: "Data Sharing Between Projects"
+    qid: 4
+    answers:
+      - "Yes, duplicating the dataset in both projects is standard practice."
+      - "No, store it once in a shared location and grant appropriate group access."
+      - "It should always go into `/reference/data` to be accessible to everyone."
+    answer: 2
+    responses:
+      - "Not correct - duplicating large datasets wastes storage and risks inconsistency."
+      - "Correct! Store the dataset once in `/project` or `/90daydata/shared` and manage group permissions so both projects can access it."
+      - "Not correct - `/reference/data` is a centrally managed space with pre-downloaded, widely used reference datasets available to all SCINet users, not a place for project-specific data sharing."
+
+  - question: "An experimental collaborator placed large data files in `/90daydata/shared` around Memorial Day. At the start of the new academic year you finally have time to analyze them, but they are missing. Meanwhile, another dataset in the same location that you used during the summer is still available. Why?"
+    title: "Purge Policy"
+    qid: 5
+    answers:
+      - "Files in `/90daydata/shared` are automatically purged 90 days after their last access date."
+      - "Other users deleted your files."
+      - "Jobs exceeding quota in `/90daydata/shared` trigger automatic deletion of some folders."
+    answer: 1
+    responses:
+      - "Correct! `/90daydata/shared` is a temporary storage tier. Files are purged if not accessed within 90 days."
+      - "Not correct - with default permissions (`drwxr-s---`), shared directories are group-readable but not world-writable. Other users cannot randomly delete your files unless permissions are explicitly modified to allow it."
+      - "`90daydata` has no quota. Also, quotas do not trigger automatic deletion of specific files; purge policies are time-based."
+
+  - question: "Where can you find pre-installed tools or datasets maintained by SCINet VRSC?"
+    title: "Built-in Datasets and Software"
+    qid: 6
+    answers:
+      - "`/reference/data` and `/reference/containers`"
+      - "`/90daydata/shared` and `module load`"
+      - "`/project/<project_name>/raw_data` and `/project/<project_name>/software`"
+    answer: 1
+    responses:
+      - "Correct! `/reference/data` stores common datasets or databases, and `/reference/containers` provides ready-to-use containers."
+      - "Not correct - `/90daydata/shared` is temporary space for cross-group collaboration and data sharing; `module load` is a command that enables using pre-installed software."
+      - "Not correct - `/project/<project_name>` is for your group’s own raw data and software installations, not for centrally maintained resources."
+
+  - question: "An experiment produced 10,000 small CSV data files, which you placed in `/90daydata/<project_name>` to merge them by common columns into a single database file, with the originals automatically discarded under the 90-day purge policy. When running your task directly from `/90daydata`, you noticed very slow input processing. What would improve performance?"
+    title: "Node-local Scratch Space for Efficient I/O"
+    qid: 7
+    answers:
+      - "Move files into `/home` and run your commands directly in a login shell."
+      - "Run the job on a compute node with staging raw data in `$TMPDIR`, then copy the merged result back to persistent storage in `/project`."
+      - "Start interactive session with `salloc` and keep working in `/90daydata/<project_name>`, as it is designed for all large-scale analyses."
+    answer: 2
+    responses:
+      - "Not correct - `/home` is quota-limited, not optimized for heavy I/O, and login shells are not intended for running computational tasks."
+      - "Correct! `$TMPDIR` provides fast node-local scratch space. Copy the raw data there at the start of your job, process it efficiently, and then copy only the final results to `/project` for persistence."
+      - "Not correct - `/90daydata` has no quota limits but offers slower performance for handling many small files."
+
+  - question: "While working in `/project/<project_name>`, you wrote your pipeline using relative paths (like `../raw_data/file.fastq`). Later, you copied the entire workspace to `/90daydata/<project_name>` to test optimizations and let those runs be purged automatically. Why will your original scripts fail?"
+    title: "Relative vs Absolute Paths"
+    qid: 8
+    answers:
+      - "Relative paths point to locations that no longer exist after moving the workspace."
+      - "The `/90daydata` filesystem does not allow using relative paths."
+      - "Purge policies automatically break relative path references."
+    answer: 1
+    responses:
+      - "Correct! Relative paths depend on the directory structure. After copying, `../raw_data` no longer resolves correctly. Absolute paths or environment variables are safer."
+      - "Not correct - `/90daydata` allows relative paths just like any other directory."
+      - "Not correct - purge policies delete files but don’t directly affect how paths resolve."
 
 ---
 
@@ -128,6 +233,15 @@ Knowing these spaces will help you find reference datasets or software and decid
 
 {% if page.takeaways %}
 ## Lesson summary
+
+<div class="usa-accordion " >
+{% include accordion title="Quick Quiz: Check your understanding" controls="quiz-formats" expanded=false class="question" icon=true %}
+<div id="quiz-formats" class="accordion_content" markdown='1'>
+Now that you’ve explored the file system structure on SCINet supercomputers and learned how different spaces vary in purpose, performance, and policies, it’s time to test your knowledge. This quiz will check your understanding of where to place files and how to work safely within the system.
+
+{% include question qid="1,2,3,4,5,6,7,8" %}
+</div>
+</div>
 
 <ul>
   {% for takeaway in page.takeaways %}
