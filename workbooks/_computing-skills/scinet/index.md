@@ -2,7 +2,7 @@
 title: "Getting started with SCINet"
 description: "Orientation for newcomers and best-practice setups for SCINet supercomputer users"
 type: introduction
-author: Aleksandra Badaczewska
+author: [Aleksandra Badaczewska, The SCINet Office]
 index: 1
 order: 1
 
