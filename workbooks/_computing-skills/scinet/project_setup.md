@@ -1,10 +1,10 @@
 ---
-title: Project setup and storage management
+title: Setting up a project and managing storage
 description: ""
 type: interactive tutorial
 author: Aleksandra Badaczewska
 index: 
-order: 3
+order: 4
 
 header:
   overlay_image: 07-wrangling/assets/img/07_data_acquisition_banner.png
@@ -376,22 +376,7 @@ Before completing this section, it is recommended that you first go through the 
 
 ### Storage types on SCINet
 
-{% include table caption="Storage types and key characteristics on SCINet" content="|      | /home     | /project  | /90daydata | $TMPDIR    | /LTS/project/ |
-|---------------|-----------|-----------|------------|------------|-----------|
-| Location  | Atlas, Ceres | Atlas, Ceres | Atlas, Ceres | Atlas, Ceres | Juno |
-| Quota     | 30GB      | 1TB       | no quota   | ~1.5TB     | 1TB or more |
-| Duration  | permanent | permanent | 90-day purge | job runtime | permanent |
-| Backup    | No        | No        | No         | No         | Yes       |
-| Compute   | limited   | Yes       | Yes        | Yes (fast) | No        |
-| Access    | User      | Group     | All (**shared/**) | User | Group    |
-| Purpose   | scripts, configs | installs, data, research | tmp data, large research | compute node only, intensive I/O | long-term storage |
-| Docs      | [guide](https://scinet.usda.gov/guides/data/storage#home-directories) | [guide](https://scinet.usda.gov/guides/data/storage#project-directories) | [guide](https://scinet.usda.gov/guides/data/storage#large-short-term-storage) | [guide](https://scinet.usda.gov/guides/data/storage#temporary-local-node-storage) | [guide](https://scinet.usda.gov/guides/data/data-management#data-and-storage-sop)" %}
-
-<div class="highlighted highlighted--basic"><div class="highlighted__body" markdown="1">
-* With **SCINet account** you get small storage quota (30GB) in your `/home/<user.name>/` directory. This is a personal storage space assigned to an individual user.
-* As a member of ARS **research project**, you get access to group-shared large storage quota (e.g., 1TB) in a specific `/project/<project_name/>` directory and `/90daydata/<project_name>/` space for unlimited but temporary files (with 90-day auto-purge policy). 
-* **Everyone** has access to shared space in `/90daydata/shared` dedicated for cross-group collaboration and to `$TMPDIR` when using a compute node.
-</div></div>
+{% include setup/storage_types %}
 
 ### Check Your Quota
 
@@ -410,7 +395,7 @@ quota -s                                   # /home directory
 ```
 
 
-### Data lifecycle
+### Data Lifecycle
 
 The data lifecycle in HPC describes how research data moves between different storage types depending on its purpose or performance needs. **Not all storage is equal.** Each location is designed for a specific stage of work.  
 
@@ -661,7 +646,7 @@ can give and revoke access to the project directory.
 
 Check your current membership in groups:
 ```bash
-id $USER   # check group membership
+id $USER | grep "proj"  # check group membership
 ```
 Ask the PI or project lead to add you to the project group:  
 ```bash
