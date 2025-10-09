@@ -1,6 +1,6 @@
 {% assign id = include.id | default: "find-projects" %}
 <div id="proj-check" class="usa-accordion">
-{% include accordion title="Check your projects" class="note" icon=true controls=id %}
+{% include accordion title="Check your membership in projects" class="note" icon=true controls=id %}
 <div class="accordion_content" id="{{ id }}" markdown='1' hidden>
 If you don't know what projects you have available, you can check by running:
 ```bash
