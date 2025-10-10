@@ -4,11 +4,13 @@ description: ""
 type: interactive tutorial
 author: [Aleksandra Badaczewska, The SCINet Office]
 index: 
-order: 3
+order: 4
 
 header:
   overlay_image: 07-wrangling/assets/img/07_data_acquisition_banner.png
 svg: /genomics.svg
+
+terms: [File System, Workspace, Shared Space, Project Directory, Access Permissions, Purge Policy, Storage, Quota]
 
 objectives: 
   - "Learn where and how to set up a personal workspace for tutorials and training on SCINet clusters."
@@ -20,8 +22,6 @@ applications:
   - "Creating a personal workspace under `/90daydata/shared/$USER` for tutorials, hands-on practice, or workflow experimentation."
   - "Setting up workspaces in `/90daydata/<project_name>` directory for project-specific testing, pipeline optimization, or large short-term jobs exceeding `/project` quota."
   - "Managing data dynamically by using the `/90daydata` space for large short-term storage and moving important files to persistent storage in a `/project` before they are purged."
-
-terms: [User Workspace, Pipeline Workspace, Purge Policy, Node]
 
 takeaways: 
   - "The /home directory is not intended for tutorials, job runs, or data storage beyond configuration files. Avoid using it for practice or testing."

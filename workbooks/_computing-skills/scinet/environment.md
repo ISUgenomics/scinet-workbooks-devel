@@ -4,7 +4,7 @@ description: ""
 type: interactive tutorial
 author: [Aleksandra Badaczewska]
 index: 
-order: 5
+order: 6
 
 header:
   overlay_image: 07-wrangling/assets/img/07_data_acquisition_banner.png
@@ -23,7 +23,7 @@ applications:
   - "Track and preserve the software stack used in publications or long-term projects."
 
 
-terms: [Command, Alias, Module System, Container, Environment File, Virtual Environment, Conda]
+terms: [Command Line Interface, Command, Alias, Module System, Container, Environment File, Virtual Environment, Conda]
 
 takeaways: 
   - "Use system modules and containers when possible to reduce setup effort and dependency issues."

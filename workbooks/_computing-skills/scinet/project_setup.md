@@ -4,7 +4,7 @@ description: ""
 type: interactive tutorial
 author: Aleksandra Badaczewska
 index: 
-order: 4
+order: 5
 
 header:
   overlay_image: 07-wrangling/assets/img/07_data_acquisition_banner.png

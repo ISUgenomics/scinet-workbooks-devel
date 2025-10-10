@@ -4,11 +4,13 @@ description: ""
 type: reference material
 author: Aleksandra Badaczewska
 index: 
-order: 2
+order: 3
 
 header:
   overlay_image: 07-wrangling/assets/img/07_data_acquisition_banner.png
 svg: /genomics.svg
+
+terms: [File System, Directory, Home Directory, Project Directory, Workspace, Path, Access Permissions, Shared Space]
 
 objectives: 
   - Understand the structure of the file system on SCINet and the role of each storage location.
@@ -32,7 +34,7 @@ takeaways:
   - Understanding storage tiers and policies ensures smoother workflows and prevents data loss.
   - Clean up regularly and follow best practices to optimize both personal and shared system resources.
 
-overview: [objectives, applications]
+overview: [objectives, applications, terminology]
 
 questions:
   - question: "Which location is private to you and not accessible by other project members?"
