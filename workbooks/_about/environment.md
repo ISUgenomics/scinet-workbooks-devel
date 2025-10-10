@@ -1,0 +1,1 @@
+/Users/abadacz/REPOS/GIF/SCINET/scinet-workbooks-devel/workbooks/_computing-skills/scinet/environment.md
