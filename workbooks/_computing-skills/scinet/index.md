@@ -7,13 +7,16 @@ index: 1
 order: 1
 
 tags: [unix, command line]
+terms: [SCINet supercomputers, Supercomputer, HPC, Local Machine, Remote Machine, Open OnDemand, Web Browser, Unix Shell, Command Line Interface, Command]
 
 objectives:
 - Introduce the SCINet Initiative and its mission in advancing scientific computing.
-- Provide guidance for new users to access the SCINet supercomputers.
 - "Highlight resources: SCINet website, user guides, and workbooks with practical tutorials."
+- Provide guidance for new users to access the SCINet supercomputers.
+- "Establish a functional user and project workspaces."
+- "Learn about software options by exploring how to use modules, containers, and virtual environments."
 
-overview: [objectives, terms]
+overview: [objectives, terminology]
 
 
 ---
@@ -26,7 +29,7 @@ overview: [objectives, terms]
 The SCINet initiative is an effort by the USDA [Agricultural Research Service (ARS)](https://www.ars.usda.gov/) to grow USDA’s research capacity by providing scientists with access to high-performance computing clusters, high-speed networking for data transfer, and training in scientific computing.
 
 - [SCINet Website](https://scinet.usda.gov/)
-- [SCINet Workbooks]()
+- [SCINet Workbooks]() *(this resource)*
 - [SCINet User Guides](https://scinet.usda.gov/guides)
 - [SCINet Forum](https://forum.scinet.usda.gov/)
 
@@ -52,13 +55,17 @@ User Guide: [Differences between Ceres and Atlas](https://scinet.usda.gov/guides
 
 ## Next steps
 
+Before moving on to subject-specific tutorials in areas such as [computing skills](/computing-skills/), [data science](/data-science/), 
+[bioinformatics](/bioinformatics/), or [geospatial](/geospatial/) analysis, it’s important to first complete the introductory SCINet workbooks tutorials. 
+These foundational exercises will help you configure your workspace and project setup, and familiarize you with the available software options on SCINet supsrcomputers.
+
 ### Explore interfaces and file system
 
 As a new user, begin by exploring the SCINet interfaces and navigating the core areas of the file system. 
 These steps provide concise, practical guidance and will greatly facilitate your work on the system.
 
 * **(selected)** [Accessing interfaces on SCINet](/computing-skills/scinet/interfaces) *(Shell, RStudio, JupyterLab, VS Code)*
-* **(required)** [File system on Atlas and Ceres supercomputers](http://127.0.0.1:4500/computing-skills/scinet/file_system)
+* **(required)** [File system on Atlas and Ceres supercomputers](/computing-skills/scinet/file_system)
 
 ### Set up user workspace
 
@@ -78,9 +85,22 @@ Users are advised to [request a SCINet project](https://scinet.usda.gov/support/
 </div></div>
 
 With your SCINet project approved, set up the **project workspace** to launch your research tasks.
-* **(required)** [Project setup on SCINet’s supercomputers](http://127.0.0.1:4500/computing-skills/scinet/project_setup)
+* **(required)** [Project setup on SCINet’s supercomputers](/computing-skills/scinet/project_setup)
+
+### Set up software environment
+
+<div class="highlighted highlighted--basic"><div class="highlighted__body" markdown="1"> 
+Each SCINet cluster has software preinstalled on it. Some general software is available in the global environment 
+but most specialized scientific software is managed by the Module system. Some software packages are available on SCINet as pre-built container images. 
+If users need packages that are not available, they can either [request VRSC to add packages](https://scinet.usda.gov/support/request#software-request), 
+or they can download and install packages in their `/project` directories. 
+</div></div>
+
+With your first computing task underway, set up the **software environment** for efficient workflows.
+* **(required)** [Setting up a reproducible environment](/computing-skills/scinet/environment)
 
 </div>
+
 
 ## Where to get help?
 

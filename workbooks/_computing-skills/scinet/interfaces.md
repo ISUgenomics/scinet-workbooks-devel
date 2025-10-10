@@ -4,11 +4,13 @@ description: ""
 type: reference material
 author:
 index: 
-order: 1
+order: 2
 
 header:
   overlay_image: 
 svg: /genomics.svg
+
+terms: [SCINet supercomputers, Local Machine, Open OnDemand, Web Browser, Unix Shell, Development environment, IDE]
 
 objectives: 
   - Understand the different interfaces available on SCINet for interacting with the system.
@@ -29,7 +31,7 @@ takeaways:
     - RStudio, JupyterLab, and VS Code make it easier to develop, visualize, and debug code in familiar environments.
     - Mastering multiple interfaces allows for flexibility in workflows and smoother collaboration with colleagues.
 
-overview: [objectives, applications]
+overview: [objectives, applications, terminology]
 
 
 ---
@@ -45,7 +47,19 @@ If you need a SCINet account, please refer to [Getting started with SCINet](/com
 {% include overviews %}
 
 
-## Practical steps
+## Getting started
+
+First, you will log in through **Open OnDemand (OOD)** in your web browser and explore the available interfaces.
+
+<div class="usa-accordion" style="margin-top: 1em;">
+
+{% include accordion title="<h3 style='margin: 0; border-bottom: none; font-size: 1.1em; display: inline;'>Access SCINet via OOD</h3><span style='font-weight: 300;'>(required) used for accessing supercomputers</span>" class="primary" controls="access-scinet" icon=false %}
+<div id="access-scinet" class="accordion_content" markdown='1' hidden> 
+{% include setup/scinet_login keep="true" %}
+</div>
+</div>
+
+### Choose an interface
 
 There are multiple different interfaces available on SCINet.  In this section, we provide template instructions for launching these interfaces and provide an overview of each input parameter.
 
@@ -57,10 +71,6 @@ There are multiple different interfaces available on SCINet.  In this section, w
 <div class="highlighted highlighted--highlighted"><div class="highlighted__body" markdown="1"> 
 Note: Each tutorial may have specific inputs depending on the resource needs and objectives of the tutorial.  Use the parameters specified by the tutorial if they differ from these demo instructions.
 </div></div>
-
-<div class="process-list" markdown="1">
-{% include setup/scinet_login keep="true" %}
-</div>
 
 <div class="process-list ul" markdown="1">
 
