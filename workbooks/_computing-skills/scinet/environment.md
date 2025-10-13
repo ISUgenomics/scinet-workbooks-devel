@@ -1,6 +1,6 @@
 ---
 title: Setting up a reproducible environment
-description: ""
+description: "Set up a flexible software environment on SCINet using Conda, modules, or containers, and enhance efficiency with shell customization"
 type: interactive tutorial
 author: [Aleksandra Badaczewska]
 index: 
