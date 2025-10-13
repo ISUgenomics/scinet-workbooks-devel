@@ -1,5 +1,6 @@
 ---
 title: Sequencing technologies and assay types
+description: "Understand how different sequencing technologies and assay types are used to study genomes, transcripts, and regulatory mechanisms"
 svg: /genomics.svg
 author: Aleksandra Badaczewska
 

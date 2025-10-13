@@ -1,5 +1,6 @@
 ---
-title: Reads, contigs, scaffolds, and nucleotide sequences 
+title: Reads, contigs, scaffolds, and nucleotide sequences
+description: "Explore how sequences combine into larger genomic structures and reveal genetic variation" 
 svg: /genomics.svg
 author: [Aleksandra Badaczewska, Andrew Severin]
 

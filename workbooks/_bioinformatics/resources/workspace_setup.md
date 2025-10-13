@@ -1,5 +1,6 @@
 ---
 title: Workspace setup for bioinformatics
+description: "Set up a productive bioinformatics workspace with organized storage, documented workflows, version control, and tested pipelines"
 svg: /genomics.svg
 author: Aleksandra Badaczewska
 

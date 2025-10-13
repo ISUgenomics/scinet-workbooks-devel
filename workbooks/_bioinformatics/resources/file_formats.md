@@ -1,5 +1,6 @@
 ---
 title: File formats in Bioinformatics
+description: "Learn about common bioinformatics file formats and how they represent sequences, annotations, and genomic variants"
 svg: /genomics.svg
 author: Aleksandra Badaczewska
 

@@ -1,5 +1,6 @@
 ---
 title: Public Databases
+description: "Explore major public bioinformatics databases, their roles, standards, and practical use for accessing sequences, genomes, variants, and functional data"
 svg: /genomics.svg
 author: Aleksandra Badaczewska
 
