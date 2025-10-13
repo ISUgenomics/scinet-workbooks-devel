@@ -1,6 +1,6 @@
 ---
 title: Setting up your workspace
-description: ""
+description: "Create and configure a user workspace on SCINet for hands-on training, practice, and workflow testing."
 type: interactive tutorial
 author: [Aleksandra Badaczewska, The SCINet Office]
 index: 

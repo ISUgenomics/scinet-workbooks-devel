@@ -1,6 +1,6 @@
 ---
 title: Setting up a project and managing storage
-description: ""
+description: "Set up and organize the /project directory on SCINet, manage storage, and optimize pipeline workspaces for reproducible research"
 type: interactive tutorial
 author: Aleksandra Badaczewska
 index: 

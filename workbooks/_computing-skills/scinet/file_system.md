@@ -1,6 +1,6 @@
 ---
 title: File system on Atlas and Ceres supercomputers
-description: ""
+description: "Overview of the SCINet supercomputers’ file system, including /home, /project, /90daydata/shared, and /reference directories."
 type: reference material
 author: Aleksandra Badaczewska
 index: 

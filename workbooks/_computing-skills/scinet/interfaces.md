@@ -1,8 +1,8 @@
 ---
 title: Accessing interfaces on SCINet
-description: ""
+description: "Learn how to access and launch key user interfaces: Shell, RStudio, JupyterLab, and VS Code"
 type: reference material
-author:
+author: The SCINet Office
 index: 
 order: 2
 
@@ -76,7 +76,7 @@ Note: Each tutorial may have specific inputs depending on the resource needs and
 
 {% include setup/ood_shell %}
 
-From here, your tutorial may have specific instructions for you to execute.  One of the first steps is often to [request a compute note and create a working directory in /90daydata](#making-your-workspace-directory-in-90daydata), as explained above.
+From here, your tutorial may have specific instructions for you to execute.  One of the first steps is often to request a compute note and create a working directory in `/90daydata`, as explained in the [Setting up your workspace](/computing-skills/scinet/user_workspace) tutorial.
 
 Requesting a compute node keeps all the intense computation off the login nodes, so that login nodes can have all the resources necessary for managing the cluster. **Please do not run your applications on the login nodes**.   For more information, see our [SLURM guide](https://scinet.usda.gov/guides/use/slurm). 
 
