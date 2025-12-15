@@ -391,7 +391,7 @@ Follow these best practices:
    ```bash
    mkdir -p /project/<project_name>/raw_data/arabidopsis_rnaseq_oct2025
    # Use Globus to move data to the supercomputer
-   chmod -R a-w /project/<project_name>/raw_data/arabidopsis_oct2025   # set read-only permissions
+   chmod -R a-w /project/<project_name>/raw_data/arabidopsis_rnaseq_oct2025   # set read-only permissions
    ```
 
 2. In your workspace, only reference raw data *(never duplicate it)*  

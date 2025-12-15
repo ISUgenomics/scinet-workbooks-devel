@@ -435,7 +435,7 @@ After converting RNA to cDNA, sequenced reads reflect how actively genes are bei
 
 </div>
 
-{% include accordion title="<div style='display: flex; width: 100%;'><div style='flex: 0 0 16%; font-weight: bold;'>Total RNA-seq</div><div style='flex: 1; font-weight: normal;'>| &ensp; coding and non-coding RNAs &ensp;-&ensp; RNA &ensp; -&ensp; rRNA depletion or filetering</div></div>" controls="tot-rna" expanded=false class=" " icon=false %}
+{% include accordion title="<div style='display: flex; width: 100%;'><div style='flex: 0 0 16%; font-weight: bold;'>Total RNA-seq</div><div style='flex: 1; font-weight: normal;'>| &ensp; coding and non-coding RNAs &ensp;-&ensp; RNA &ensp; -&ensp; rRNA depletion or filtering</div></div>" controls="tot-rna" expanded=false class=" " icon=false %}
 <div id="tot-rna" class="accordion_content"   markdown='1'>
 Total RNA-seq captures both coding and non-coding RNAs, including rRNA, tRNA, and lncRNA. 
 Can provide broader transcriptome coverage than mRNA-focused RNA-seq.

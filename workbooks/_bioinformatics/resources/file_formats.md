@@ -251,7 +251,7 @@ Each entry begins with a **header line** starting with `>` (sequence identifier 
 > sequence_id description
 SEQUENCE-IN-ONE-LETTER-NOTATION
 ```
-- Recommended sequenece line length: 60–80 characters.  
+- Recommended sequence line length: 60–80 characters.  
 - Empty lines are typically ignored by parsers.  
 - Multiple sequences can be included in one file.
 
