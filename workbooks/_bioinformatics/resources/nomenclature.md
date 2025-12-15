@@ -29,6 +29,7 @@ takeaways:
     - Contigs are continuous, gapless sequences reconstructed from overlapping reads.
     - Scaffolds order contigs but may contain unresolved gaps (often represented by Ns).
     - Reference genomes are assembled and annotated representations used for alignment and interpretation.
+    - Variant calling compares reads to a reference genome to identify differences.
     - Recognizing these structures is essential to working confidently with real bioinformatics datasets.
 
 overview: [objectives, applications]
@@ -318,8 +319,49 @@ but they are essential for tasks like variant calling, annotation, and comparati
 A **variant** is a difference between a given sequence and a reference genome. Variants can be:  
 
 - **SNPs** (Single Nucleotide Polymorphisms): a single base change  
-- **Indels**: small insertions or deletions  
-- **Structural variants**: larger changes like duplications, inversions, or translocations  
+- **Indels**: small insertions or deletions (typically <50 bp)  
+- **Structural variants (SVs)**: larger changes like duplications, inversions, translocations, or copy number variations (CNVs)  
+
+```markdown
+Reference:
+ATCGATCGATCGATCG
+
+SNP (C → T at position 7):
+ATCGATCGATCGATCG
+ATCGATTGATCGATCG
+
+Insertion (GG inserted after position 6, alignment view):
+ATCGAT--CGATCGATCG
+ATCGATGGCGATCGATCG
+
+Deletion (CGAT deleted at positions 7–10, alignment view):
+ATCGATCGATCGATCG
+ATCGAT----CGATCG
+```
+
+Insertions and deletions are shown using an alignment-style representation, where dashes (-) indicate gaps relative to the reference.
+
+### Variant calling
+
+Variant calling is the process of identifying variants by comparing aligned sequencing reads to a [reference genome](#reference-genome). 
+This typically involves:
+1. Aligning reads to the reference (producing BAM/SAM files)
+2. Identifying positions where the reads differ from the reference
+3. Filtering and quality-checking candidate variants
+
+The accuracy of variant calling depends on [sequencing depth](#sequencing-depth--coverage), read quality, and the complexity of the genomic region.
+
+### VCF format
+
+Variants are commonly stored in **VCF (Variant Call Format)** files, a standardized text format that records the position, reference allele, alternate allele(s), and quality metrics for each variant. VCF files typically use the `.vcf` or compressed `.vcf.gz` extension.
+
+```markdown
+#CHROM  POS     ID          REF  ALT  QUAL  FILTER  INFO
+chr1    12345   rs12345     A    G    99    PASS    DP=30;AF=0.5
+chr1    12400   .           CT   C    85    PASS    DP=25;AF=1.0
+```
+
+Each line represents a single variant, with columns describing its genomic location, the reference and alternate alleles, quality scores, and additional annotations.
 
 Variants are central to many bioinformatics analyses, including the identification of disease-associated mutations, population genetics, and evolutionary studies.
 
