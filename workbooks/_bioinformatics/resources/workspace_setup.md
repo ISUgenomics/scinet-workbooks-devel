@@ -834,9 +834,12 @@ Optional:
 </div>
 
 
-
+<!--
 ### Templates for Bioinformatics Pipelines
 
+section under construction; will be cross-linked to learning pathways or pipeline templates
+
+-->
 </div>
 
 {% if page.takeaways %}
